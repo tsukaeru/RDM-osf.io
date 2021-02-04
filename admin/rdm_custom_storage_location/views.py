@@ -471,7 +471,7 @@ class UserMapView(InstitutionalStorageBaseView, View):
         ext = 'csv'
         name = 'usermap-' + provider_name
 
-        s = iO.StringIO()
+        s = io.StringIO()
         csv_writer = csv.writer(s, delimiter=',')
 
         def fullname(osfuser):
