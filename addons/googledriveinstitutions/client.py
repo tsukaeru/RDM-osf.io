@@ -46,7 +46,11 @@ class GoogleDriveInstitutionsClient(BaseClient):
         res = self._make_request(
             'GET',
             self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files'),
+<<<<<<< HEAD
             params={'q': query, 'fields': 'files(id,name)'},
+=======
+            params={'q': query},
+>>>>>>> Add googledriveinstitutions
             expects=(200, ),
             throws=HTTPError(401)
         )
