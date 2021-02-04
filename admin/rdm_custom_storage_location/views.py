@@ -9,7 +9,7 @@ from rest_framework import status as http_status
 from mimetypes import MimeTypes
 import os
 import csv
-from io import StringIO
+import io
 import logging
 
 from addons.osfstorage.models import Region
@@ -212,6 +212,12 @@ class SaveCredentialsView(InstitutionalStorageBaseView, View):
                 request.user,
                 storage_name,
                 data.get('googledrive_folder'),
+            )
+        elif provider_short_name == 'googledriveinstitutions':
+            result = utils.save_googledriveinstitutions_credentials(
+                request.user,
+                storage_name,
+                data.get('googledriveinstitutions_folder'),
             )
         elif provider_short_name == 'owncloud':
             result = utils.save_owncloud_credentials(
@@ -465,7 +471,7 @@ class UserMapView(InstitutionalStorageBaseView, View):
         ext = 'csv'
         name = 'usermap-' + provider_name
 
-        s = StringIO.StringIO()
+        s = iO.StringIO()
         csv_writer = csv.writer(s, delimiter=',')
 
         def fullname(osfuser):
