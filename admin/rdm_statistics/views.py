@@ -113,7 +113,7 @@ class StatisticsView(RdmPermissionMixin, UserPassesTestMixin, TemplateView):
         ctx['current_date'] = current_date
         ctx['user'] = user
         ctx['provider_data_array'] = provider_data_array
-        digest = hashlib.sha512(SITE_KEY).hexdigest()
+        digest = hashlib.sha512(SITE_KEY.encode("UTF-8")).hexdigest()
         ctx['token'] = digest.upper()
         return ctx
 
