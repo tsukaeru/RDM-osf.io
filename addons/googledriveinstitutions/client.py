@@ -31,7 +31,8 @@ class GoogleDriveInstitutionsClient(BaseClient):
     def rootFolderId(self):
         return self._make_request(
             'GET',
-            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', 'fileId=root?fields=id'),
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', 'root'),
+            params={'fields': 'id'},
             expects=(200, ),
             throws=HTTPError(401)
         ).json()['id']
@@ -45,7 +46,7 @@ class GoogleDriveInstitutionsClient(BaseClient):
         res = self._make_request(
             'GET',
             self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files'),
-            params={'q': query},
+            params={'q': query, 'fields': 'files(id,name)'},
             expects=(200, ),
             throws=HTTPError(401)
         )

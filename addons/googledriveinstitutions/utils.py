@@ -16,13 +16,13 @@ def to_hgrid(item, node, path):
     :param item: contents returned from Google Drive API
     :return: results formatted as required for Hgrid display
     """
-    path = os.path.join(path, item['files'])
+    path = os.path.join(path, item['name'])
 
     serialized = {
         'path': path,
         'id': item['id'],
         'kind': 'folder',
-        'name': item['files'],
+        'name': item['name'],
         'addon': 'googledriveinstitutions',
         'urls': build_googledriveinstitutions_urls(item, node, path=path)
     }
