@@ -229,12 +229,13 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.changeMessage('Please enter an User guid.', 'text-danger');
             return;
         }
-        if (!self.microsoftTeamsUserObject() ){
-            self.changeMessage('Please enter an Microsoft Teams User Object ID.', 'text-danger');
-            return;
-        }
         if (!self.microsoftTeamsMail() ){
             self.changeMessage('Please enter an Microsoft Teams Sign-in Address.', 'text-danger');
+            return;
+        }
+
+        if (!self.microsoftTeamsUserObject() ){
+            self.changeMessage('Please enter an Microsoft Teams User Object ID.', 'text-danger');
             return;
         }
 
@@ -268,7 +269,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
     deleteMicrosoftTeamsUser : function() {
         var self = this;
         if (!self.userGuidToDelete() ){
-            self.changeMessage('Please enter an User guid.', 'text-danger');
+            self.changeMessage('Please enter an User guid for Delete.', 'text-danger');
             return;
         }
         var url = self.urls().delete_microsoft_teams_user;

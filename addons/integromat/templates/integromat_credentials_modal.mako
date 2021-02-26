@@ -88,7 +88,7 @@
                 <table style="width: 100%">
                     <tr>
                         <td>
-                            User guid
+                            User guid for Delete
                         </td>
                     </tr>
                     <tr>
