@@ -74,12 +74,80 @@ def niirdccore_get_dmp_info(**kwargs):
     addon = node.get_addon(SHORT_NAME)
 
     dmp_id = addon.get_dmp_id()
+
+    if dmp_id is None:
+        raise HTTPError(http_status.HTTP_410_GONE)
+
     url = settings.DMR_URL + '/v1/dmp/' + str(dmp_id)
     headers = {'Authorization': 'Bearer ' + addon.get_dmr_api_key()}
-    dmp_info = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers)
+
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        logger.error("Failed to post/put request to DMR, error message: " + str(e))
+        raise e
+
+    data = response.json()
 
     return {'data': {'id': node._id, 'type': 'dmp-status',
-                    'attributes': dmp_info.json()}}
+                    'attributes': data['dmp']}
+            }
+
+@must_be_valid_project
+@must_have_permission('admin')
+@must_have_addon(SHORT_NAME, 'node')
+def niirdccore_update_dmp_info(**kwargs):
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+    dmp_id = addon.get_dmp_id()
+
+    if dmp_id is None:
+        raise HTTPError(http_status.HTTP_410_GONE)
+    
+    # update/create dataset
+    try: 
+        recv_data = request.json['data']['attributes']
+        dataset = recv_data['dataset'][0]
+        dataset_is_new = dataset['dataset_is_new']
+        dataset_id = dataset['dataset_id']['identifier']
+    except KeyError:
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+
+    dataset.pop('dataset_is_new')
+    send_data = {'data': dataset}
+
+    headers = {'Authorization': 'Bearer ' + addon.get_dmr_api_key()}
+
+    if dataset_is_new:
+        # create dataset
+        send_data['data']['dmp_id'] = {'identifier': dmp_id, 'type': 'other'}
+        url = settings.DMR_URL + '/v1/dataset/metadata'
+        response = requests.post(url, json=send_data, headers=headers)        
+    else:
+        # update dataset
+        url = settings.DMR_URL + '/v1/dataset/{}/metadata'.format(str(dataset_id))
+        response = requests.put(url, json=send_data, headers=headers)
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        logger.error("Failed to post/put request to DMR, error message: " + str(e)) 
+        raise e
+
+    # get updated dmp
+    url = settings.DMR_URL + '/v1/dmp/' + str(dmp_id)
+    response = requests.get(url, headers=headers)
+    try:
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        logger.error("Failed to get request to DMR, error message: " + str(e))
+        raise e
+
+    data = response.json()
+
+    return {'data': {'id': node._id, 'type': 'dmp-status',
+                    'attributes': data['dmp']}
+            }
 
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
