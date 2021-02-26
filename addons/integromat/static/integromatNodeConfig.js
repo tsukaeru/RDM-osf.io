@@ -20,6 +20,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.userGuid = ko.observable();
         self.microsoftTeamsUserObject = ko.observable();
         self.microsoftTeamsMail = ko.observable();
+        self.userGuidToDelete = ko.observable();
         // Treebeard config
         self.treebeardOptions = $.extend(
             {},
@@ -224,6 +225,19 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
 
     addMicrosoftTeamsUser : function() {
         var self = this;
+        if (!self.userGuid() ){
+            self.changeMessage('Please enter an User guid.', 'text-danger');
+            return;
+        }
+        if (!self.microsoftTeamsUserObject() ){
+            self.changeMessage('Please enter an Microsoft Teams User Object ID.', 'text-danger');
+            return;
+        }
+        if (!self.microsoftTeamsMail() ){
+            self.changeMessage('Please enter an Microsoft Teams Sign-in Address.', 'text-danger');
+            return;
+        }
+
         var url = self.urls().add_microsoft_teams_user;
         return osfHelpers.postJSON(
             url,
@@ -238,6 +252,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.userGuid(null);
             self.microsoftTeamsUserObject(null);
             self.microsoftTeamsMail(null);
+            self.userGuidToDelete(null);
 
         }).fail(function(xhr, textStatus, error) {
             var errorMessage = (xhr.status === 401) ? '401' : 'Duplicate';
@@ -252,11 +267,15 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
 
     deleteMicrosoftTeamsUser : function() {
         var self = this;
+        if (!self.userGuidToDelete() ){
+            self.changeMessage('Please enter an User guid.', 'text-danger');
+            return;
+        }
         var url = self.urls().delete_microsoft_teams_user;
         return osfHelpers.postJSON(
             url,
             ko.toJS({
-                user_guid: self.userGuid(),
+                user_guid: self.userGuidToDelete(),
             })
         ).done(function() {
             self.message('');
@@ -264,6 +283,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.userGuid(null);
             self.microsoftTeamsUserObject(null);
             self.microsoftTeamsMail(null);
+            self.userGuidToDelete(null);
 
         }).fail(function(xhr, textStatus, error) {
             var errorMessage = (xhr.status === 401) ? '401' : 'Error';

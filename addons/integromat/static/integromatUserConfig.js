@@ -32,6 +32,7 @@ function ViewModel(url) {
     self.userGuid = ko.observable();
     self.microsoftTeamsUserObject = ko.observable();
     self.microsoftTeamsMail = ko.observable();
+    self.userGuidToDelete = ko.observable();
 
     ChangeMessageMixin.call(self);
 

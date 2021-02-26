@@ -93,7 +93,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" data-bind="value: userGuid" style="width: 80%">
+                            <input type="text" data-bind="value: userGuidToDelete" style="width: 80%">
                         </td>
                         <td>
                             <button data-bind="click: deleteMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-danger pull-right">
