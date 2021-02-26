@@ -233,8 +233,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
                 microsoft_teams_mail: self.microsoftTeamsMail()
             })
         ).done(function() {
-            self.clearModal();
-            $modal.modal('hide');
+            self.message('');
             $('#microsoftTeamsUserRegistrationModal').modal('hide');
             self.userGuid(null);
             self.microsoftTeamsUserObject(null);
@@ -260,8 +259,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
                 user_guid: self.userGuid(),
             })
         ).done(function() {
-            self.clearModal();
-            $modal.modal('hide');
+            self.message('');
             $('#microsoftTeamsUserRegistrationModal').modal('hide');
             self.userGuid(null);
             self.microsoftTeamsUserObject(null);
