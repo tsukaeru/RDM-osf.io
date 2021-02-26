@@ -364,12 +364,12 @@ def integromat_add_microsoft_teams_user(**kwargs):
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject).exists():
-        attendee = models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject)
+        attendee = models.Attendees.objects.get(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject)
         logger.info('Microsoft User Object ID duplicate with ' + attendee.user_guid)
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
-        attendee = models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail)
+        attendee = models.Attendees.objects.get(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail)
         logger.info('Microsoft Teams Sign-in Address duplicate with ' + attendee.user_guid)
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
