@@ -363,13 +363,15 @@ def integromat_add_microsoft_teams_user(**kwargs):
         logger.info('user_guid duplicate.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-#    if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject).exists():
-#        logger.info('Microsoft User Object ID duplicate.')
-#        raise HTTPError('Microsoft User Object ID duplicate.', response=self)
+    if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject).exists():
+        attendee = models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject)
+        logger.info('Microsoft User Object ID duplicate with ' + attendee.user_guid)
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-#    if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
-#        logger.info('Microsoft Teams Sign-in Address duplicate.')
-#        raise HTTPError('Microsoft Teams Sign-in Address duplicate.', response=self)
+    if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
+        attendee = models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail)
+        logger.info('Microsoft Teams Sign-in Address duplicate with ' + attendee.user_guid)
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     microsoftTeamsUserInfo = models.Attendees(
         user_guid = userGuid,
