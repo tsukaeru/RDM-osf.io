@@ -360,16 +360,16 @@ def integromat_add_microsoft_teams_user(**kwargs):
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
     nodeNum = nodeSettings.id
     if models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid).exists():
-        logger.info('user_guid deplicated')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+        logger.info('user_guid duplicate.')
+        raise HTTPError('User guid is duplicate', response=self)
 
     if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_object=microsoftTeamsUserObject).exists():
-        logger.info('Microsoft User Object ID deplicated')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+        logger.info('Microsoft User Object ID duplicate.')
+        raise HTTPError('Microsoft User Object ID duplicate.', response=self)
 
     if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
-        logger.info('Microsoft Teams Sign-in Address')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+        logger.info('Microsoft Teams Sign-in Address duplicate.')
+        raise HTTPError('Microsoft Teams Sign-in Address duplicate.', response=self)
 
     microsoftTeamsUserInfo = models.Attendees(
         user_guid = userGuid,

@@ -240,7 +240,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.microsoftTeamsMail(null);
 
         }).fail(function(xhr, textStatus, error) {
-            var errorMessage = (xhr.status === 401) ? '401' : 'Deplicated';
+            var errorMessage = (xhr.status === 401) ? '401' : 'Duplicate';
             self.changeMessage(errorMessage, 'text-danger');
             Raven.captureMessage('Could not add Micorosoft Teams user', {
                 url: self.url,
