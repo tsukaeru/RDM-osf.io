@@ -82,8 +82,8 @@ def connect_s3compat(host=None, access_key=None, secret_key=None, node_settings=
     #    s3_config.add_section('s3')
     #    s3_config.set('s3', 'use-sigv4', 'True')
     region = ''
-    if host.endswith('.oraclecloud.com')
-        region = host.split('.')[3]
+    if host.endswith('.oraclecloud.com'):
+        region = host.split('.')[-3]
     url = ('https://' if port == 443 else 'http://') + host
     return boto3.resource(
         's3',
