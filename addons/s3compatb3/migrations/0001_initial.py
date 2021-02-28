@@ -28,8 +28,8 @@ class Migration(migrations.Migration):
                 ('folder_id', models.TextField(blank=True, null=True)),
                 ('folder_name', models.TextField(blank=True, null=True)),
                 ('encrypt_uploads', models.BooleanField(default=True)),
-                ('external_account', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compat_node_settings', to='osf.ExternalAccount')),
-                ('owner', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compat_node_settings', to='osf.AbstractNode')),
+                ('external_account', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compatb3_node_settings', to='osf.ExternalAccount')),
+                ('owner', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compatb3_node_settings', to='osf.AbstractNode')),
             ],
             options={
                 'abstract': False,
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('_id', models.CharField(db_index=True, default=osf.models.base.generate_object_id, max_length=24, unique=True)),
                 ('deleted', models.BooleanField(default=False)),
                 ('oauth_grants', osf.utils.datetime_aware_jsonfield.DateTimeAwareJSONField(blank=True, default=dict, encoder=osf.utils.datetime_aware_jsonfield.DateTimeAwareJSONEncoder)),
-                ('owner', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compat_user_settings', to=settings.AUTH_USER_MODEL)),
+                ('owner', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='addons_s3compatb3_user_settings', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'abstract': False,
@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='nodesettings',
             name='user_settings',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='addons_s3compat.UserSettings'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='addons_s3compatb3.UserSettings'),
         ),
         migrations.AddField(
             model_name='nodesettings',
