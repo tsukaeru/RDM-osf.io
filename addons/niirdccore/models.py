@@ -76,6 +76,17 @@ class NodeSettings(BaseNodeSettings):
     # DMP情報モニタリング
     @receiver(post_save, sender=Node)
     def node_monitoring(sender, instance, created, **kwargs):
+        if SHORT_NAME not in ws_settings.ADDONS_AVAILABLE_DICT:
+            return
+
+        sender_node = instance.get_addon(name=SHORT_NAME)
+        if sender_node == None:
+            return
+
+        sender_dmp_id = sender_node.get_dmp_id()
+        if sender_dmp_id == None:
+            return
+
         # DMP更新タスク発行
         NodeSettings.dmp_update(node=instance)
 
@@ -140,7 +151,7 @@ class NodeSettings(BaseNodeSettings):
 
         # DMP更新リクエスト
         dmr_url = settings.DMR_URL + '/v1/dmp/' + str(self.dmp_id)
-        access_token = settings.DMR_ACCESS_TOKEN
+        access_token = node.get_addon(SHORT_NAME).get_dmr_api_key()
         headers = {'Authorization': 'Bearer ' + access_token}
         requests.put(dmr_url, headers=headers, json=request_body)
 
