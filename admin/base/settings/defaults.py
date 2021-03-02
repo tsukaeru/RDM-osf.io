@@ -165,6 +165,7 @@ MIGRATION_MODULES = {
     'addons_azureblobstorage': None,
     'addons_weko': None,
     'addons_s3compat': None,
+    'addons_s3compatb3': None,
     'addons_nextcloud': None,
     'addons_gitlab': None,
     'addons_onedrive': None,
