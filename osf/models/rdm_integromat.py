@@ -10,4 +10,3 @@ class RdmWorkflows(models.Model):
 class RdmWebMeetingApps(models.Model):
     id = models.AutoField(primary_key=True)
     app_name = models.CharField(max_length=128, unique=True)
-

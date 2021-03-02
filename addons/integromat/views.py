@@ -262,21 +262,20 @@ def integromat_create_meeting_info(**kwargs):
         logger.error('web app name is invalid.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-
     with transaction.atomic():
 
         meetingInfo = models.AllMeetingInformation(
-            subject = subject,
-            organizer = organizer,
-            start_datetime = startDatetime,
-            end_datetime = endDatetime,
-            location = location,
-            content = content,
-            join_url = joinUrl,
-            meetingid = meetingId,
-            app_id = webApp.id,
-            node_settings_id = node.id,
-            )
+            subject=subject,
+            organizer=organizer,
+            start_datetime=startDatetime,
+            end_datetime=endDatetime,
+            location=location,
+            content=content,
+            join_url=joinUrl,
+            meetingid=meetingId,
+            app_id=webApp.id,
+            node_settings_id=node.id,
+        )
         meetingInfo.save()
 
         attendeeIds = []
@@ -340,8 +339,8 @@ def integromat_delete_meeting_info(**kwargs):
     meetingIds = request.get_json().get('microsoftTeamsMeetingIds')
     logger.info('meetingIds:' + str(meetingIds))
     for meetingId in meetingIds:
-         qsDeleteMeeting = models.AllMeetingInformation.objects.get(meetingid=meetingId)
-         qsDeleteMeeting.delete()
+        qsDeleteMeeting = models.AllMeetingInformation.objects.get(meetingid=meetingId)
+        qsDeleteMeeting.delete()
 
     return {}
 
@@ -374,12 +373,11 @@ def integromat_add_microsoft_teams_user(**kwargs):
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     microsoftTeamsUserInfo = models.Attendees(
-        user_guid = userGuid,
-        microsoft_teams_user_object = microsoftTeamsUserObject,
-        microsoft_teams_mail = microsoftTeamsMail,
-        node_settings = nodeSettings,
-
-        )
+        user_guid=userGuid,
+        microsoft_teams_user_object=microsoftTeamsUserObject,
+        microsoft_teams_mail=microsoftTeamsMail,
+        node_settings=nodeSettings,
+    )
 
     microsoftTeamsUserInfo.save()
 
@@ -396,7 +394,7 @@ def integromat_delete_microsoft_teams_user(**kwargs):
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
     nodeNum = nodeSettings.id
-    qsMicrosoftTeamsUserInfo =  models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid)
+    qsMicrosoftTeamsUserInfo = models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid)
 
     qsMicrosoftTeamsUserInfo.delete()
 
@@ -489,10 +487,10 @@ def integromat_info_msg(**kwargs):
     node = models.NodeSettings.objects.get(_id=nodeId)
 
     wem = models.workflowExecutionMessages(
-        integromat_msg = msg,
-        timestamp = timestamp,
-        node_settings_id = node.id,
-        )
+        integromat_msg=msg,
+        timestamp=timestamp,
+        node_settings_id=node.id,
+    )
     wem.save()
 
     logger.info('integromat_info_msg end')
@@ -510,10 +508,10 @@ def integromat_error_msg(**kwargs):
     node = models.NodeSettings.objects.get(_id=nodeId)
 
     wem = models.workflowExecutionMessages(
-        integromat_msg = msg,
-        timestamp = timestamp,
-        node_settings_id = node.id,
-        )
+        integromat_msg=msg,
+        timestamp=timestamp,
+        node_settings_id=node.id,
+    )
     wem.save()
 
     logger.info('integromat_error_msg end')
