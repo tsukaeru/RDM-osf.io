@@ -121,7 +121,7 @@ class TestConnectionView(InstitutionalStorageBaseView, View):
                 data.get('s3compatinstitutions_bucket'),
             )
         elif provider_short_name == 'ociinstitutions':
-            result = utils.test_oci_connection(
+            result = utils.test_s3compatb3_connection(
                 data.get('ociinstitutions_endpoint_url'),
                 data.get('ociinstitutions_access_key'),
                 data.get('ociinstitutions_secret_key'),
