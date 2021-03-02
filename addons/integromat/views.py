@@ -215,7 +215,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'microsoft_teams_meetings': microsoftTeamsMeetingsJson,
                          'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
                          'workflows': workflowsJson,
-                         'app_name_microsoft_teams' : settings.MICROSOFT_TEAMS,
+                         'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
                          'organizer_id': organizerId
                      }}}
 
