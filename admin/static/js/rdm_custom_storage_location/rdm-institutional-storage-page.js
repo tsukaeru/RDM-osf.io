@@ -15,8 +15,8 @@ var no_storage_name_providers = ['osfstorage'];
 var preload_accounts_type1 = ['dropboxbusiness'];
 // type2: get from admin/rdm_custom_storage_location/views.py
 var preload_accounts_type2 = ['nextcloudinstitutions',
-                  'ociinstitutions'
-			      's3compatinstitutions']
+                'ociinstitutions',
+                's3compatinstitutions']
 
 function preload(provider, callback) {
     if (preload_accounts_type1.indexOf(provider) >= 0) {
