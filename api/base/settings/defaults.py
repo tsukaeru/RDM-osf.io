@@ -121,7 +121,6 @@ INSTALLED_APPS = (
     'addons.dropboxbusiness',
     'addons.nextcloudinstitutions',
     'addons.s3compatinstitutions',
-    'addons.integromat',
 )
 
 # local development using https
@@ -286,7 +285,7 @@ VARNISH_SERVERS = osf_settings.VARNISH_SERVERS
 ESI_MEDIA_TYPES = osf_settings.ESI_MEDIA_TYPES
 
 ADDONS_FOLDER_CONFIGURABLE = ['box', 'dropbox', 's3', 'googledrive', 'figshare', 'owncloud', 'onedrive', 'swift', 'azureblobstorage', 'weko', 'iqbrims']
-ADDONS_OAUTH = ADDONS_FOLDER_CONFIGURABLE + ['dataverse', 'github', 'bitbucket', 'gitlab', 'mendeley', 'zotero', 'forward', 'integromat']
+ADDONS_OAUTH = ADDONS_FOLDER_CONFIGURABLE + ['dataverse', 'github', 'bitbucket', 'gitlab', 'mendeley', 'zotero', 'forward']
 
 BYPASS_THROTTLE_TOKEN = 'test-token'
 
@@ -348,6 +347,9 @@ ADDONS_OAUTH.append('s3compat')
 INSTALLED_APPS += ('addons.nextcloud',)
 ADDONS_FOLDER_CONFIGURABLE.append('nextcloud')
 ADDONS_OAUTH.append('nextcloud')
+INSTALLED_APPS += ('addons.integromat',)
+ADDONS_FOLDER_CONFIGURABLE.append('integromat')
+ADDONS_OAUTH.append('integromat')
 
 TST_COMMAND_DELIMITER = ' '
 # RSA key generation settings

@@ -111,17 +111,39 @@ class NodeSettings(BaseOAuthNodeSettings):
         self.deauthorize(log=False)
         super(NodeSettings, self).delete(save=save)
 
-    def serialize_waterbutler_settings(self, *args, **kwargs):
-        # required by superclass, not actually used
-        pass
+    def serialize_waterbutler_credentials(self):
+        if not self.has_auth:
+            raise exceptions.AddonError('Cannot serialize credentials for {} addon'.format(FULL_NAME))
+        return {
+            'host': settings.HOST,
+            'access_key': self.external_account.oauth_key,
+            'secret_key': self.external_account.oauth_secret,
+        }
 
-    def serialize_waterbutler_credentials(self, *args, **kwargs):
-        # required by superclass, not actually used
-        pass
+    def serialize_waterbutler_settings(self):
+        if not self.folder_id:
+            raise exceptions.AddonError('Cannot serialize settings for {} addon'.format(FULL_NAME))
+        return {
+            'bucket': self.folder_id
+        }
 
-    def create_waterbutler_log(self, *args, **kwargs):
-        # required by superclass, not actually used
-        pass
+    def create_waterbutler_log(self, auth, action, metadata):
+        url = self.owner.web_url_for('addon_view_or_download_file', path=metadata['path'], provider=SHORT_NAME)
+
+        self.owner.add_log(
+            '{0}_{1}'.format(SHORT_NAME, action),
+            auth=auth,
+            params={
+                'project': self.owner.parent_id,
+                'node': self.owner._id,
+                'path': metadata['materialized'],
+                'bucket': self.folder_id,
+                'urls': {
+                    'view': url,
+                    'download': url + '?action=download'
+                }
+            },
+        )
 
     def after_delete(self, user):
         self.deauthorize(Auth(user=user), log=True)
