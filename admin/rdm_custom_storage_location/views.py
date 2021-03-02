@@ -53,6 +53,10 @@ class InstitutionalStorageView(InstitutionalStorageBaseView, TemplateView):
         kwargs['institution'] = institution
         kwargs['region'] = region
         kwargs['providers'] = utils.get_providers()
+        provider_names = [provider.short_name for provider in kwargs['providers']]
+        logger.info('--- providers ---:[{}]'.format(provider_names))
+        provider_names = [provider.short_name for provider in osf_settings.ADDONS_AVAILABLE]
+        logger.info('--- providers ---:[{}]'.format(provider_names))
         kwargs['selected_provider_short_name'] = provider_name
         kwargs['have_storage_name'] = utils.have_storage_name(provider_name)
         kwargs['osf_domain'] = osf_settings.DOMAIN
