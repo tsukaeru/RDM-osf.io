@@ -120,11 +120,11 @@ $('#s3compatinstitutions_modal input').on('paste', function(e) {
 });
 
 $('#ociinstitutions_modal input').keyup(function () {
-    validateRequiredFields('s3compatinstitutions');
+    validateRequiredFields('ociinstitutions');
 });
 
 $('#ociinstitutions_modal input').on('paste', function(e) {
-    validateRequiredFields('s3compatinstitutions');
+    validateRequiredFields('ociinstitutions');
 });
 
 $('#swift_modal input').keyup(function () {
