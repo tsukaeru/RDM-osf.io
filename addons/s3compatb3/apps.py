@@ -48,10 +48,6 @@ class S3CompatB3AddonAppConfig(BaseAddonAppConfig):
         NODE_DEAUTHORIZED,
         NODE_DEAUTHORIZED_NO_USER)
 
-    # default value for RdmAddonOption.is_allowed for GRDM Admin
-    is_allowed_default = False
-    for_institutions = True
-
     @property
     def routes(self):
         from . import routes
