@@ -531,7 +531,6 @@ def integromat_get_meetings(**kwargs):
     amiJson = serializers.serialize('json', ami, ensure_ascii=False)
 
     logger.info('ami:' + str(ami))
-    logger.info('ami:' + str(amiJson))
     logger.info('integromat_get_meetings end')
 
     return {'qs': 'try', 'meetings': amiJson}
