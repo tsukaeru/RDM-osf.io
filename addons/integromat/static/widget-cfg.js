@@ -20,7 +20,7 @@ function IntegromatWidget() {
     self.param_1 = ko.observable('');
 
     self.loadConfig = function() {
-        var url = self.baseUrl + 'settings';
+        var url = self.baseUrl + 'get_meetings';
         console.log(logPrefix, 'loading: ', url);
 
         return $.ajax({
@@ -31,7 +31,7 @@ function IntegromatWidget() {
             console.log(logPrefix, 'loaded: ', data);
             self.loading(false);
             self.loadCompleted(true);
-            self.param_1(data.param_1);
+            self.param_1('test');
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);

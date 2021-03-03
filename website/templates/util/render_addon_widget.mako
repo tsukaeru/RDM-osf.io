@@ -241,9 +241,9 @@
                         <div class="text-danger">${_("Error occurred")}</div>
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
-                        <h5 style="padding: 0.2em;">${_("Integromat")}</h5>
+                        <h5 style="padding: 0.2em;">${_("Today's Meeting")}</h5>
                         <div>
-                            <label data-bind="text: param_1_label"></label>
+                            <label></label>
                             <p data-bind="text: param_1"></p>
                         </div>
                         <!-- /ko -->

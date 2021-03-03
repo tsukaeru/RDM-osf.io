@@ -166,6 +166,13 @@ api_routes = {
         ),
 
         Rule(
+            '/integromat/get_meetings',
+            'get',
+            views.integromat_get_meetings,
+            json_renderer,
+        ),
+
+        Rule(
             [
                 '/project/<pid>/integromat/buckets/',
                 '/project/<pid>/node/<nid>/integromat/buckets/',

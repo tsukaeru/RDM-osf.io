@@ -4,6 +4,7 @@ import logging
 import requests
 import json
 import time
+from datetime import date
 from addons.integromat import SHORT_NAME, FULL_NAME
 from django.db import transaction
 from django.db.models import Min
@@ -516,6 +517,22 @@ def integromat_error_msg(**kwargs):
     logger.info('integromat_error_msg end')
 
     return {}
+
+@must_be_valid_project
+@must_have_addon(SHORT_NAME, 'node')
+def integromat_get_meetings(**kwargs):
+
+    logger.info('integromat_get_meetings start')
+
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+
+    ami = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today())
+
+    logger.info('ami:' + str(ami))
+    logger.info('integromat_get_meetings end')
+
+    return {'qs': ami}
 
 @must_be_addon_authorizer(SHORT_NAME)
 @must_have_addon('integromat', 'node')
