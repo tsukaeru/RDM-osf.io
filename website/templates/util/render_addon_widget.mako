@@ -232,6 +232,24 @@
                     </div>
                 % endif
 
+                % if addon_name == 'integromat':
+                    <div id="integromat-content" class="scripted">
+                        <!-- ko if: loading -->
+                        <div>${_("Loading")}</div>
+                        <!-- /ko -->
+                        <!-- ko if: loadFailed -->
+                        <div class="text-danger">${_("Error occurred")}</div>
+                        <!-- /ko -->
+                        <!-- ko if: loadCompleted -->
+                        <h5 style="padding: 0.2em;">${_("Integromat")}</h5>
+                        <div>
+                            <label data-bind="text: param_1_label"></label>
+                            <p data-bind="text: param_1"></p>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                % endif
+
                 </div>
             % else:
                 <div class='addon-config-error p-sm'>

@@ -14,7 +14,7 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
     label = 'addons_integromat'
     short_name = 'integromat'
     full_name = 'Integromat'
-    views = ['page']
+    views = ['widget', 'page']
     categories = ['web integration']
     owners = ['user', 'node']
     configs = ['accounts', 'node']
