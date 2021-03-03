@@ -531,7 +531,7 @@ def integromat_get_meetings(**kwargs):
 
     for qs in ami:
         logger.info('qs:' + str(qs))
-        logger.info('qs:' + str(dict(qs)))
+        logger.info('qs:' + str(dir(qs)))
 
     logger.info('ami:' + str(ami))
     logger.info('integromat_get_meetings end')
