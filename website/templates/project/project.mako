@@ -474,7 +474,7 @@
             <!-- Show widgets in left column if present -->
             % for addon in addons_enabled:
                 % if addons[addon]['has_widget']:
-                    %if addon != 'wiki' and addon != 'iqbrims': ## We already show the wiki widget at the top
+                    %if addon != 'wiki' and addon != 'iqbrims' and addon != 'integromat': ## We already show the wiki widget at the top
                         ${ render_addon_widget.render_addon_widget(addon, addons_widget_data[addon]) }
                     %endif
                 % endif
@@ -487,6 +487,10 @@
     </div>
 
     <div class="col-sm-12 col-md-6 osf-dash-col">
+        % if 'integromat' in addons_enabled and addons['integromat']['has_widget']:
+            ${ render_addon_widget.render_addon_widget('integromat', addons_widget_data['integromat']) }
+        % endif
+
         % if addons:
             <!-- Show IQB-RIMS widgets in right column if present -->
             % for addon in addons_enabled:
