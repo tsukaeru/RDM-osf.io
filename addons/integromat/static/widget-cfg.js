@@ -31,7 +31,7 @@ function IntegromatWidget() {
             console.log(logPrefix, 'loaded: ', data);
             self.loading(false);
             self.loadCompleted(true);
-            self.param_1(data.meetings);
+            self.param_1(data);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
