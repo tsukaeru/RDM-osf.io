@@ -528,15 +528,13 @@ def integromat_get_meetings(**kwargs):
     addon = node.get_addon(SHORT_NAME)
 
     ami = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
-
-    for qs in ami:
-        logger.info('qs:' + str(qs))
-        logger.info('qs:' + str(dir(qs)))
+    amiJson = serializers.serialize('json', ami, ensure_ascii=False)
 
     logger.info('ami:' + str(ami))
+    logger.info('ami:' + str(amiJson))
     logger.info('integromat_get_meetings end')
 
-    return {'qs': 'test'}
+    return {'qs': 'try', 'meetings': amiJson}
 
 @must_be_addon_authorizer(SHORT_NAME)
 @must_have_addon('integromat', 'node')
