@@ -533,7 +533,7 @@ def integromat_get_meetings(**kwargs):
     logger.info('ami:' + str(ami))
     logger.info('integromat_get_meetings end')
 
-    return {'qs': 'try', 'meetings': amiJson}
+    return amiJson
 
 @must_be_addon_authorizer(SHORT_NAME)
 @must_have_addon('integromat', 'node')
