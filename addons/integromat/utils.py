@@ -2,8 +2,6 @@
 
 from addons.integromat.apps import IntegromatAddonConfig
 
-logger = logging.getLogger(__name__)
-
 def serialize_integromat_widget(node):
     iqbrims = node.get_addon('integromat')
     ret = {
