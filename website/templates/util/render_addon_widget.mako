@@ -244,7 +244,7 @@
                         <h5 style="padding: 0.2em;">${_("Today's Meeting")}</h5>
                         <table>
                             <tbody data-bind="foreach: param_1">
-                                <tr><td data-bind="text: fields.subject"></td></tr>
+                            <tr><td data-bind="text: fields.subject"></td><td data-bind="text: fields.start_datetime"></td><td><button class='fa fa-play' data-bind="click: startMeeting.bind($data, fields.join_url)"></button></td></tr>
                         </table>
                         <!-- /ko -->
                     </div>

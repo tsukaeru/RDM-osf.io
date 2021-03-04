@@ -47,6 +47,10 @@ function IntegromatWidget() {
         });
     };
 
+  self.startMeeting = function(url) {
+    window.open(url, '_blank');
+  };
+
 }
 
 var w = new IntegromatWidget();
