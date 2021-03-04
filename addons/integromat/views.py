@@ -202,7 +202,7 @@ def integromat_get_config_ember(auth, **kwargs):
     appMicrosoftTeams = RdmWebMeetingApps.objects.get(app_name='MicrosoftTeams')
 
     workflows = RdmWorkflows.objects.all()
-    microsoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id)
+    microsoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id).order_by('start_datetime').reverse()
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
 
     microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
