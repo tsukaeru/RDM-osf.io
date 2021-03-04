@@ -245,7 +245,7 @@
                         <h6 style="padding: 0.2em;">${_("Today's Meeting")}</h6>
                         <table class='table'>
                             <tbody data-bind="foreach: meetings">
-                            <tr><td data-bind="text: fields.subject"></td><td data-bind="date: fields.start_datetime, dateFormat: 'YYYY-MM-DD HH:mm'"></td><td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td></tr>
+                            <tr><td data-bind="text: fields.subject"></td><td data-bind="text: moment(fields.start_datetime).format('YYYY-MM-DD HH:mm')"></td><td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td></tr>
                             </tbody>
                         </table>
                         <!-- /ko -->
