@@ -81,6 +81,7 @@ var entry = {
         'lodash.get',
         'js-cookie',
         'URIjs',
+        'knockout-date-bindings',
         // Common internal modules
         'js/fangorn',
         'js/citations',
