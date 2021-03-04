@@ -196,7 +196,7 @@ def integromat_get_config_ember(auth, **kwargs):
     userGuidSerializer = serializers.serialize('json', qsUserGuid, ensure_ascii=False)
     userGuidJson = json.loads(userGuidSerializer)
     userGuid = userGuidJson[0]['fields']['_id']
-    organizer = models.Attendees.objects.get(user_guid=userGuid)
+    organizer = models.Attendees.objects.get(node_settings_id=addon.id, user_guid=userGuid)
     organizerId = organizer.microsoft_teams_user_object
 
     appMicrosoftTeams = RdmWebMeetingApps.objects.get(app_name='MicrosoftTeams')
