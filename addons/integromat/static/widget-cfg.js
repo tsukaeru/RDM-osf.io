@@ -17,7 +17,7 @@ function IntegromatWidget() {
     self.loading = ko.observable(true);
     self.loadFailed = ko.observable(false);
     self.loadCompleted = ko.observable(false);
-    self.param_1 = ko.observable('');
+    self.meetings = ko.observable('');
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
@@ -33,7 +33,7 @@ function IntegromatWidget() {
             self.loadCompleted(true);
             var meetingsJson = JSON.stringify(data);
             var meetings = JSON.parse(meetingsJson)
-            self.param_1(meetings);
+            self.meetings(meetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
@@ -47,9 +47,9 @@ function IntegromatWidget() {
         });
     };
 
-  self.startMeeting = function(url) {
-    window.open(url, '_blank');
-  };
+    self.startMeeting = function(url) {
+        window.open(url, '_blank');
+    };
 
 }
 

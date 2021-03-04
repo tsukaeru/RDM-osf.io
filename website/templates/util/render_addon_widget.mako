@@ -241,10 +241,12 @@
                         <div class="text-danger">${_("Error occurred")}</div>
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
-                        <h5 style="padding: 0.2em;">${_("Today's Meeting")}</h5>
-                        <table>
+                        <h5 style="padding: 0.2em;">${_("The Meeting App Information")}</h5>
+                        <h6 style="padding: 0.2em;">${_("Today's Meeting")}</h6>
+                        <table class='table'>
                             <tbody data-bind="foreach: param_1">
                             <tr><td data-bind="text: fields.subject"></td><td data-bind="text: fields.start_datetime"></td><td><button class='fa fa-play' data-bind="click: startMeeting.bind($data, fields.join_url)"></button></td></tr>
+                            </tbody>
                         </table>
                         <!-- /ko -->
                     </div>
