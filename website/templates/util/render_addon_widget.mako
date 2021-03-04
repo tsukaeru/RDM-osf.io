@@ -242,10 +242,10 @@
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
                         <h5 style="padding: 0.2em;">${_("Today's Meeting")}</h5>
-                        <table>
-                            <tbody data-bind="foreach: param_1">
-                                <tr><td data-bind="text: fields"></td></tr>
-                        </table>
+                        <div>
+                            <label></label>
+                            <p data-bind="text: param_1"></p>
+                        </div>
                         <!-- /ko -->
                     </div>
                 % endif
