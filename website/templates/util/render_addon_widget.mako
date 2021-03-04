@@ -244,7 +244,7 @@
                         <h5 style="padding: 0.2em;">${_("Today's Meeting")}</h5>
                         <table>
                             <tbody data-bind="foreach: param_1">
-                                <tr><td data-bind="text: fields"></td></tr>
+                                <tr><td data-bind="text: fields.subject"></td></tr>
                         </table>
                         <!-- /ko -->
                     </div>
