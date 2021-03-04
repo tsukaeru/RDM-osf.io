@@ -31,7 +31,8 @@ function IntegromatWidget() {
             console.log(logPrefix, 'loaded: ', data);
             self.loading(false);
             self.loadCompleted(true);
-            var meetings = JSON.stringify(data);
+            var meetingsJson = JSON.stringify(data);
+            var meetings = JSON.parse(meetingsJson)
             self.param_1(meetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
