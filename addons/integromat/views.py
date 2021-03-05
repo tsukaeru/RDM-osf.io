@@ -196,8 +196,14 @@ def integromat_get_config_ember(auth, **kwargs):
     userGuidSerializer = serializers.serialize('json', qsUserGuid, ensure_ascii=False)
     userGuidJson = json.loads(userGuidSerializer)
     userGuid = userGuidJson[0]['fields']['_id']
-    organizer = models.Attendees.objects.get(node_settings_id=addon.id, user_guid=userGuid)
-    organizerId = organizer.microsoft_teams_user_object
+    microsoftTeamsOrganizerId = ''
+
+    try:
+        organizer = models.Attendees.objects.get(node_settings_id=addon.id, user_guid=userGuid)
+        microsoftTeamsOrganizerId = organizer.microsoft_teams_user_object
+    except ObjectDoesNotExist:
+        logger.info('object des not exist1')
+        pass
 
     appMicrosoftTeams = RdmWebMeetingApps.objects.get(app_name='MicrosoftTeams')
 
@@ -217,7 +223,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
                          'workflows': workflowsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
-                         'organizer_id': organizerId
+                         'microsoft_teams_organizer_id': microsoftTeamsOrganizerId
                      }}}
 
 #api for Integromat action
@@ -533,7 +539,8 @@ def integromat_get_meetings(**kwargs):
     logger.info('ami:' + str(ami))
     logger.info('integromat_get_meetings end')
 
-    return amiDict
+    return {'todaysMeetings': amiDict,
+            }
 
 @must_be_addon_authorizer(SHORT_NAME)
 @must_have_addon('integromat', 'node')

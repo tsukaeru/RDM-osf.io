@@ -17,7 +17,8 @@ function IntegromatWidget() {
     self.loading = ko.observable(true);
     self.loadFailed = ko.observable(false);
     self.loadCompleted = ko.observable(false);
-    self.meetings = ko.observable('');
+    self.todaysMeetings = ko.observable('');
+    self.todaysMeetings = ko.observable('No today\'s meetings.');
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
@@ -31,9 +32,7 @@ function IntegromatWidget() {
             console.log(logPrefix, 'loaded: ', data);
             self.loading(false);
             self.loadCompleted(true);
-            var meetingsJson = JSON.stringify(data);
-            var meetings = JSON.parse(meetingsJson)
-            self.meetings(meetings);
+            self.todaysMeetings(data.todaysMeetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
