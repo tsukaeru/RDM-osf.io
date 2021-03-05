@@ -242,12 +242,19 @@
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
                         <h5 style="padding: 0.2em;">${_("The Meeting App Information")}</h5>
+                        <h6 data-bind="ifnot: todaysMeetings().length" style="padding: 0.2em;">${_("No Today's Meeting")}</h6>
+                        <div data-bind="if: todaysMeetings().length">
                         <h6 style="padding: 0.2em;">${_("Today's Meeting")}</h6>
                         <table class='table'>
                             <tbody data-bind="foreach: todaysMeetings">
-                            <tr><td data-bind="text: fields.subject"></td><td data-bind="date: fields.start_datetime, dateFormat: 'YYYY-MM-DD HH:mm'"></td><td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td></tr>
+                                <tr>
+                                    <td data-bind="text: fields.subject"></td>
+                                    <td data-bind="date: fields.start_datetime, dateFormat: 'YYYY-MM-DD HH:mm'"></td>
+                                    <td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
+                                </tr>
                             </tbody>
                         </table>
+                        </div>
                         <!-- /ko -->
                     </div>
                 % endif
