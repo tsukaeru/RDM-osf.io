@@ -4,7 +4,7 @@ import logging
 import requests
 import json
 import time
-from datetime import date
+from datetime import date, datetime
 from addons.integromat import SHORT_NAME, FULL_NAME
 from django.db import transaction
 from django.db.models import Min
@@ -209,8 +209,8 @@ def integromat_get_config_ember(auth, **kwargs):
 
     workflows = RdmWorkflows.objects.all()
     microsoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id).order_by('start_datetime').reverse()
-    upcomingMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__gte=date.today()).order_by('start_datetime').reverse()
-    previousMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__lt=date.today()).order_by('start_datetime').reverse()
+    upcomingMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__gte=datetime.datetime.today()).order_by('start_datetime')
+    previousMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__lt=datetime.datetime.today()).order_by('start_datetime').reverse()
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
 
     microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
