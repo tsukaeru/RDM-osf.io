@@ -242,7 +242,7 @@
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
                         <h5>${_("Application Information")}</h5>
-                        <p data-bind="ifnot: todaysMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Today's Meeting")}</p>
+                        <h5 data-bind="ifnot: todaysMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Today's Meeting")}</h5>
                         <div style="padding-left: 1.0em;" data-bind="if: todaysMeetings().length">
                             <h5>${_("Today's Meeting")}</h6>
                             <table class='table'>
