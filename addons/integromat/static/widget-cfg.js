@@ -18,7 +18,7 @@ function IntegromatWidget() {
     self.loadFailed = ko.observable(false);
     self.loadCompleted = ko.observable(false);
     self.todaysMeetings = ko.observable('');
-    self.todaysMeetings = ko.observable('No today\'s meetings.');
+    self.noTodaysMeetings = ko.observable('No today\'s meetings.');
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
