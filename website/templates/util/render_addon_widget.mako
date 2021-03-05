@@ -241,9 +241,9 @@
                         <div class="text-danger">${_("Error occurred")}</div>
                         <!-- /ko -->
                         <!-- ko if: loadCompleted -->
-                        <h5 style="padding: 0.2em;">${_("Application Information")}</h5>
-                        <h5 data-bind="ifnot: todaysMeetings().length" style="padding: 1.0em;">${_("No Today's Meeting")}</h6>
-                        <div  style="padding: 1.0em;" data-bind="if: todaysMeetings().length">
+                        <h5>${_("Application Information")}</h5>
+                        <h5 data-bind="ifnot: todaysMeetings().length" style="padding-top: 0.2em;">${_("No Today's Meeting")}</h6>
+                        <div style="padding-left: 1.0em;" data-bind="if: todaysMeetings().length">
                             <h5>${_("Today's Meeting")}</h6>
                             <table class='table'>
                                 <tbody data-bind="foreach: todaysMeetings">
