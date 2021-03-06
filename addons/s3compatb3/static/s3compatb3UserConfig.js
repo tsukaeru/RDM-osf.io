@@ -27,9 +27,9 @@ function ViewModel(url) {
     self.properName = 'SOracle Cloud Infrastructure Object Storage';
     self.availableServices = ko.observableArray(s3compatb3Settings['availableServices']);
     self.selectedService = ko.observable(s3compatb3Settings['availableServices'][0]);
-    self.hostTemplate = ko.observable(s3compatb3Settings['hostTemplate'];
-    self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex'];
-    self.regionIndex = ko.observable(s3compatb3Settings['regionIndex'];
+    self.hostTemplate = ko.observable(s3compatb3Settings['hostTemplate']);
+    self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex']);
+    self.regionIndex = ko.observable(s3compatb3Settings['regionIndex']);
     self.namespace = ko.observable();
     self.region = ko.observable();
     //self.host = ko.observable(s3compatb3Settings['hostTemplate'];

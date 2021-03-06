@@ -21,12 +21,12 @@ var s3compatb3b3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         // Non-OAuth fields
         self.availableServices = ko.observableArray(s3compatb3b3Settings['availableServices']);
         self.selectedService = ko.observable(s3compatb3b3Settings['availableServices'][0]);
-        self.hostTemplate = ko.observable(s3compatb3Settings['hostTemplate'];
-        self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex'];
-        self.regionIndex = ko.observable(s3compatb3Settings['regionIndex'];
+        self.hostTemplate = ko.observable(s3compatb3Settings['hostTemplate']);
+        self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex']);
+        self.regionIndex = ko.observable(s3compatb3Settings['regionIndex']);
         self.namespace = ko.observable('');
         self.region = ko.observable('');
-        //self.host = ko.observable(s3compatb3Settings['hostTemplate'];
+        // self.host = ko.observable(s3compatb3Settings['hostTemplate'];
         self.host = ko.computed(function() {
             let dc = this.hostTemplate().split('.');
             dc[this.namespaceIndex()] = this.namespace();
