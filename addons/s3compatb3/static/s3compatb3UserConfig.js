@@ -34,7 +34,7 @@ function ViewModel(url) {
     self.region = ko.observable();
     //self.host = ko.observable(s3compatb3Settings['hostTemplate'];
     self.host = ko.computed(function() {
-        let dc = this.hostTemplate().split('.');
+        var dc = this.hostTemplate().split('.');
         dc[this.namespaceIndex()] = this.namespace();
         dc[this.regionIndex()] = this.region();
         return dc.join('.');
