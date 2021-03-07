@@ -12,7 +12,7 @@ var s3compatb3b3Settings = require('json-loader!./settings.json');
 
 var OauthAddonFolderPicker = require('js/oauthAddonNodeConfig')._OauthAddonNodeConfigViewModel;
 
-var s3compatb3b3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
+var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
     constructor: function(addonName, url, selector, folderPicker, opts, tbOpts) {
         var self = this;
         // TODO: [OSF-7069]
