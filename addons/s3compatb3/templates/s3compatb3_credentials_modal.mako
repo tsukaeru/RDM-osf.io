@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="s3compatb3Addon">${_("host")}</label>
-                                https://<input class="form-control" data-bind="value: host" name="host" 'disabled' />
+                                https://<span data-bind="text: host"></span>
                             </div>
                             <div class="form-group">
                                 <label for="s3compatb3Addon">${_("Access Key")}</label>

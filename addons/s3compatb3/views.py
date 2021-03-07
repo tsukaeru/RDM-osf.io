@@ -21,7 +21,7 @@ from admin.rdm_addons.decorators import must_be_rdm_addons_allowed
 
 
 SHORT_NAME = 's3compatb3'
-FULL_NAME = 'S3 Compatible Storage'
+FULL_NAME = 'Oracle Cloud Infrastructure Object Storage'
 
 s3compatb3_account_list = generic_views.account_list(
     SHORT_NAME,
