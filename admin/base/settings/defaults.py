@@ -131,7 +131,6 @@ INSTALLED_APPS = (
     'addons.azureblobstorage',
     'addons.weko',
     'addons.s3compat',
-    'addons.s3compatb3',
     'addons.nextcloud',
     'addons.gitlab',
     'addons.onedrive',
@@ -139,7 +138,6 @@ INSTALLED_APPS = (
     'addons.dropboxbusiness',
     'addons.nextcloudinstitutions',
     'addons.s3compatinstitutions',
-    'addons.ociinstitutions',
 )
 
 MIGRATION_MODULES = {
@@ -159,13 +157,11 @@ MIGRATION_MODULES = {
     'addons_mendeley': None,
     'addons_owncloud': None,
     'addons_s3': None,
-    'addons_s3b3': None,
     'addons_zotero': None,
     'addons_swift': None,
     'addons_azureblobstorage': None,
     'addons_weko': None,
     'addons_s3compat': None,
-    'addons_s3compatb3': None,
     'addons_nextcloud': None,
     'addons_gitlab': None,
     'addons_onedrive': None,
@@ -173,7 +169,6 @@ MIGRATION_MODULES = {
     'addons_dropboxbusiness': None,
     'addons_nextcloudinstitutions': None,
     'addons_s3compatinstitutions': None,
-    'addons_ociinstitutions': None,
 }
 
 UNSUPPORTED_FORCE_TO_USE_ADDONS = [
@@ -181,7 +176,6 @@ UNSUPPORTED_FORCE_TO_USE_ADDONS = [
     'swift',
     'weko',
     's3compat',
-    's3compatb3',
     'nextcloud',
     'gitlab',
     'onedrive',

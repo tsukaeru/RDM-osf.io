@@ -59,10 +59,6 @@
         "fullName": "S3 Compatible Storage",
         "externalView": false
     },
-    "s3compatb3": {
-        "fullName": "S3 Compatible Storage",
-        "externalView": false
-    },
     "weko": {
         "fullName": "WEKO",
         "externalView": false
@@ -81,10 +77,6 @@
     },
     "s3compatinstitutions": {
         "fullName": "S3 Compatible Storage for Institutions",
-        "externalView": false
-    },
-    "ociinstitutions": {
-        "fullName": "Oracle Cloud Infrastructure for Institutions",
         "externalView": false
     },
     "dropboxbusiness": {
