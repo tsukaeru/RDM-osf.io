@@ -49,11 +49,6 @@ class IntegromatSerializer(StorageAddonSerializer):
         if user_settings:
             logger.info('credentials_are_valid end Ture')
             return True
-        '''
-            for account in user_settings.external_accounts.all():
-                if utils.can_list(settings.HOST,
-                                  account.oauth_key, account.oauth_secret):
-                    return True
-        '''
+
         logger.info('credentials_are_valid False')
         return False
