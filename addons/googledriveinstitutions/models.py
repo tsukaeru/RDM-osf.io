@@ -174,7 +174,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         if self.folder_id is None:
             return ''
         elif self.folder_id == 'root':
-            return 'Full Google Drive'
+            return 'Full Google Drive in G Suite / Google Workspace'
         else:
             return self.folder_name
 

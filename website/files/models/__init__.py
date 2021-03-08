@@ -9,6 +9,7 @@ from website.files.models.dataverse import *  # noqa
 from website.files.models.osfstorage import *  # noqa
 from website.files.models.owncloud import *  # noqa
 from website.files.models.googledrive import *  # noqa
+from website.files.models.googledriveinstitutions import *  # noqa
 from website.files.models.iqbrims import *  # noqa
 from website.files.models.swift import *  # noqa
 from website.files.models.azureblobstorage import *  # noqa
