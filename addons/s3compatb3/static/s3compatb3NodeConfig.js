@@ -169,6 +169,8 @@ var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.message('');
         self.messageClass('text-info');
         self.selectedService(s3compatb3Settings['availableServices'][0]);
+        self.namespace(null);
+        self.region(null);
         self.secretKey(null);
         self.accessKey(null);
     },

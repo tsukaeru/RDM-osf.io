@@ -87,10 +87,10 @@ def s3compatb3_add_user_account(auth, **kwargs):
         return {
             'message': 'All the fields above are required.'
         }, httplib.BAD_REQUEST
-    if host not in [s['host'] for s in settings.AVAILABLE_SERVICES]:
-        return {
-            'message': 'The host is not available.'
-        }, httplib.BAD_REQUEST
+    # if host not in [s['host'] for s in settings.AVAILABLE_SERVICES]:
+    #     return {
+    #         'message': 'The host is not available.'
+    #     }, httplib.BAD_REQUEST
 
     user_info = utils.get_user_info(host, access_key, secret_key)
     if not user_info:

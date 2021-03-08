@@ -3,7 +3,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h3>${_("Connect an S3 Compatible Storage Account")}</h3>
+                <h3>Oracle Cloud Infrastructure: ${_("Connect an S3 Compatible Storage Account")}</h3>
             </div>
 
             <form>
