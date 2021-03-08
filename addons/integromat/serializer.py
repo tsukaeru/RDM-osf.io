@@ -35,6 +35,14 @@ class IntegromatSerializer(StorageAddonSerializer):
 
         return result
 
+    def serialized_folder(self, node_settings):
+        logger.info('serialized_folder start')
+        logger.info('serialized_folder end')
+        return {
+            'path': node_settings.folder_id,
+            'name': node_settings.folder_name
+        }
+
     def credentials_are_valid(self, user_settings, client=None):
         logger.info('credentials_are_valid start')
 
