@@ -4,6 +4,7 @@ import logging
 import requests
 import json
 import time
+from django.utils.timezone import make_aware
 from datetime import date, datetime
 from addons.integromat import SHORT_NAME, FULL_NAME
 from django.db import transaction
@@ -212,6 +213,9 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
     previousMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
+
+    logger.info('datetime.today:' + str(datetime.today()))
+    logger.info('datetime.today aware:' + str(make_aware(datetime.today())))
 
     microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
     workflowsJson = serializers.serialize('json', workflows, ensure_ascii=False)
@@ -540,6 +544,8 @@ def integromat_get_meetings(**kwargs):
     addon = node.get_addon(SHORT_NAME)
 
     ami = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
+    logger.info('today:' + str(date.today()))
+    logger.info('date.today aware:' + str(make_aware(date.today())))
     amiJson = serializers.serialize('json', ami, ensure_ascii=False)
     amiDict = json.loads(amiJson)
     logger.info('ami:' + str(ami))
