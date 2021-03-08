@@ -114,7 +114,7 @@ def s3compatb3_add_user_account(auth, **kwargs):
             oauth_key=access_key,
             oauth_secret=secret_key,
             provider_id='{}\t{}'.format(host, access_key),
-            display_name=user_info.display_name,
+            display_name=access_key,
         )
         account.save()
     except ValidationError:
