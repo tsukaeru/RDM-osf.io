@@ -349,7 +349,7 @@ def integromat_delete_meeting_info(**kwargs):
     nodeId = request.get_json().get('nodeId')
     appName = request.get_json().get('meetingAppName')
     meetingId = request.get_json().get('microsoftTeamsMeetingId')
-    logger.info('meetingIds:' + str(meetingIds))
+    logger.info('meetingId:' + str(meetingId))
 
     qsDeleteMeeting = models.AllMeetingInformation.objects.get(meetingid=meetingId)
     qsDeleteMeeting.delete()
