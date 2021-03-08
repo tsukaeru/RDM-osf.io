@@ -545,7 +545,6 @@ def integromat_get_meetings(**kwargs):
 
     ami = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
     logger.info('today:' + str(date.today()))
-    logger.info('date.today aware:' + str(make_aware(date.today())))
     amiJson = serializers.serialize('json', ami, ensure_ascii=False)
     amiDict = json.loads(amiJson)
     logger.info('ami:' + str(ami))
