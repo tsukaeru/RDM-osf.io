@@ -92,15 +92,15 @@ class Attendees(BaseModel):
 
 class AllMeetingInformation(BaseModel):
     id = models.AutoField(primary_key=True)
-    subject = models.CharField(blank=True, null=True, max_length=128)
-    organizer = models.CharField(max_length=128)
+    subject = models.CharField(blank=True, null=True, max_length=254)
+    organizer = models.CharField(max_length=254)
     attendees = models.ManyToManyField(Attendees, blank=True, null=True)
     start_datetime = models.DateTimeField(blank=True, null=True)
     end_datetime = models.DateTimeField(blank=True, null=True)
-    location = models.CharField(blank=True, null=True, max_length=128)
-    content = models.CharField(blank=True, null=True, max_length=128)
-    join_url = models.CharField(max_length=512)
-    meetingid = models.CharField(max_length=512)
+    location = models.CharField(blank=True, null=True, max_length=254)
+    content = models.TextField(blank=True, null=True, max_length=10000)
+    join_url = models.TextField(max_length=512)
+    meetingid = models.TextField(max_length=512)
     app = models.ForeignKey(RdmWebMeetingApps, to_field='id', on_delete=models.CASCADE)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
