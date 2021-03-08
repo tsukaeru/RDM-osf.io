@@ -3,7 +3,6 @@ import logging
 from addons.base.serializer import StorageAddonSerializer
 from addons.integromat import SHORT_NAME
 from addons.integromat import settings
-#from addons.integromat import utils
 from website.util import web_url_for
 
 logger = logging.getLogger(__name__)
@@ -36,19 +35,11 @@ class IntegromatSerializer(StorageAddonSerializer):
 
         return result
 
-    def serialized_folder(self, node_settings):
-        logger.info('serialized_folder start')
-        logger.info('serialized_folder end')
-        return {
-            'path': node_settings.folder_id,
-            'name': node_settings.folder_name
-        }
-
     def credentials_are_valid(self, user_settings, client=None):
         logger.info('credentials_are_valid start')
 
         if user_settings:
-            logger.info('serialized_folder end1')
+            logger.info('credentials_are_valid end Ture')
             return True
         '''
             for account in user_settings.external_accounts.all():
@@ -56,5 +47,5 @@ class IntegromatSerializer(StorageAddonSerializer):
                                   account.oauth_key, account.oauth_secret):
                     return True
         '''
-        logger.info('serialized_folder end2')
+        logger.info('credentials_are_valid False')
         return False

@@ -13,7 +13,6 @@ from addons.integromat.provider import IntegromatProvider
 from addons.integromat import SHORT_NAME, FULL_NAME
 import addons.integromat.settings as settings
 
-#from addons.integromat.utils import bucket_exists, get_bucket_names
 from framework.auth.core import Auth
 from osf.models.files import File, Folder, BaseFileNode
 
@@ -55,36 +54,6 @@ class NodeSettings(BaseOAuthNodeSettings):
     @property
     def display_name(self):
         return u'{0}: {1}'.format(self.config.full_name, self.folder_id)
-
-    def set_folder(self, folder_id, auth):
-        logger.info('set_folder start')
-
-        self.folder_id = str(folder_id)
-        self.folder_name = folder_id
-        self.save()
-
-        self.nodelogger.log(action='bucket_linked', extra={'bucket': str(folder_id)}, save=True)
-        logger.info('set_folder end')
-
-    def get_folders(self, **kwargs):
-        # This really gets only buckets, not subfolders,
-        # as that's all we want to be linkable on a node.
-        logger.info('get_folder start')
-
-        logger.info('get_folder end')
-        return [
-            {
-                'addon': SHORT_NAME,
-                'kind': 'folder',
-                'id': bucket,
-                'name': bucket,
-                'path': bucket,
-                'urls': {
-                    'folders': ''
-                }
-            }
-            for bucket in buckets
-        ]
 
     @property
     def complete(self):

@@ -12,7 +12,6 @@ from django.db.models import Min
 from addons.base import generic_views
 from framework.auth.decorators import must_be_logged_in
 from addons.integromat.serializer import IntegromatSerializer
-#from addons.integromat.apps import IntegromatSerializer
 from osf.models import ExternalAccount
 from django.core.exceptions import ValidationError
 from framework.exceptions import HTTPError
