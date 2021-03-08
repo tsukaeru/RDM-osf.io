@@ -113,7 +113,7 @@ def s3compatb3_add_user_account(auth, **kwargs):
             provider_name=FULL_NAME,
             oauth_key=access_key,
             oauth_secret=secret_key,
-            provider_id='{}\t{}'.format(host, user_info.id),
+            provider_id='{}\t{}'.format(host, access_key),
             display_name=user_info.display_name,
         )
         account.save()
@@ -121,7 +121,7 @@ def s3compatb3_add_user_account(auth, **kwargs):
         # ... or get the old one
         account = ExternalAccount.objects.get(
             provider=SHORT_NAME,
-            provider_id='{}\t{}'.format(host, user_info.id)
+            provider_id='{}\t{}'.format(host, access_key)
         )
         if account.oauth_key != access_key or account.oauth_secret != secret_key:
             account.oauth_key = access_key
