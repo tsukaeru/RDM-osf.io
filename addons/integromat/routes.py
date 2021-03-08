@@ -33,13 +33,6 @@ api_routes = {
     'rules': [
 
         Rule(
-            '/settings/integromat/',
-            'get',
-            views.integromat_user_config_get,
-            json_renderer,
-        ),
-
-        Rule(
             '/settings/integromat/accounts/',
             'post',
             views.integromat_add_user_account,
@@ -173,25 +166,6 @@ api_routes = {
             'get',
             views.integromat_get_meetings,
             json_renderer,
-        ),
-
-        Rule(
-            [
-                '/project/<pid>/integromat/buckets/',
-                '/project/<pid>/node/<nid>/integromat/buckets/',
-            ],
-            'get',
-            views.integromat_folder_list,
-            json_renderer,
-        ),
-        Rule(
-            [
-                '/project/<pid>/integromat/newbucket/',
-                '/project/<pid>/node/<nid>/integromat/newbucket/',
-            ],
-            'post',
-            views.integromat_create_bucket,
-            json_renderer
         ),
 
         # ember: ここから

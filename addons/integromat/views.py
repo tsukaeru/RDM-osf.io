@@ -55,49 +55,12 @@ integromat_deauthorize_node = generic_views.deauthorize_node(
     SHORT_NAME
 )
 
-def _set_folder(node_addon, folder, auth):
-    logger.info('_set_folder start')
-    folder_id = folder['id']
-    node_addon.set_folder(folder_id, auth=auth)
-    node_addon.save()
-    logger.info('_set_folder end')
-
 integromat_set_config = generic_views.set_config(
     SHORT_NAME,
     FULL_NAME,
     IntegromatSerializer,
-    _set_folder
+    ''
 )
-
-@must_have_addon(SHORT_NAME, 'node')
-@must_be_addon_authorizer(SHORT_NAME)
-def integromat_folder_list(node_addon, **kwargs):
-    logger.info('integromat_folder_list start')
-    """ Returns all the subsequent folders under the folder id passed.
-    """
-    logger.info('integromat_folder_list end')
-    return node_addon.get_folders()
-
-@must_be_logged_in
-def integromat_user_config_get(auth, **kwargs):
-    """View for getting a JSON representation of the logged-in user's
-    Integromat user settings.
-    """
-
-    user_addon = auth.user.get_addon('integromat')
-    user_has_auth = False
-    if user_addon:
-        user_has_auth = user_addon.has_auth
-
-    return {
-        'result': {
-            'userHasAuth': user_has_auth,
-            'urls': {
-                'create': api_url_for('integromat_add_user_account'),
-                'accounts': api_url_for('integromat_account_list'),
-            },
-        },
-    }, http_status.HTTP_200_OK
 
 @must_be_logged_in
 def integromat_add_user_account(auth, **kwargs):
@@ -552,13 +515,3 @@ def integromat_get_meetings(**kwargs):
 
     return {'todaysMeetings': amiDict,
             }
-
-@must_be_addon_authorizer(SHORT_NAME)
-@must_have_addon('integromat', 'node')
-@must_have_permission('write')
-def integromat_create_bucket(auth, node_addon, **kwargs):
-    logger.info('integromat_create_bucket start')
-    bucket_name = request.json.get('bucket_name', '')
-    # bucket_location = request.json.get('bucket_location', '')
-    logger.info('integromat_create_bucket end')
-    return {}

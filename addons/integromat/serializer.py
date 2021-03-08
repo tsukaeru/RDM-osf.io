@@ -15,6 +15,7 @@ class IntegromatSerializer(StorageAddonSerializer):
 
     @property
     def addon_serialized_urls(self):
+        logger.info('addon_serialized_urls start')
         node = self.node_settings.owner
         user_settings = self.node_settings.user_settings or self.user_settings
 
@@ -33,16 +34,24 @@ class IntegromatSerializer(StorageAddonSerializer):
         if user_settings:
             result['owner'] = web_url_for('profile_view_id',
                                           uid=user_settings.owner._id)
+
+        logger.info('addon_serialized_urls end')
+
         return result
 
     def serialized_folder(self, node_settings):
+        logger.info('serialized_folder start')
+        logger.info('serialized_folder end')
         return {
             'path': node_settings.folder_id,
             'name': node_settings.folder_name
         }
 
     def credentials_are_valid(self, user_settings, client=None):
+        logger.info('credentials_are_valid start')
+
         if user_settings:
+            logger.info('serialized_folder end1')
             return True
         '''
             for account in user_settings.external_accounts.all():
@@ -50,4 +59,5 @@ class IntegromatSerializer(StorageAddonSerializer):
                                   account.oauth_key, account.oauth_secret):
                     return True
         '''
+        logger.info('serialized_folder end2')
         return False
