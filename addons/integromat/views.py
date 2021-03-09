@@ -4,6 +4,7 @@ import logging
 import requests
 import json
 import time
+import pytz
 from django.utils.timezone import make_aware
 from datetime import date, datetime
 from addons.integromat import SHORT_NAME, FULL_NAME
@@ -177,7 +178,8 @@ def integromat_get_config_ember(auth, **kwargs):
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
 
     logger.info('datetime.today:' + str(datetime.today()))
-    logger.info('datetime.today aware:' + str(make_aware(datetime.today())))
+    logger.info('datetime.now:' + str(datetime.now()))
+    logger.info('datetime.now aware:' + str(make_aware(datetime.now())))
 
     microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
     workflowsJson = serializers.serialize('json', workflows, ensure_ascii=False)
@@ -505,12 +507,18 @@ def integromat_get_meetings(**kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
-    ami = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
+    
+
+
+    amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
+    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today() +  + datetime.timedelta(days=1)).order_by('start_datetime')
     logger.info('today:' + str(date.today()))
-    amiJson = serializers.serialize('json', ami, ensure_ascii=False)
-    amiDict = json.loads(amiJson)
-    logger.info('ami:' + str(ami))
+    amiTodayJson = serializers.serialize('json', amiToday, ensure_ascii=False)
+    amiTomorrowJson = serializers.serialize('json', amiToday, ensure_ascii=False)
+    amiTodayDict = json.loads(amiTodayJson)
+    amiTomorrowDict = json.loads(amiTomorrowJson)
     logger.info('integromat_get_meetings end')
 
-    return {'todaysMeetings': amiDict,
+    return {'todaysMeetings': amiTodayDict,
+            'tomorrowsMeetings' amiTomorrowDict,
             }

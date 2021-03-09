@@ -244,9 +244,21 @@
                         <h5>${_("Application Information")}</h5>
                         <h5 data-bind="ifnot: todaysMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Today's Meeting")}</h5>
                         <div style="padding-left: 1.0em;" data-bind="if: todaysMeetings().length">
-                        <h5>${_("Today's Meeting")}</h5>(<h5 data-bind="date: fields.start_datetime, dateFormat: 'MM/DD'"></h5>)
+                        <h5>${_("Today's Meeting")}</h5>(<h5 data-bind="text: today"></h5>)
                             <table class='table'>
                                 <tbody data-bind="foreach: todaysMeetings">
+                                    <tr>
+                                        <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style='width: 11%'></td>
+                                        <td data-bind="text: fields.subject tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>
+                                        <td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="padding-left: 1.0em;" data-bind="if: tomorrowsMeetings().length">
+                        <h5>${_("Tomorrow's Meeting")}</h5>(<h5 data-bind="text: tomorrow"></h5>)
+                            <table class='table'>
+                                <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
                                         <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style='width: 11%'></td>
                                         <td data-bind="text: fields.subject tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>

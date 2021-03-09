@@ -5,7 +5,7 @@ var $ = require('jquery');
 var ko = require('knockout');
 var Raven = require('raven-js');
 var osfHelpers = require('js/osfHelpers');
-
+var moment = require('moment');
 var logPrefix = '[integromat] ';
 
 require('./integromat.css');
@@ -18,7 +18,13 @@ function IntegromatWidget() {
     self.loadFailed = ko.observable(false);
     self.loadCompleted = ko.observable(false);
     self.todaysMeetings = ko.observable('');
+    self.tomorrowsMeetings = ko.observable('');
     self.noTodaysMeetings = ko.observable('No today\'s meetings.');
+    self.noTomorrowsMeetings = ko.observable('No tomorrow\'s meetings.');
+
+    var now = new Date();
+    self.today = now.getMonth() + '/' + now.getDate();
+    self.tomorrow = now.getMonth() + '/' + (now.getDate() + 1)
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
@@ -33,6 +39,7 @@ function IntegromatWidget() {
             self.loading(false);
             self.loadCompleted(true);
             self.todaysMeetings(data.todaysMeetings);
+            self.tomorrowsMeetings(data.tomorrowsMeetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
