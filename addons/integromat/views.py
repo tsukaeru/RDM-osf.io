@@ -520,5 +520,5 @@ def integromat_get_meetings(**kwargs):
     logger.info('integromat_get_meetings end')
 
     return {'todaysMeetings': amiTodayDict,
-            'tomorrowsMeetings' amiTomorrowDict,
+            'tomorrowsMeetings': amiTomorrowDict,
             }
