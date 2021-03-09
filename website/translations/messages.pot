@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: rocs-office@nii.ac.jp\n"
-"POT-Creation-Date: 2021-03-09 10:30+0900\n"
-"PO-Revision-Date: 2021-03-09 10:30+0900\n"
+"POT-Creation-Date: 2021-03-09 11:30+0900\n"
+"PO-Revision-Date: 2021-03-09 11:30+0900\n"
 "Last-Translator: Hiroki Ohashi\n"
 "Language-Team: RCOS <rocs-office@nii.ac.jp\n"
 "MIME-Version: 1.0\n"
@@ -1207,70 +1207,74 @@ msgid "Other"
 msgstr ""
 
 #: website/templates/messages.mako:6
-msgid "No license"
+msgid "Web apps"
 msgstr ""
 
 #: website/templates/messages.mako:7
-msgid "Analysis"
+msgid "No license"
 msgstr ""
 
 #: website/templates/messages.mako:8
-msgid "Communication"
+msgid "Analysis"
 msgstr ""
 
 #: website/templates/messages.mako:9
-msgid "Data"
+msgid "Communication"
 msgstr ""
 
 #: website/templates/messages.mako:10
-msgid "Hypothesis"
+msgid "Data"
 msgstr ""
 
 #: website/templates/messages.mako:11
-msgid "Instrumentation"
+msgid "Hypothesis"
 msgstr ""
 
 #: website/templates/messages.mako:12
-msgid "Methods and Measures"
+msgid "Instrumentation"
 msgstr ""
 
 #: website/templates/messages.mako:13
-msgid "Procedure"
+msgid "Methods and Measures"
 msgstr ""
 
 #: website/templates/messages.mako:14
-msgid "Software"
+msgid "Procedure"
 msgstr ""
 
 #: website/templates/messages.mako:15
-msgid "Component has been successfully deleted."
+msgid "Software"
 msgstr ""
 
 #: website/templates/messages.mako:16
-msgid "Project has been successfully deleted."
+msgid "Component has been successfully deleted."
 msgstr ""
 
 #: website/templates/messages.mako:17
+msgid "Project has been successfully deleted."
+msgstr ""
+
+#: website/templates/messages.mako:18
 msgid ""
 "View all information associated with this account, including for private "
 "projects."
 msgstr ""
 
-#: website/templates/messages.mako:18
+#: website/templates/messages.mako:19
 msgid ""
 "View and edit all information associated with this account, including for"
 " private projects."
 msgstr ""
 
-#: website/templates/messages.mako:19
+#: website/templates/messages.mako:20
 msgid "Read your profile data."
 msgstr ""
 
-#: website/templates/messages.mako:20
+#: website/templates/messages.mako:21
 msgid "Read your primary email address."
 msgstr ""
 
-#: website/templates/messages.mako:22
+#: website/templates/messages.mako:23
 msgid ""
 "\n"
 "<div style=\"text-align: center\">\n"
@@ -1282,21 +1286,21 @@ msgid ""
 " Policy</a>. Please read them carefully.</h4>"
 msgstr ""
 
-#: website/templates/messages.mako:26
+#: website/templates/messages.mako:27
 msgid ""
 "<h5><input type=\"checkbox\" id=\"accept\" style=\"margin-right: 5px\">I "
 "have read and agree to these terms.</input></h5>\n"
 "    </div>"
 msgstr ""
 
-#: website/templates/messages.mako:28
+#: website/templates/messages.mako:29
 msgid ""
 "<button class=\"btn btn-primary\" data-dismiss=\"alert\" id=\"continue\" "
 "disabled>Continue</button>\n"
 "</div>"
 msgstr ""
 
-#: website/templates/messages.mako:30
+#: website/templates/messages.mako:31
 msgid "Web Apps"
 msgstr ""
 

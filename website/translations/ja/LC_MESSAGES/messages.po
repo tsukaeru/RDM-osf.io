@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: rocs-office@nii.ac.jp\n"
-"POT-Creation-Date: 2021-03-09 10:30+0900\n"
+"POT-Creation-Date: 2021-03-09 11:30+0900\n"
 "PO-Revision-Date: 2020-11-10 20:10+0900\n"
 "Last-Translator: Hiroki Ohashi\n"
 "Language: ja\n"
@@ -1243,71 +1243,75 @@ msgid "Other"
 msgstr "その他"
 
 #: website/templates/messages.mako:6
+msgid "Web apps"
+msgstr "アプリ"
+
+#: website/templates/messages.mako:7
 msgid "No license"
 msgstr "ライセンスなし"
 
-#: website/templates/messages.mako:7
+#: website/templates/messages.mako:8
 msgid "Analysis"
 msgstr "分析"
 
-#: website/templates/messages.mako:8
+#: website/templates/messages.mako:9
 msgid "Communication"
 msgstr "コミュニケーション"
 
-#: website/templates/messages.mako:9
+#: website/templates/messages.mako:10
 msgid "Data"
 msgstr "データ"
 
-#: website/templates/messages.mako:10
+#: website/templates/messages.mako:11
 msgid "Hypothesis"
 msgstr "仮説"
 
-#: website/templates/messages.mako:11
+#: website/templates/messages.mako:12
 msgid "Instrumentation"
 msgstr "器具"
 
-#: website/templates/messages.mako:12
+#: website/templates/messages.mako:13
 msgid "Methods and Measures"
 msgstr "方法と対策"
 
-#: website/templates/messages.mako:13
+#: website/templates/messages.mako:14
 msgid "Procedure"
 msgstr "手順"
 
-#: website/templates/messages.mako:14
+#: website/templates/messages.mako:15
 msgid "Software"
 msgstr "ソフトウェア"
 
-#: website/templates/messages.mako:15
+#: website/templates/messages.mako:16
 msgid "Component has been successfully deleted."
 msgstr "コンポーネントは正常に削除されました。"
 
-#: website/templates/messages.mako:16
+#: website/templates/messages.mako:17
 msgid "Project has been successfully deleted."
 msgstr "プロジェクトは正常に削除されました。"
 
-#: website/templates/messages.mako:17
+#: website/templates/messages.mako:18
 msgid ""
 "View all information associated with this account, including for private "
 "projects."
 msgstr "プライベートプロジェクトを含む、このアカウントに関連付けられているすべての情報を表示します。"
 
-#: website/templates/messages.mako:18
+#: website/templates/messages.mako:19
 msgid ""
 "View and edit all information associated with this account, including for"
 " private projects."
 msgstr "プライベートプロジェクトを含む、このアカウントに関連付けられているすべての情報を表示および編集します。"
 
-#: website/templates/messages.mako:19
+#: website/templates/messages.mako:20
 msgid "Read your profile data."
 msgstr "プロフィールデータを読込む"
 
-#: website/templates/messages.mako:20
+#: website/templates/messages.mako:21
 msgid "Read your primary email address."
 msgstr "プライマリメールアドレスを読込む"
 
 # ##Please translate carefully with html.
-#: website/templates/messages.mako:22
+#: website/templates/messages.mako:23
 msgid ""
 "\n"
 "<div style=\"text-align: center\">\n"
@@ -1327,7 +1331,7 @@ msgstr ""
 "href=\"https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=32676422\">プライバシーポリシー</a>を更新しました。注意深くお読みください。</h4>"
 
 # ##Please translate carefully with html.
-#: website/templates/messages.mako:26
+#: website/templates/messages.mako:27
 msgid ""
 "<h5><input type=\"checkbox\" id=\"accept\" style=\"margin-right: 5px\">I "
 "have read and agree to these terms.</input></h5>\n"
@@ -1338,7 +1342,7 @@ msgstr ""
 "    </div>"
 
 # ##Please translate carefully with html.
-#: website/templates/messages.mako:28
+#: website/templates/messages.mako:29
 msgid ""
 "<button class=\"btn btn-primary\" data-dismiss=\"alert\" id=\"continue\" "
 "disabled>Continue</button>\n"
@@ -1348,7 +1352,7 @@ msgstr ""
 "disabled>続ける</button>\n"
 "</div>"
 
-#: website/templates/messages.mako:30
+#: website/templates/messages.mako:31
 msgid "Web Apps"
 msgstr "アプリ"
 
