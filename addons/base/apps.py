@@ -73,6 +73,7 @@ class BaseAddonAppConfig(AppConfig):
     owners = []
     categories = []
     has_page_icon = True
+    tab_name = ''
 
     # default value for RdmAddonOption.is_allowed for GRDM Admin
     is_allowed_default = True
@@ -170,7 +171,8 @@ class BaseAddonAppConfig(AppConfig):
             'icon': self.icon_url,
             'has_page': 'page' in self.views,
             'has_widget': 'widget' in self.views,
-            'has_page_icon': self.has_page_icon
+            'has_page_icon': self.has_page_icon,
+            'tab_name': self.tab_name
         }
 
     # Override Appconfig
