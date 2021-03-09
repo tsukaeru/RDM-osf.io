@@ -1,13 +1,13 @@
 # Japanese translations for .
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the  project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: rocs-office@nii.ac.jp\n"
-"POT-Creation-Date: 2020-11-10 20:10+0900\n"
+"POT-Creation-Date: 2021-03-09 10:30+0900\n"
 "PO-Revision-Date: 2020-11-10 20:10+0900\n"
 "Last-Translator: Hiroki Ohashi\n"
 "Language: ja\n"
@@ -66,7 +66,7 @@ msgstr "アカウントキー"
 #: website/templates/project/modal_remove_contributor.mako:122
 #: website/templates/project/nodes_delete.mako:89
 #: website/templates/project/nodes_privacy.mako:104
-#: website/templates/project/project.mako:568
+#: website/templates/project/project.mako:576
 #: website/templates/project/settings.mako:131
 #: website/templates/project/timestamp.mako:71
 #: website/templates/util/render_addon_widget.mako:98
@@ -110,7 +110,7 @@ msgstr "キャンセル"
 #: website/templates/profile/personal_tokens_detail.mako:55
 #: website/templates/project/addon/node_settings_default.mako:74
 #: website/templates/project/addon/user_settings.mako:13
-#: website/templates/project/project.mako:570
+#: website/templates/project/project.mako:578
 #: website/templates/project/settings.mako:338
 msgid "Save"
 msgstr "保存"
@@ -882,7 +882,7 @@ msgstr "重要な情報、リンク、または画像をここに追加して、
 #: addons/wiki/templates/edit.mako:126 addons/wiki/templates/edit.mako:134
 #: website/templates/include/profile/schools.mako:180
 #: website/templates/include/profile/social.mako:184
-#: website/templates/project/project.mako:539
+#: website/templates/project/project.mako:547
 msgid "Edit"
 msgstr "編集"
 
@@ -1212,7 +1212,7 @@ msgid "Reproducibility&nbsp;Project: Cancer Biology"
 msgstr "再現性&nbsp;プロジェクト：がん生物学"
 
 #: website/templates/institution.mako:8
-#: website/templates/project/project_header.mako:200
+#: website/templates/project/project_header.mako:217
 msgid ""
 "<strong>NOTICE: </strong>Forks, registrations, and uploads will be "
 "temporarily disabled while the GakuNin RDM undergoes a hardware upgrade. "
@@ -1348,6 +1348,10 @@ msgstr ""
 "disabled>続ける</button>\n"
 "</div>"
 
+#: website/templates/messages.mako:30
+msgid "Web Apps"
+msgstr "アプリ"
+
 #: website/templates/my_projects.mako:2 website/templates/nav.mako:51
 msgid "My Projects"
 msgstr "マイプロジェクト"
@@ -1417,7 +1421,7 @@ msgstr "プロフィール"
 #: website/templates/profile/personal_tokens_list.mako:4
 #: website/templates/profile/settings.mako:2
 #: website/templates/profile/settings.mako:9
-#: website/templates/project/project_header.mako:80
+#: website/templates/project/project_header.mako:97
 #: website/templates/project/settings.mako:2
 #: website/templates/project/settings.mako:5
 #: website/templates/util/render_node.mako:67
@@ -1723,7 +1727,7 @@ msgstr "説明"
 #: website/templates/project/contributors.mako:8
 #: website/templates/project/contributors.mako:54
 #: website/templates/project/project.mako:163
-#: website/templates/project/project_header.mako:72
+#: website/templates/project/project_header.mako:74
 #: website/templates/search.mako:295 website/templates/search.mako:352
 #: website/templates/search_grdm.mako:438
 #: website/templates/search_grdm.mako:499
@@ -1745,7 +1749,7 @@ msgstr "グループメンバー"
 msgid "Registration"
 msgstr "登録"
 
-#: website/templates/project/project.mako:587
+#: website/templates/project/project.mako:595
 #: website/templates/project/view_file.mako:71
 #: website/templates/search.mako:377 website/templates/search_grdm.mako:472
 #: website/templates/search_grdm.mako:581
@@ -1823,7 +1827,7 @@ msgid "Page"
 msgstr "ページ"
 
 #: website/templates/include/comment_pane_template.mako:3
-#: website/templates/project/project_header.mako:86
+#: website/templates/project/project_header.mako:103
 msgid "Comments"
 msgstr "コメント"
 
@@ -1894,7 +1898,7 @@ msgstr "ポジション"
 #: website/templates/project/modal_remove_contributor.mako:96
 #: website/templates/project/modal_remove_contributor.mako:105
 #: website/templates/project/modal_remove_contributor.mako:114
-#: website/templates/project/project.mako:569
+#: website/templates/project/project.mako:577
 #: website/templates/project/settings.mako:498
 #: website/templates/project/settings.mako:501
 msgid "Remove"
@@ -1928,7 +1932,7 @@ msgstr "職名"
 
 #: website/templates/include/profile/jobs.mako:54
 #: website/templates/include/profile/schools.mako:54
-#: website/templates/project/project.mako:610
+#: website/templates/project/project.mako:618
 msgid "Start date"
 msgstr "開始日"
 
@@ -1948,7 +1952,7 @@ msgstr "年"
 
 #: website/templates/include/profile/jobs.mako:69
 #: website/templates/include/profile/schools.mako:69
-#: website/templates/project/project.mako:613
+#: website/templates/project/project.mako:621
 msgid "End date"
 msgstr "終了日"
 
@@ -3236,83 +3240,83 @@ msgstr "この{preprint_word}は公開されており、検索可能です。"
 msgid "This {preprint_word} is not publicly available or searchable."
 msgstr "この{preprint_word}は一般公開も検索もできません。"
 
-#: website/templates/project/project.mako:461
+#: website/templates/project/project.mako:465
 #: website/templates/project/view_file.mako:52
 msgid "Loading files..."
 msgstr "ファイルをロード中"
 
-#: website/templates/project/project.mako:502
+#: website/templates/project/project.mako:510
 #: website/templates/util/render_addon_widget.mako:70
 msgid "Citation"
 msgstr "引用"
 
 #: website/templates/project/addon/citations_widget.mako:16
-#: website/templates/project/project.mako:514
+#: website/templates/project/project.mako:522
 #: website/templates/util/render_addon_widget.mako:136
 msgid "Loading citations..."
 msgstr "引用をロード中..."
 
-#: website/templates/project/project.mako:519
+#: website/templates/project/project.mako:527
 msgid "Customize"
 msgstr "カスタマイズ"
 
-#: website/templates/project/project.mako:527
+#: website/templates/project/project.mako:535
 msgid "Chicago"
 msgstr "シカゴ"
 
-#: website/templates/project/project.mako:531
+#: website/templates/project/project.mako:539
 msgid "Get more citations"
 msgstr "より多くの引用スタイルを取得"
 
-#: website/templates/project/project.mako:549
+#: website/templates/project/project.mako:557
 #, python-format
 msgid ""
 "<div %(f_x_xl)s>Cite as:</div>                                         "
 "<span %(textCustomCitation)s></span>"
 msgstr "<span %(textCustomCitation)s></span>として<div %(f_x_xl)s>引用：</div>"
 
-#: website/templates/project/project.mako:560
+#: website/templates/project/project.mako:568
 msgid "Enter custom citation"
 msgstr "カスタム引用の入力"
 
-#: website/templates/project/project.mako:601
+#: website/templates/project/project.mako:609
 msgid "Recent Activity"
 msgstr "最近の活動"
 
-#: website/templates/project/project.mako:602
+#: website/templates/project/project.mako:610
 msgid "Clear Filters"
 msgstr "フィルタをクリア"
 
-#: website/templates/project/project.mako:603
+#: website/templates/project/project.mako:611
 msgid "Refresh"
 msgstr "更新"
 
-#: website/templates/project/project.mako:635
+#: website/templates/project/project.mako:643
 msgid "Loading logs..."
 msgstr "ログをロード中..."
 
-#: website/templates/project/project.mako:641
+#: website/templates/project/project.mako:649
 msgid "Download as file"
 msgstr "ファイルをダウンロード"
 
-#: website/templates/project/project.mako:642
+#: website/templates/project/project.mako:650
 #: website/templates/project/timestamp.mako:206
 msgid "Download"
 msgstr "ダウンロード"
 
-#: website/templates/project/project.mako:655
+#: website/templates/project/project.mako:663
 msgid "Components"
 msgstr "コンポーネント"
 
-#: website/templates/project/project.mako:659
+#: website/templates/project/project.mako:667
 msgid "Add Component"
 msgstr "コンポーネントを追加"
 
-#: website/templates/project/project.mako:661
+#: website/templates/project/project.mako:669
 msgid "Link Projects"
 msgstr "プロジェクトをリンク"
 
-#: website/templates/project/project.mako:671
+#: website/templates/project/project.mako:679
 msgid "Add components to organize your project."
 msgstr "コンポーネントを追加して、プロジェクトを整理します。"
 
@@ -3324,30 +3328,34 @@ msgstr "コンポーネント"
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: website/templates/project/project_header.mako:61
+#: website/templates/project/project_header.mako:63
 msgid "Analytics"
 msgstr "分析"
 
-#: website/templates/project/project_header.mako:67
+#: website/templates/project/project_header.mako:69
 msgid "Registrations"
 msgstr "登録"
 
-#: website/templates/project/project_header.mako:76
+#: website/templates/project/project_header.mako:78
 msgid "Add-ons"
 msgstr "アドオン"
 
-#: website/templates/project/project_header.mako:96
+#: website/templates/project/project_header.mako:89
+msgid "tab_name"
+msgstr ""
+
+#: website/templates/project/project_header.mako:113
 #: website/templates/project/timestamp.mako:2
 msgid "Timestamp"
 msgstr "証跡管理"
 
-#: website/templates/project/project_header.mako:128
+#: website/templates/project/project_header.mako:145
 msgid ""
 "This file is part of a registration and is being shown in its archived "
 "version (and cannot be altered)."
 msgstr "このファイルは登録の一部であり、アーカイブバージョンで表示されています（変更できません）。"
 
-#: website/templates/project/project_header.mako:129
+#: website/templates/project/project_header.mako:146
 #, python-format
 msgid ""
 "The <a %(archivedFromUrl)s>active file</a> is viewable from within the <a"
@@ -3356,14 +3364,14 @@ msgstr ""
 "<a %(archivedFromUrl)s>アクティブなファイル</a>は、<a "
 "%(registeredFromUrl)s>ライブ%(nodeType)s</a>内から表示できます。"
 
-#: website/templates/project/project_header.mako:131
+#: website/templates/project/project_header.mako:148
 #, python-format
 msgid ""
 "This registration is a frozen, non-editable version of <a "
 "%(registeredFromUrl)s>this %(nodeType)s</a>"
 msgstr "この登録は、<a %(registeredFromUrl)s>この%(nodeType)s</a>の凍結された編集不可バージョンです"
 
-#: website/templates/project/project_header.mako:135
+#: website/templates/project/project_header.mako:152
 #, python-format
 msgid ""
 "This is a pending registration of <a %(registeredFromUrl)s>this "
@@ -3374,17 +3382,17 @@ msgstr ""
 "これは<a "
 "%(registeredFromUrl)s>この%(nodeType)s</a>の保留中の登録であり、プロジェクト管理者からの承認を待っています。この登録は、すべてのプロジェクト管理者が登録または48時間のパスのいずれか早い方を承認したときに最終となります。"
 
-#: website/templates/project/project_header.mako:141
-#: website/templates/project/project_header.mako:173
+#: website/templates/project/project_header.mako:158
+#: website/templates/project/project_header.mako:190
 msgid "Cancel registration"
 msgstr "登録をキャンセル"
 
-#: website/templates/project/project_header.mako:159
+#: website/templates/project/project_header.mako:176
 #, python-format
 msgid "This %(nodeType)s is currently pending withdrawal."
 msgstr "この%(nodeType)sは現在、保留中です。"
 
-#: website/templates/project/project_header.mako:163
+#: website/templates/project/project_header.mako:180
 #, python-format
 msgid ""
 "This %(nodeType)s is a withdrawn registration of <a "
@@ -3394,7 +3402,7 @@ msgstr ""
 "この%(nodeType)sは、<a "
 "%(registeredFromUrl)s>この%(nodeType)s</a>の登録の撤回です。%(nodeType)sのコンテンツは、下記の理由により削除されました。"
 
-#: website/templates/project/project_header.mako:168
+#: website/templates/project/project_header.mako:185
 #, python-format
 msgid ""
 "This %(nodeType)s is currently pending registration, awaiting approval "
@@ -3404,14 +3412,14 @@ msgid ""
 "keep the registration private until the embargo period ends."
 msgstr "この%(nodeType)sは現在登録を保留しており、プロジェクト管理者からの承認を待っています。この登録は最終的なものであり、すべてのプロジェクト管理者が登録を承認するか、48時間のパスのいずれか早いほうを承認した時点で禁止期間に入ります。禁止措置は、禁止期間が終了するまで登録を非公開にします。"
 
-#: website/templates/project/project_header.mako:182
+#: website/templates/project/project_header.mako:199
 #, python-format
 msgid ""
 "This registration is currently embargoed. It will remain private until "
 "its embargo end date, %(embargoEndDate)s."
 msgstr "現在、この登録は禁止されています。 禁止終了日(%(embargoEndDate)s)まで非公開のままです。"
 
-#: website/templates/project/project_header.mako:188
+#: website/templates/project/project_header.mako:205
 #, python-format
 msgid ""
 "This %(nodeType)s contains supplemental materials for a preprint, but has"
@@ -3419,7 +3427,7 @@ msgid ""
 "making this %(nodeType)s Public."
 msgstr "この%(nodeType)sにはプレプリントの補足資料が含まれていますが、非公開になっています。この%(nodeType)sを公開することで、補足資料を見つけやすくします。"
 
-#: website/templates/project/project_header.mako:192
+#: website/templates/project/project_header.mako:209
 #, python-format
 msgid ""
 "This %(nodeType)s is being viewed through an anonymized, view-only link. "
@@ -3429,7 +3437,7 @@ msgstr ""
 "この%(nodeType)sは、匿名化された参照専用リンクを介して表示されています。メンバーとして表示する場合は、<a "
 "%(redirectUrl)s>こちら</a>をクリックしてください。"
 
-#: website/templates/project/project_header.mako:196
+#: website/templates/project/project_header.mako:213
 #, python-format
 msgid ""
 "This %(nodeType)s is being viewed through a private, view-only link. "
@@ -3774,7 +3782,7 @@ msgstr "%(fullname)sアドオンが正しく構成されていません。"
 
 #: website/templates/project/addon/page.mako:23
 #: website/templates/project/addon/widget.mako:19
-#: website/templates/util/render_addon_widget.mako:240
+#: website/templates/util/render_addon_widget.mako:267
 #, python-format
 msgid "Configure this add-on on the <a href=%(nodeUrl)s>add-ons</a> page."
 msgstr "<a href=%(nodeUrl)s>アドオン</a>ページでこのアドオンを構成します。"
@@ -3826,11 +3834,13 @@ msgstr "このプロジェクトには、<a %(textLinkDisplay)s></a>への転送
 
 #: website/templates/util/render_addon_widget.mako:144
 #: website/templates/util/render_addon_widget.mako:175
+#: website/templates/util/render_addon_widget.mako:238
 msgid "Loading"
 msgstr "ロード中"
 
 #: website/templates/util/render_addon_widget.mako:147
 #: website/templates/util/render_addon_widget.mako:178
+#: website/templates/util/render_addon_widget.mako:241
 msgid "Error occurred"
 msgstr "エラーが発生しました。"
 
@@ -3864,6 +3874,18 @@ msgstr "論文登録申請"
 msgid "Image Scan only"
 msgstr "投稿前画像スキャン依頼"
 
+#: website/templates/util/render_addon_widget.mako:244
+msgid "Application Information"
+msgstr "アプリ情報"
+
+#: website/templates/util/render_addon_widget.mako:245
+msgid "No Today's Meeting"
+msgstr "今日の会議はありません"
+
+#: website/templates/util/render_addon_widget.mako:247
+msgid "Today's Meeting"
+msgstr "今日の会議"
+
 #: website/templates/util/render_node.mako:5
 msgid "component"
 msgstr "コンポーネント"
@@ -3889,3 +3911,4 @@ msgstr "%(summaryTitle)sのフォークを作成"
 #: website/templates/util/render_node.mako:66
 msgid "Manage Contributors"
 msgstr "メンバー管理"
+
