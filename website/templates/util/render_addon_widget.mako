@@ -249,7 +249,7 @@
                                 <tbody data-bind="foreach: todaysMeetings">
                                     <tr>
                                         <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style='width: 11%'></td>
-                                        <td data-bind="text: fields.subject tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>
+                                        <td data-bind="text: fields.subject, tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>
                                         <td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
                                 </tbody>
@@ -261,7 +261,7 @@
                                 <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
                                         <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style='width: 11%'></td>
-                                        <td data-bind="text: fields.subject tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>
+                                        <td data-bind="text: fields.subject, tooltip:{title: fields.subject}" style='max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap;'></td>
                                         <td><button class='fa fa-play' data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
                                 </tbody>
