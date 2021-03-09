@@ -6,7 +6,7 @@ import json
 import time
 import pytz
 from django.utils.timezone import make_aware
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from addons.integromat import SHORT_NAME, FULL_NAME
 from django.db import transaction
 from django.db.models import Min
@@ -511,7 +511,7 @@ def integromat_get_meetings(**kwargs):
 
 
     amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
-    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today() +  + datetime.timedelta(days=1)).order_by('start_datetime')
+    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today() + timedelta(days=1)).order_by('start_datetime')
     logger.info('today:' + str(date.today()))
     amiTodayJson = serializers.serialize('json', amiToday, ensure_ascii=False)
     amiTomorrowJson = serializers.serialize('json', amiToday, ensure_ascii=False)
