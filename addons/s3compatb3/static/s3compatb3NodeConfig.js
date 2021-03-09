@@ -19,7 +19,8 @@ var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.super.super.constructor.call(self, addonName, url, selector, folderPicker, tbOpts);
         self.super.construct.call(self, addonName, url, selector, folderPicker, opts, tbOpts);
         // Non-OAuth fields
-        self.availableServices = ko.observableArray(s3compatb3Settings['availableServices']);
+        self.availableServices = ko.observableArray(s3compatSettings['availableServices']);
+        self.regions = ko.observableArray(s3compatb3Settings['regions']);
         self.selectedService = ko.observable(s3compatb3Settings['availableServices'][0]);
         self.hostTemplate = ko.observable(s3compatb3Settings['hostTemplate']);
         self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex']);
