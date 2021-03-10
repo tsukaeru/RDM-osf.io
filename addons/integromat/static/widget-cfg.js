@@ -19,8 +19,6 @@ function IntegromatWidget() {
     self.loadCompleted = ko.observable(false);
     self.todaysMeetings = ko.observable('');
     self.tomorrowsMeetings = ko.observable('');
-    self.noTodaysMeetings = ko.observable('No today\'s meetings.');
-    self.noTomorrowsMeetings = ko.observable('No tomorrow\'s meetings.');
 
     var now = new Date();
     self.today = now.getMonth() + '/' + now.getDate();
