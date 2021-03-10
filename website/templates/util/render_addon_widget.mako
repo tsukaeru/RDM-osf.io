@@ -243,35 +243,39 @@
                         <!-- ko if: loadCompleted -->
                         <h5>${_("Application Information")}</h5>
                         <h5 data-bind="ifnot: todaysMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Today's Meeting")}</h5>
-                        <h5 data-bind="ifnot: tomorrowsMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Tomorrow's Meeting")}</h5>
                         <div style="padding-left: 1.0em;" data-bind="if: todaysMeetings().length">
                         <h5 style="display: inline;">${_("Today's Meeting")}</h5>(<h5 style="display: inline;" data-bind="text: today"></h5>)
                             <table class="table">
                                 <tbody data-bind="foreach: todaysMeetings">
                                     <tr>
-                                        <td style="width: 23%">
-                                        <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                        <td style="width: 20%">
+                                            <h5><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
                                         <td style="width: 70%; max-width: 200px;">
-                                            <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject, offset: 100}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
+                                            <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
-                                        <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
+                                        <td>
+                                            <h5><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                        <h5 data-bind="ifnot: tomorrowsMeetings().length" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Tomorrow's Meeting")}</h5>
                         <div style="padding-left: 1.0em;" data-bind="if: tomorrowsMeetings().length">
                         <h5 style="display: inline;">${_("Tomorrow's Meeting")}</h5>(<h5 style="display: inline;" data-bind="text: tomorrow"></h5>)
                             <table class="table">
                                 <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
-                                        <td style="width: 23%">
-                                        <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                        <td style="width: 20%">
+                                            <h5><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
                                         <td style="width: 70%; max-width: 200px;">
                                             <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
-                                        <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
+                                        <td>
+                                            <h5><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
