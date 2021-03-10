@@ -249,10 +249,12 @@
                             <table class="table">
                                 <tbody data-bind="foreach: todaysMeetings">
                                     <tr>
-                                        <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style="width: 11%"></td>
-                                        <td>-</td>
-                                        <td data-bind="date: fields.start_endtime, dateFormat: 'HH:mm'" style="width: 11%"></td>
-                                        <td><div data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap; width: 100%;"></div></td>
+                                        <td style="width: 23%">
+                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span>-<span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                        </td>
+                                        <td style="width: 70%; max-width: 200px;">
+                                            <span data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></span>
+                                        </td>
                                         <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
                                 </tbody>
@@ -263,10 +265,12 @@
                             <table class="table">
                                 <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
-                                        <td data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'" style="width: 11%"></td>
-                                        <td>-</td>
-                                        <td data-bind="date: fields.start_endtime, dateFormat: 'HH:mm'" style="width: 11%"></td>
-                                        <td><div data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="max-width: 1px; text-overflow: ellipsis; overflow: hidden white-space: nowrap; width: 100%;"></div></td>
+                                        <td style="width: 23%">
+                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span>-<span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                        </td>
+                                        <td style="width: 70%; max-width: 200px;">
+                                            <span data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></span>
+                                        </td>
                                         <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
                                 </tbody>
