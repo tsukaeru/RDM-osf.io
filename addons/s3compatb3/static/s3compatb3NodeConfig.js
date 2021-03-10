@@ -26,12 +26,12 @@ var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.namespaceIndex = ko.observable(s3compatb3Settings['namespaceIndex']);
         self.regionIndex = ko.observable(s3compatb3Settings['regionIndex']);
         self.namespace = ko.observable('');
-        self.region = ko.observable('');
+        self.region = ko.observable(s3compatb3Settings['regions'].find(region => region['id'] == s3compatb3Settings['regionDefault']));
         // self.host = ko.observable(s3compatb3Settings['hostTemplate'];
         self.host = ko.computed(function() {
             var dc = this.hostTemplate().split('.');
             dc[this.namespaceIndex()] = this.namespace();
-            dc[this.regionIndex()] = this.region();
+            dc[this.regionIndex()] = this.region()['id'];
             return dc.join('.');
         }, self);
         self.accessKey = ko.observable('');

@@ -41,5 +41,6 @@
         {"id": "us-phoenix-1", "name": "Phoenix, AZ "},
         {"id": "us-sanjose-1", "name": "San Jose, CA "}
     ],
+    "regionDefault": "ap-tokyo-1",
     "encryptUploads": true
 }
