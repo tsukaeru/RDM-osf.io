@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: rocs-office@nii.ac.jp\n"
-"POT-Creation-Date: 2021-03-09 11:30+0900\n"
+"POT-Creation-Date: 2021-03-10 13:30+0900\n"
 "PO-Revision-Date: 2020-11-10 20:10+0900\n"
 "Last-Translator: Hiroki Ohashi\n"
 "Language: ja\n"
@@ -3786,7 +3786,7 @@ msgstr "%(fullname)sアドオンが正しく構成されていません。"
 
 #: website/templates/project/addon/page.mako:23
 #: website/templates/project/addon/widget.mako:19
-#: website/templates/util/render_addon_widget.mako:267
+#: website/templates/util/render_addon_widget.mako:288
 #, python-format
 msgid "Configure this add-on on the <a href=%(nodeUrl)s>add-ons</a> page."
 msgstr "<a href=%(nodeUrl)s>アドオン</a>ページでこのアドオンを構成します。"
@@ -3886,9 +3886,17 @@ msgstr "アプリ情報"
 msgid "No Today's Meeting"
 msgstr "今日の会議はありません"
 
-#: website/templates/util/render_addon_widget.mako:247
+#: website/templates/util/render_addon_widget.mako:246
+msgid "No Tomorrow's Meeting"
+msgstr "明日の会議はありません。"
+
+#: website/templates/util/render_addon_widget.mako:248
 msgid "Today's Meeting"
 msgstr "今日の会議"
+
+#: website/templates/util/render_addon_widget.mako:264
+msgid "Tomorrow's Meeting"
+msgstr "明日の会議"
 
 #: website/templates/util/render_node.mako:5
 msgid "component"
