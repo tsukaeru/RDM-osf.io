@@ -31,7 +31,7 @@ var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.host = ko.computed(function() {
             var dc = this.hostTemplate().split('.');
             dc[this.namespaceIndex()] = this.namespace();
-            dc[this.regionIndex()] = this.region()['id'];
+            dc[this.regionIndex()] = (this.region() || {})['id'];
             return dc.join('.');
         }, self);
         self.accessKey = ko.observable('');

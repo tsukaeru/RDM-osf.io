@@ -128,8 +128,8 @@ def validate_bucket_name(name):
 
 
 def create_bucket(node_settings, bucket_name, location=''):
-    return connect_s3compatb3(node_settings=node_settings).create_bucket(Bucket=bucket_name,
-        CreateBucketConfigurationlocation={'LocationConstraint': location})
+    return connect_s3compatb3(node_settings=node_settings).create_bucket(Bucket=bucket_name)
+    #     CreateBucketConfigurationlocation={'LocationConstraint': location})
 
 def bucket_exists(host, access_key, secret_key, bucket_name):
     """Tests for the existance of a bucket and if the user
