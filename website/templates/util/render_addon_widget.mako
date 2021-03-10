@@ -249,13 +249,13 @@
                                 <tbody data-bind="foreach: todaysMeetings">
                                     <tr>
                                         <td style="width: 20%; padding: initial;">
-                                            <h5><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
+                                            <h5 style="margin-left: 10px"><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
-                                        <td style="width: 70%; max-width: 200px; padding: initial;">
+                                        <td style="width: 65%; max-width: 200px; padding: initial;">
                                             <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
                                         <td style="padding: initial;">
-                                            <h5><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
+                                            <h5 style="margin-left: 20px"><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -267,13 +267,13 @@
                                 <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
                                         <td style="width: 20%; padding: initial;">
-                                            <h5><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
+                                            <h5 style="margin-left: 10px"><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
-                                        <td style="width: 70%; max-width: 200px; padding: initial;">
+                                        <td style="width: 65%; max-width: 200px; padding: initial;">
                                             <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
                                         <td style="padding: initial;">
-                                            <h5><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
+                                            <h5 style="margin-left: 20px"><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
                                         </td>
                                     </tr>
                                 </tbody>
