@@ -193,6 +193,8 @@ def get_bucket_location_or_error(host, access_key, secret_key, bucket_name):
 
     try:
         # Will raise an exception if bucket_name doesn't exist
-        return connection.get_bucket(bucket_name, validate=False).get_location()
+        # return connection.get_bucket(bucket_name, validate=False).get_location()
+        metadata = connection.meta.client.head_bucket(Bucket=bucket_name)
+        return metadata['ResponseMetadata']['HTTPHeaders']['x-amz-bucket-region']
     except exception.S3ResponseError:
         raise InvalidFolderError()

@@ -282,12 +282,6 @@ var s3compatb3FolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
                                         '</div>'+
                                     '</div>' +
                                 '</div>' +
-                                '<div class="form-group"> ' +
-                                    '<label class="col-md-4 control-label" for="bucketLocation">Bucket Location</label> ' +
-                                    '<div class="col-md-8"> ' +
-                                        generateBucketSelector() +
-                                    '</div>' +
-                                '</div>' +
                             '</form>' +
                         '</div>' +
                     '</div>',
