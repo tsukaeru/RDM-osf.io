@@ -21,8 +21,8 @@ function IntegromatWidget() {
     self.tomorrowsMeetings = ko.observable('');
 
     var now = new Date();
-    self.today = now.getMonth() + '/' + now.getDate();
-    self.tomorrow = now.getMonth() + '/' + (now.getDate() + 1)
+    self.today = (now.getMonth() + 1) + '/' + now.getDate();
+    self.tomorrow = (now.getMonth() + 1) + '/' + (now.getDate() + 1)
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
