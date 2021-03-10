@@ -250,10 +250,10 @@
                                 <tbody data-bind="foreach: todaysMeetings">
                                     <tr>
                                         <td style="width: 23%">
-                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span>-<span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
                                         </td>
                                         <td style="width: 70%; max-width: 200px;">
-                                            <span data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></span>
+                                            <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
                                         <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
@@ -266,10 +266,10 @@
                                 <tbody data-bind="foreach: tomorrowsMeetings">
                                     <tr>
                                         <td style="width: 23%">
-                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span>-<span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
+                                            <span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"</span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span>
                                         </td>
                                         <td style="width: 70%; max-width: 200px;">
-                                            <span data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></span>
+                                            <h5 data-bind="text: fields.subject, tooltip:{title: fields.subject}" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
                                         </td>
                                         <td><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></td>
                                     </tr>
