@@ -12,13 +12,13 @@ dist: trusty
 # addons:
 #   chrome: stable
 
-#cache:
-#  yarn: true
-#  pip: true
-#  directories:
-#    - $HOME/.cache
-#    - node_modules
-#    - website/static/vendor/bower_components
+cache:
+  yarn: true
+  pip: true
+  directories:
+    - $HOME/.cache
+    - node_modules
+    - website/static/vendor/bower_components
 
 env:
   global:
