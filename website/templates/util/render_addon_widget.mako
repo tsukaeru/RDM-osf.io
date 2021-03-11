@@ -261,10 +261,8 @@
                                         </td>
                                     </tr>
                                     <!-- /ko -->
-                                    <!-- ko if: todaysMeetings().length > 3 && $index == 3 -->
-                                    <div><button class="btn-link project-toggle"></button></div>
-                                    <!-- /ko -->
                                     <!-- ko if: $index == 4 -->
+                                    <div><button class="btn-link project-toggle"></button></div>
                                     <div class="panel-body">
                                     <!-- /ko -->
                                     <!-- ko if: $index > 3 -->
