@@ -259,9 +259,9 @@
                                             <h5 style="margin-left: 20px"><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
                                         </td>
                                     </tr>
-                                    <div data-bind="if: $index == 4"><button class="btn-link project-toggle"><i class="fa fa-angle-down"></i></button></div>
+                                    <tr data-bind="if: $index == 4"><button class="btn-link project-toggle"><i class="fa fa-angle-down"></i></button></tr>
                                     <div class="panel-body">
-                                    <tr data-bind="$index > 3">
+                                    <tr data-bind="if: $index > 3">
                                         <td style="width: 20%; padding: initial;">
                                             <h5 style="margin-left: 10px"><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
