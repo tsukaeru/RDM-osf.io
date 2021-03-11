@@ -248,8 +248,7 @@
                         <h5 style="display: inline;">${_("Today's Meeting")}</h5>(<h5 style="display: inline;" data-bind="text: today"></h5>)
                             <table class="table">
                                 <tbody data-bind="foreach: todaysMeetings">
-                                    <!-- ko if: $index < 4 -->
-                                    <tr>
+                                    <tr data-bind="if: $index < 4">
                                         <td style="width: 20%; padding: initial;">
                                             <h5 style="margin-left: 10px"><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
@@ -260,13 +259,9 @@
                                             <h5 style="margin-left: 20px"><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
                                         </td>
                                     </tr>
-                                    <!-- /ko -->
-                                    <!-- ko if: $index == 4 -->
-                                    <div><button class="btn-link project-toggle"></button></div>
+                                    <div data-bind="if: $index == 4"><button class="btn-link project-toggle"><i class="fa fa-angle-down"></i></button></div>
                                     <div class="panel-body">
-                                    <!-- /ko -->
-                                    <!-- ko if: $index > 3 -->
-                                    <tr>
+                                    <tr data-bind="$index > 3">
                                         <td style="width: 20%; padding: initial;">
                                             <h5 style="margin-left: 10px"><span data-bind="date: fields.start_datetime, dateFormat: 'HH:mm'"></span><span>-</span><span data-bind="date: fields.end_datetime, dateFormat: 'HH:mm'"></span></h5>
                                         </td>
@@ -277,7 +272,6 @@
                                             <h5 style="margin-left: 20px"><button class="fa fa-play" data-bind="click: $root.startMeeting.bind($data, fields.join_url)"></button></h5>
                                         </td>
                                     </tr>
-                                    <!-- /ko -->
                                 </tbody>
                             </table>
                         </div>
