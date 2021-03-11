@@ -42,63 +42,63 @@ env:
     - TEST_BUILD="api2"
     - TEST_BUILD="api3_and_osf"
 
-before_install:
+#before_install:
 
     # cache directories
-    - |
-      mkdir -p $HOME/.cache/downloads
-      mkdir -p $HOME/.cache/pip
-      mkdir -p $HOME/.cache/wheelhouse
-      rm -rf node_modules  ## TODO remove this later
+#    - |
+#      mkdir -p $HOME/.cache/downloads
+#      mkdir -p $HOME/.cache/pip
+#      mkdir -p $HOME/.cache/wheelhouse
+#      rm -rf node_modules  ## TODO remove this later
     # postgres
-    - |
-      cd $HOME/.cache/downloads
+#    - |
+#      cd $HOME/.cache/downloads
 
-      if [ ! -f "$LIBXML2_DEB" ]; then
-        curl -SLO http://security.ubuntu.com/ubuntu/pool/main/libx/libxml2/$LIBXML2_DEB
-      fi
+#      if [ ! -f "$LIBXML2_DEB" ]; then
+#        curl -SLO http://security.ubuntu.com/ubuntu/pool/main/libx/libxml2/$LIBXML2_DEB
+#      fi
 
-      if [ ! -f "$POSTGRES_DEB" ]; then
-        curl -SLO http://apt.postgresql.org/pub/repos/apt/pool/main/p/postgresql-9.6/$POSTGRES_DEB
-      fi
+#      if [ ! -f "$POSTGRES_DEB" ]; then
+#        curl -SLO http://apt.postgresql.org/pub/repos/apt/pool/main/p/postgresql-9.6/$POSTGRES_DEB
+#      fi
 
-      dpkg -x $LIBXML2_DEB /tmp/libxml2
-      dpkg -x $POSTGRES_DEB /tmp/postgres
-    - |
-      export LD_LIBRARY_PATH=/tmp/libxml2/usr/lib/x86_64-linux-gnu
-      /tmp/postgres/usr/lib/postgresql/9.6/bin/initdb /tmp/postgres/data --nosync -U postgres
-      sed -i -e 's/#fsync.*/fsync = off/' /tmp/postgres/data/postgresql.conf
-      sed -i -e 's/#synchronous_commit.*/synchronous_commit = off/' /tmp/postgres/data/postgresql.conf
-      sed -i -e 's/#full_page_writes.*/full_page_writes = off/' /tmp/postgres/data/postgresql.conf
-      /tmp/postgres/usr/lib/postgresql/9.6/bin/postgres -k /tmp -D /tmp/postgres/data -p 54321 > /dev/null & export POSTGRES_PID=$!
+#      dpkg -x $LIBXML2_DEB /tmp/libxml2
+#      dpkg -x $POSTGRES_DEB /tmp/postgres
+#    - |
+#      export LD_LIBRARY_PATH=/tmp/libxml2/usr/lib/x86_64-linux-gnu
+#      /tmp/postgres/usr/lib/postgresql/9.6/bin/initdb /tmp/postgres/data --nosync -U postgres
+#      sed -i -e 's/#fsync.*/fsync = off/' /tmp/postgres/data/postgresql.conf
+#      sed -i -e 's/#synchronous_commit.*/synchronous_commit = off/' /tmp/postgres/data/postgresql.conf
+#      sed -i -e 's/#full_page_writes.*/full_page_writes = off/' /tmp/postgres/data/postgresql.conf
+#      /tmp/postgres/usr/lib/postgresql/9.6/bin/postgres -k /tmp -D /tmp/postgres/data -p 54321 > /dev/null & export POSTGRES_PID=$!
     # elasticsearch
-    - |
-      cd $HOME/.cache/downloads
+#    - |
+#      cd $HOME/.cache/downloads
 
-      if [ ! -f "$ELASTICSEARCH_ARCHIVE" ]; then
-        curl -SLO https://download.elasticsearch.org/elasticsearch/elasticsearch/$ELASTICSEARCH_ARCHIVE
-      fi
+#      if [ ! -f "$ELASTICSEARCH_ARCHIVE" ]; then
+#        curl -SLO https://download.elasticsearch.org/elasticsearch/elasticsearch/$ELASTICSEARCH_ARCHIVE
+#      fi
 
-      if [ ! -f "$ELASTICSEARCH_ARCHIVE.sha1.txt" ]; then
-        curl -SLO https://download.elasticsearch.org/elasticsearch/elasticsearch/$ELASTICSEARCH_ARCHIVE.sha1.txt
-      fi
+#      if [ ! -f "$ELASTICSEARCH_ARCHIVE.sha1.txt" ]; then
+#        curl -SLO https://download.elasticsearch.org/elasticsearch/elasticsearch/$ELASTICSEARCH_ARCHIVE.sha1.txt
+#      fi
 
-      sha1sum --check $ELASTICSEARCH_ARCHIVE.sha1.txt
+#      sha1sum --check $ELASTICSEARCH_ARCHIVE.sha1.txt
 
-      mkdir -p /tmp/elasticsearch
-      tar xzf $ELASTICSEARCH_ARCHIVE -C /tmp/elasticsearch --strip-components=1
-      /tmp/elasticsearch/bin/plugin install analysis-kuromoji
-      /tmp/elasticsearch/bin/plugin install analysis-icu
-    - /tmp/elasticsearch/bin/elasticsearch > /dev/null & export ELASTICSEARCH_PID=$!
+#      mkdir -p /tmp/elasticsearch
+#      tar xzf $ELASTICSEARCH_ARCHIVE -C /tmp/elasticsearch --strip-components=1
+#      /tmp/elasticsearch/bin/plugin install analysis-kuromoji
+#      /tmp/elasticsearch/bin/plugin install analysis-icu
+#    - /tmp/elasticsearch/bin/elasticsearch > /dev/null & export ELASTICSEARCH_PID=$!
     # Wait for elasticsearch to come online
-    - |-
-      while true; do
-          sleep 5
-          curl -sf http://localhost:9200/_cluster/health?wait_for_status=yellow
-          if [ $? -eq 0 ]; then
-              break
-          fi
-      done
+#    - |-
+#      while true; do
+#          sleep 5
+#          curl -sf http://localhost:9200/_cluster/health?wait_for_status=yellow
+#          if [ $? -eq 0 ]; then
+#              break
+#          fi
+#      done
 
 install:
     - cd $TRAVIS_BUILD_DIR
