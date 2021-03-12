@@ -261,6 +261,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div></div>
                         <h5 data-bind="visible: !(tomorrowsMeetings().length)" style="padding-top: 0.2em; padding-left: 1.0em;">${_("No Tomorrow's Meeting")}</h5>
                         <div style="padding-left: 1.0em;" data-bind="if: tomorrowsMeetings().length">
                         <h5 style="display: inline;">${_("Tomorrow's Meeting")}</h5>(<h5 style="display: inline;" data-bind="text: tomorrow"></h5>)
