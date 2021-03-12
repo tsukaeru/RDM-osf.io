@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="s3compatb3Addon">${_("Region")}</label>
-                                <select class="form-control" data-bind="value: region, options: regions, optionsText: 'name', optionssValue: 'id'" id="regionOptions" name="region" ${'disabled' if disabled else ''}></select>
+                                <select class="form-control" data-bind="value: region, options: regions, optionsText: ${_("optionsText")}, optionssValue: 'id'" id="regionOptions" name="region" ${'disabled' if disabled else ''}></select>
                             </div>
                             <div class="form-group">
                                 <label for="s3compatb3Addon">${_("Access Key")}</label>
