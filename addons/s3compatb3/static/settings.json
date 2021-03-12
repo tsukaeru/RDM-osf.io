@@ -36,7 +36,7 @@
         {"id": "eu-zurich-1", "optionsText": "Zurich, Switzerland", "optionsTextJa": "チューリッヒ(スイス)"},
         {"id": "me-dubai-1", "optionsText": "Dubai, UAE", "ドバイ(UAE)"},
         {"id": "uk-london-1", "optionsText": "London, United Kingdom", "optionsTextJa": "ロンドン(英国)"},
-        {"id": "uk-cardiff-1", "optionsText": "Newport, United Kingdom"},
+        {"id": "uk-cardiff-1", "optionsText": "Newport, United Kingdom", "optionsTextJa": "ニューポート(英国)"},
         {"id": "us-ashburn-1", "optionsText": "Ashburn, VA", "optionsTextJa": "アッシュバーン(米国)"},
         {"id": "us-phoenix-1", "optionsText": "Phoenix, AZ ", "optionsTextJa": "フェニックス(米国)"},
         {"id": "us-sanjose-1", "optionsText": "San Jose, CA ", "optionsTextJa": "サンノゼ(米国)"}
