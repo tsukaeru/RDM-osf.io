@@ -34,7 +34,7 @@
         {"id": "ap-seoul-1", "optionsText": "Seoul, South Korea", "optionsTextJa": "ソウル(韓国)"},
         {"id": "ap-chuncheon-1", "optionsText": "Chuncheon, South Korea", "optionsTextJa": "春川(韓国)"},
         {"id": "eu-zurich-1", "optionsText": "Zurich, Switzerland", "optionsTextJa": "チューリッヒ(スイス)"},
-        {"id": "me-dubai-1", "optionsText": "Dubai, UAE", "ドバイ(UAE)"},
+        {"id": "me-dubai-1", "optionsText": "Dubai, UAE", "optionsTextJa": "ドバイ(UAE)"},
         {"id": "uk-london-1", "optionsText": "London, United Kingdom", "optionsTextJa": "ロンドン(英国)"},
         {"id": "uk-cardiff-1", "optionsText": "Newport, United Kingdom", "optionsTextJa": "ニューポート(英国)"},
         {"id": "us-ashburn-1", "optionsText": "Ashburn, VA", "optionsTextJa": "アッシュバーン(米国)"},
