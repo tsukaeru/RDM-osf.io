@@ -207,6 +207,9 @@ def integromat_api_call(*args, **kwargs):
     logger.info('kwargs' + str(dict(kwargs)))
     logger.info('args' + str(dict(args)))
     logger.info('headers' + str(dict(request.headers)))
+    logger.info('headers.Authorization:' + str(dict(request.headers['Authorization'])))
+    parts = request.headers['Authorization'].split()
+    logger.info('headers.Authorization.parts:' + str(dict(parts[1])))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     logger.info('auth:' + str(auth))
 
@@ -216,9 +219,6 @@ def integromat_create_meeting_info(**kwargs):
 
     logger.info('integromat called integromat_create_meeting_info')
     logger.info('headers' + str(dict(request.headers)))
-    logger.info('headers.Authorization:' + str(dict(request.headers['Authorization'])))
-    parts = request.headers['Authorization'].split()
-    logger.info('headers.Authorization.parts:' + str(dict(parts[1])))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     logger.info('auth:' + str(auth))
 
