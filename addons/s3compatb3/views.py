@@ -10,7 +10,6 @@ from framework.auth.decorators import must_be_logged_in
 from addons.base import generic_views
 from addons.s3compatb3 import utils
 from addons.s3compatb3.serializer import S3CompatB3Serializer
-import addons.s3compatb3.settings as settings
 from osf.models import ExternalAccount
 from website.project.decorators import (
     must_have_addon, must_have_permission,
