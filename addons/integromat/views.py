@@ -207,9 +207,6 @@ def integromat_api_call(*args, **kwargs):
     logger.info('kwargs' + str(dict(kwargs)))
     logger.info('args' + str(dict(args)))
     logger.info('headers' + str(dict(request.headers)))
-    logger.info('headers.Authorization:' + str(request.headers['Authorization']))
-    parts = request.headers['Authorization'].split()
-    logger.info('headers.Authorization.parts:' + str(parts[1]))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     logger.info('auth:' + str(auth))
 
