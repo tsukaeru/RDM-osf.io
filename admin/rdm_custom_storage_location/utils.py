@@ -603,7 +603,6 @@ def save_googledriveinstitutions_credentials(user, storage_name, folder_id):
     }
     region = update_storage(institution_id, storage_name, wb_credentials, wb_settings)
     external_util.set_region_external_account(region, account)
-    save_usermap_from_tmp('googledriveinstitutions', user.affiliated_institutions.first())
 
     return ({
         'message': 'OAuth was set successfully'
@@ -877,21 +876,3 @@ def save_usermap_from_tmp(provider_name, institution):
         rdm_addon_option.extended[KEYNAME_USERMAP] = new_usermap
         del rdm_addon_option.extended[KEYNAME_USERMAP_TMP]
         rdm_addon_option.save()
-
-def extuser_permission(institution_id, extuser, folder_id):
-
-    access_token = ExternalAccountTemporary.objects.get(
-        _id=institution_id, provider='googledriveinstitutions'
-    ).oauth_key
-    client = GoogleDriveInstitutionsClient(access_token)
-
-    try:
-        client.permission_creat(folder_id, extuser)
-    except HTTPError:
-        return ({
-            'message': 'Invalid extuser.'
-        }, http_status.HTTP_400_BAD_REQUEST)
-
-    return ({
-        'message': 'Permission is created.'
-    }, http_status.HTTP_200_OK)

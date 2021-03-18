@@ -48,36 +48,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                   <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>{% trans "Download User Mapping file" %}</label><br/>
-                            <button type="button" class="btn btn-default download-csv" id="csv_download">{% trans "Download" %}</button>
-                            <div id="csv_download_ng" class="text-danger"></div>
-                       </div>
-                        <div class="form-group">
-                            <label>{% trans "Upload User Mapping file" %}</label></br>
-                            <input type="hidden" class="selection" id="csv_check_extuser">
-                            <div class="csv-upload-button">
-                                <label class="btn btn-default btn-file">
-                                    {% trans "Browse" %}<input type="file" name="usermap" id="googledriveinstitutions_csv_file" accept=".csv">
-                                </label>
-                                <div id="csv_file_name"></div>
-                            </div>
-                            <div class="text-muted" style="text-align: left" id="csv_report">
-                                <em>
-        {% blocktrans %}Example of User Mapping file{% endblocktrans %}:<br/>
-        #User_GUID(or ePPN),External_UserID,Fullname(ignored)<br/>
-        eppn_user1@idp.example.com,external_user1,User1<br/>
-        ABCDE,external_user2,User2<br/>
-                                </em>
-                            </div>
-                            <div id="csv_usermap" hidden></div>
-                            <div id="csv_ok" class="text-success"></div>
-                            <div id="csv_ng" class="text-danger"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default auth-cancel" id="googledriveinstitutions_cancel" data-dismiss="modal">{% trans "Cancel" %}</button>

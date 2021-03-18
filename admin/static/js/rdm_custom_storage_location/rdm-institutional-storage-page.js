@@ -147,14 +147,6 @@ $('#googledrive_modal input').on('paste', function(e) {
     authSaveButtonState('googledrive');
 });
 
-$('#googledriveinstitutions_modal input').keyup(function () {
-    authSaveButtonState('googledriveinstitutions');
-});
-
-$('#googledriveinstitutions_modal input').on('paste', function(e) {
-    authSaveButtonState('googledriveinstitutions');
-});
-
 $('#box_modal input').keyup(function () {
     authSaveButtonState('box');
 });
@@ -163,7 +155,7 @@ $('#box_modal input').on('paste', function(e) {
     authSaveButtonState('box');
 });
 
-$('#csv_file, #googledriveinstitutions_csv_file').on('change', function() {
+$('#csv_file').on('change', function() {
     var filename = '';
     var fileLists = $(this).prop('files');
     if (fileLists.length > 0) {
@@ -601,7 +593,7 @@ function reflect_csv_results(data, providerShortName) {
     }
 }
 
-$('#csv_file, #googledriveinstitutions_csv_file').change(function () {
+$('#csv_file').change(function () {
     var provider = selectedProvider();
     var file = $(this).prop('files')[0];
 
