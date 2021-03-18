@@ -350,6 +350,10 @@ class UserMapView(InstitutionalStorageBaseView, View):
         provider_name = request.POST.get('provider', None)
         institution = request.user.affiliated_institutions.first()
 
+        folder_id = ''
+        if provider_name == 'googledriveinstitutions':
+            folder_id = request.POST.get('googledriveinstitutions_folder', None)
+
         OK = 'OK'
         NG = 'NG'
         clear = to_bool(request.POST.get('clear', 'false'))
@@ -434,6 +438,13 @@ class UserMapView(InstitutionalStorageBaseView, View):
                                                   extuser)
                     if detail:
                         add_report(NG, UNKNOWN_EXTUSER, line, detail)
+                        continue
+
+                if provider_name == 'googledriveinstitutions':
+                    institution_id = request.user.affiliated_institutions.first()._id
+                    permissionResult = utils.extuser_permission(institution_id, extuser, folder_id)
+                    if permissionResult[1] != http_status.HTTP_200_OK:
+                        add_report(NG, 'INVALID_EXTUSER', line, permissionResult)
                         continue
 
                 if u._id in user_to_extuser:

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from framework.exceptions import HTTPError
 
 from website.util.client import BaseClient
@@ -51,3 +53,23 @@ class GoogleDriveInstitutionsClient(BaseClient):
             throws=HTTPError(401)
         )
         return res.json()['files']
+
+    def permission_creat(self, folder_id, extuser):
+        res = self._make_request(
+            'POST',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files',
+                            folder_id, 'permissions'),
+            params={'supportsAllDrives': 'true'},
+            headers={
+                'Content-Type': 'application/json',
+            },
+            data=json.dumps({
+                'kind': 'drive#permission',
+                'emailAddress': extuser,
+                'role': 'writer',
+                'type': 'user'
+            }),
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()
