@@ -32,6 +32,9 @@ def send_email(from_addr, to_addr, subject, message, mimetype='html', ttls=True,
 
     :return: True if successful
     """
+
+    logger.info('tasks.send_email::' + _charset)
+
     if not settings.USE_EMAIL:
         return
     if settings.SENDGRID_API_KEY:
@@ -72,6 +75,8 @@ def _send_with_smtp(from_addr, to_addr, subject, message, mimetype='html', ttls=
     if login and (username is None or password is None):
         logger.error('Mail username and password not set; skipping send.')
         return
+
+    logger.info('_send_with_smtp::' + _charset)
 
     msg = MIMEText(message, mimetype, _charset)
     msg['Subject'] = subject

@@ -110,6 +110,8 @@ def send_mail(
     if waffle.switch_is_active(features.DISABLE_ENGAGEMENT_EMAILS) and mail.engagement:
         return False
 
+    logger.info('send_mail_charset::' + _charset)
+
     from_addr = from_addr or settings.FROM_EMAIL
     mailer = mailer or tasks.send_email
     subject = unicode(mail.subject(**context), 'utf-8')
