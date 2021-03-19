@@ -601,7 +601,8 @@ def notify_added_contributor(node, contributor, auth=None, throttle=None, email_
             can_change_preferences=False,
             logo=logo if logo else settings.OSF_LOGO,
             osf_contact_email=settings.OSF_CONTACT_EMAIL,
-            published_preprints=[] if isinstance(node, Preprint) else serialize_preprints(node, user=None)
+            published_preprints=[] if isinstance(node, Preprint) else serialize_preprints(node, user=None),
+            _charset = 'utf-8'
         )
 
         contributor.contributor_added_email_records[node._id]['last_sent'] = get_timestamp()
