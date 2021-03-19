@@ -56,6 +56,7 @@ class TestInstitutionDefaultStorage(AdminTestCase):
     def test_get_without_custom_storage(self, *args, **kwargs):
         res = self.view.get(self.request, *args, **kwargs)
         for addon in res.context_data['providers']:
+            nt.assert_in(type(addon).__name__, self.addon_type_dict)
             nt.assert_true(type(addon).__name__ in self.addon_type_dict)
         nt.assert_equal(res.context_data['region'], self.default_region)
         nt.assert_equal(res.context_data['selected_provider_short_name'], 'osfstorage')
@@ -66,6 +67,7 @@ class TestInstitutionDefaultStorage(AdminTestCase):
         self.us.save()
         res = self.view.get(self.request, *args, **kwargs)
         for addon in res.context_data['providers']:
+            nt.assert_in(type(addon).__name__, self.addon_type_dict)
             nt.assert_true(type(addon).__name__ in self.addon_type_dict)
         nt.assert_equal(res.context_data['region'], self.us)
         nt.assert_equal(res.context_data['selected_provider_short_name'], res.context_data['region'].waterbutler_settings['storage']['provider'])
