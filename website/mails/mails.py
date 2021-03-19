@@ -107,13 +107,18 @@ def send_mail(
     .. note:
          Uses celery if available
     """
+
+    logger.info('send_mail start')
+
     if waffle.switch_is_active(features.DISABLE_ENGAGEMENT_EMAILS) and mail.engagement:
         return False
 
     logger.info('send_mail_charset::' + _charset)
 
     from_addr = from_addr or settings.FROM_EMAIL
+    logger.info('send_mail_1')
     mailer = mailer or tasks.send_email
+    logger.info('send_mail_2')
     subject = unicode(mail.subject(**context), 'utf-8')
     message = unicode(mail.html(**context), 'utf-8')
     # Don't use ttls and login in DEBUG_MODE
@@ -150,6 +155,7 @@ def send_mail(
     if settings.USE_EMAIL:
         if settings.USE_CELERY and celery:
             logger.debug('Sending via celery...')
+            logger.info('kwargs::' + str(kwargs))
             return mailer.apply_async(kwargs=kwargs, link=callback)
         else:
             logger.debug('Sending without celery')
