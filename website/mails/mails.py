@@ -115,9 +115,6 @@ def send_mail(
 
     logger.info('send_mail_charset::' + _charset)
 
-    if _charset == 'utf-8':
-        mail._charset = 'utf-8'
-
     from_addr = from_addr or settings.FROM_EMAIL
     logger.info('send_mail_1')
     mailer = mailer or tasks.send_email
