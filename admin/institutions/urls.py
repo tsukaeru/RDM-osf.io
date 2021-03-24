@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^institution_list/$', views.InstitutionUserList.as_view(), name='institution_list'),
     url(r'^create/$', views.CreateInstitution.as_view(), name='create'),
     url(r'^import/$', views.ImportInstitution.as_view(), name='import'),
+    url(r'^quota_recalc/all/$', views.quota_recalc_all, name='quota_recalc_all'),
     url(r'^(?P<institution_id>[0-9]+)/$', views.InstitutionDetail.as_view(), name='detail'),
     url(r'^(?P<institution_id>[0-9]+)/export/$', views.InstitutionExport.as_view(), name='export'),
     url(r'^(?P<institution_id>[0-9]+)/delete/$', views.DeleteInstitution.as_view(), name='delete'),

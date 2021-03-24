@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
 
 import json
+import admin.quota_recalc.views as recalc
 from operator import itemgetter
+from logging import getLogger, INFO
 
 from django.http import Http404
 from django.core import serializers
@@ -361,3 +363,10 @@ class StatisticalStatusDefaultStorage(QuotaUserList, RdmPermissionMixin, UserPas
 
     def get_institution(self):
         return self.request.user.affiliated_institutions.first()
+
+def quota_recalc_all(request):
+    result = json.loads(recalc.all_users(request).content)
+    logger = getLogger(__name__)
+    logger.setLevel(INFO)
+    logger.info(result['message'])
+    return redirect('institutions:institution_list')

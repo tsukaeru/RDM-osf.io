@@ -1721,6 +1721,7 @@ msgstr "スパムでは"
 msgid " spam? %(guid)s"
 msgstr "ありませんか？：%(guid)s"
 
+#: admin\templates\institutions\institution_list.html:65
 #: admin/templates/nodes/confirm_ham.html:11
 #: admin/templates/nodes/confirm_spam.html:11
 #: admin/templates/nodes/node.html:397 admin/templates/nodes/node_list.html:110
@@ -3123,6 +3124,15 @@ msgstr "アップロード"
 #, python-format
 msgid "Page %(itemsNumber)s of %(paginatorNumPage)s"
 msgstr "ページ%(itemsNumber)s / %(paginatorNumPage)s"
+
+#: admin\templates\institutions\institution_list.html:22
+msgid "Quota Recalculation for all users"
+msgstr "全ユーザーのクォータ再計算"
+
+#: admin\templates\institutions\institution_list.html:61
+msgid "Are you sure you want to recalculate users' quota?"
+msgstr "ユーザー使用量を再計算しますか？"
+
 
 #~ msgid "Submit"
 #~ msgstr "検索"

@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
 
 import pytz
+import json
 from datetime import datetime
+from logging import getLogger, INFO
 
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -35,6 +37,7 @@ from admin.nodes.templatetags.node_extras import reverse_node
 from admin.nodes.serializers import serialize_node, serialize_simple_user_and_node_permissions, serialize_log
 from website.project.tasks import update_node_share
 from website.project.views.register import osf_admin_change_status_identifier
+import admin.quota_recalc.views as recalc
 
 
 class NodeFormView(PermissionRequiredMixin, GuidFormView):
@@ -189,6 +192,10 @@ class NodeDeleteView(PermissionRequiredMixin, NodeDeleteBase):
                     should_hide=True,
                 )
                 osf_log.save()
+            result = json.loads(recalc.calculate_quota_for_node(node).content)
+            logger = getLogger(__name__)
+            logger.setLevel(INFO)
+            logger.info(result['message'])
         except AttributeError:
             return page_not_found(
                 request,

@@ -52,3 +52,23 @@ def user(request, guid, **kwargs):
         'status': 'OK',
         'message': 'User\'s quota successfully recalculated!'
     })
+
+def calculate_quota_for_node(node):
+    c = 0
+    for user in OSFUser.objects.filter(guids___id__in=node.admin_contributor_or_group_member_ids):
+        calculate_quota(user)
+        c += 1
+    return JsonResponse({
+        'status': 'OK',
+        'message': str(c) + ' users\' quota successfully recalculated!'
+    })
+
+def calculate_quota_for_institution(request, institutionId):
+    c = 0
+    for user in OSFUser.objects.filter(affiliated_institutions=institutionId):
+        calculate_quota(user)
+        c += 1
+    return JsonResponse({
+        'status': 'OK',
+        'message': str(c) + ' users\' quota successfully recalculated!'
+    })
