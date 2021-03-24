@@ -90,7 +90,7 @@ api_routes = {
         #route for Integromat action
         Rule(
             '/integromat/integromat_api_call',
-            'post',
+            'get',
             views.integromat_api_call,
             notemplate,
         ),
