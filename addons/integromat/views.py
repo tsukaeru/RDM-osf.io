@@ -209,8 +209,9 @@ def integromat_api_call(*args, **kwargs):
     logger.info('headers' + str(dict(request.headers)))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     logger.info('auth:' + str(auth))
+    logger.info('auth:' + str(dict(auth)))
 
-    return {}
+    return {'id': 'test123'}
 
 @must_be_logged_in
 def integromat_create_meeting_info(**kwargs):
