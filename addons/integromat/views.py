@@ -211,7 +211,7 @@ def integromat_api_call(*args, **kwargs):
     logger.info('auth:' + str(auth))
     logger.info('auth:' + str(auth.user))
 
-    return {'user': auth.user}
+    return {'user': str(auth.user)}
 
 @must_be_logged_in
 def integromat_create_meeting_info(**kwargs):
