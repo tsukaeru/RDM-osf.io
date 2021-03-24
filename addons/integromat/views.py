@@ -209,7 +209,7 @@ def integromat_api_call(*args, **kwargs):
     logger.info('headers' + str(dict(request.headers)))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     logger.info('auth:' + str(auth))
-    logger.info('auth:' + str(dict(auth)))
+    logger.info('auth:' + str(dir(auth)))
 
     return {'id': 'test123'}
 
