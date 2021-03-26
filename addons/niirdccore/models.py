@@ -152,7 +152,7 @@ class NodeSettings(BaseNodeSettings):
         }
 
         # DMP更新リクエスト
-        dmr_url = settings.DMR_URL + '/v1/dmp/' + node_dmp_id
+        dmr_url = settings.DMR_URL + '/v1/workspace/' + node_dmp_id
 
         access_token = node.get_addon(SHORT_NAME).get_dmr_api_key()
         headers = {'Authorization': 'Bearer ' + access_token}
