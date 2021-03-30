@@ -162,9 +162,14 @@ def integromat_get_config_ember(auth, **kwargs):
     userGuid = userGuidJson[0]['fields']['_id']
     microsoftTeamsOrganizerId = ''
 
+    logger.info('userGuidJson:' + str(userGuidJson))
+    logger.info('userGuid:' + str(userGuid))
+
     try:
         organizer = models.Attendees.objects.get(node_settings_id=addon.id, user_guid=userGuid)
         microsoftTeamsOrganizerId = organizer.microsoft_teams_user_object
+        logger.info('organizer:' + str(organizer))
+        logger.info('microsoftTeamsOrganizerId:' + str(microsoftTeamsOrganizerId))
     except ObjectDoesNotExist:
         logger.info('object des not exist1')
         pass
