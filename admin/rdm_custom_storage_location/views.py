@@ -270,6 +270,7 @@ class SaveCredentialsView(InstitutionalStorageBaseView, View):
                 request.user,
                 storage_name,
                 data.get('googledriveinstitutions_folder'),
+                provider_short_name,
             )
         elif provider_short_name == 'owncloud':
             result = utils.save_owncloud_credentials(

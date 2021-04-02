@@ -38,7 +38,8 @@ def get_addon_template_config(config, user):
 
 def get_addons_by_config_type(config_type, user):
     """get a list of Addon objects from the Config Type of Addon."""
-    addons = [addon for addon in settings.ADDONS_AVAILABLE if config_type in addon.configs and not addon.for_institutions]
+    # 'for_institutions' of 'googledriveinstitutions' is 'True', but it can be set to extended storage.
+    addons = [addon for addon in settings.ADDONS_AVAILABLE if config_type in addon.configs and not (addon.for_institutions and addon.short_name != 'googledriveinstitutions')]
     return [get_addon_template_config(addon_config, user) for addon_config in sorted(addons, key=lambda cfg: cfg.full_name.lower())]
 
 def get_addon_config(config_type, addon_short_name):

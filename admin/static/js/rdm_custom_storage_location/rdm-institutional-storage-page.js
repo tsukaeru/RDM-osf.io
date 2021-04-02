@@ -12,7 +12,8 @@ var clipboard = require('js/clipboard');
 
 var no_storage_name_providers = ['osfstorage'];
 // type1: get from admin/rdm_addons/api_v1/views.py
-var preload_accounts_type1 = ['dropboxbusiness'];
+var preload_accounts_type1 = ['dropboxbusiness',
+                              'googledriveinstitutions'];
 // type2: get from admin/rdm_custom_storage_location/views.py
 var preload_accounts_type2 = ['nextcloudinstitutions',
                 'ociinstitutions',
@@ -165,6 +166,14 @@ $('#googledrive_modal input').keyup(function () {
 
 $('#googledrive_modal input').on('paste', function(e) {
     authSaveButtonState('googledrive');
+});
+
+$('#googledriveinstitutions_modal input').keyup(function () {
+    authSaveButtonState('googledriveinstitutions');
+});
+
+$('#googledriveinstitutions_modal input').on('paste', function(e) {
+    authSaveButtonState('googledriveinstitutions');
 });
 
 $('#box_modal input').keyup(function () {

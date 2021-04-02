@@ -17,3 +17,12 @@ API_BASE_URL = 'https://www.googleapis.com/'
 
 # Max file size permitted by frontend in megabytes
 MAX_UPLOAD_SIZE = 5 * 1024  # 5 GB
+
+DEFAULT_BASE_FOLDER = 'root'
+
+# available: {title} {guid}
+ROOT_FOLDER_FORMAT = 'GRDM_{title}_{guid}'
+
+DEBUG_URL = None
+DEBUG_USER = None
+DEBUG_PASSWORD = None

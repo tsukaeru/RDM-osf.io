@@ -1,7 +1,27 @@
 from addons.base.apps import BaseAddonAppConfig, generic_root_folder
 from addons.googledriveinstitutions.settings import MAX_UPLOAD_SIZE
+from website.util import rubeus
 
-googledriveinstitutions_root_folder = generic_root_folder('googledriveinstitutions')
+
+def googledriveinstitutions_root(addon_config, node_settings, auth, **kwargs):
+    from addons.osfstorage.models import Region
+
+    node = node_settings.owner
+    institution = node_settings.addon_option.institution
+    if Region.objects.filter(_id=institution._id).exists():
+        region = Region.objects.get(_id=institution._id)
+        if region:
+            node_settings.region = region
+    root = rubeus.build_addon_root(
+        node_settings=node_settings,
+        name='',
+        permissions=auth,
+        user=auth.user,
+        nodeUrl=node.url,
+        nodeApiUrl=node.api_url,
+    )
+    return [root]
+
 
 class GoogleDriveInstitutionsAddonConfig(BaseAddonAppConfig):
 
@@ -15,9 +35,7 @@ class GoogleDriveInstitutionsAddonConfig(BaseAddonAppConfig):
     has_hgrid_files = True
     max_file_size = MAX_UPLOAD_SIZE
 
-    @property
-    def get_hgrid_data(self):
-        return googledriveinstitutions_root_folder
+    get_hgrid_data = googledriveinstitutions_root
 
     FOLDER_SELECTED = 'googledriveinstitutions_folder_selected'
     NODE_AUTHORIZED = 'googledriveinstitutions_node_authorized'
@@ -26,7 +44,8 @@ class GoogleDriveInstitutionsAddonConfig(BaseAddonAppConfig):
     actions = (FOLDER_SELECTED, NODE_AUTHORIZED, NODE_DEAUTHORIZED, )
 
     # default value for RdmAddonOption.is_allowed for GRDM Admin
-    is_allowed_default = False
+    is_allowed_default = False 
+    for_institutions = True
 
     @property
     def routes(self):

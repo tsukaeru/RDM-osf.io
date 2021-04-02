@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from framework.exceptions import HTTPError
+import json
 
+from framework.exceptions import HTTPError
 from website.util.client import BaseClient
 from addons.googledriveinstitutions import settings
 
@@ -27,6 +28,78 @@ class GoogleDriveInstitutionsClient(BaseClient):
         if self.access_token:
             return {'authorization': 'Bearer {}'.format(self.access_token)}
         return {}
+
+    def mkdir(self, base_folder, name):
+        self._make_request(
+            'POST',
+            self.build_url(settings.API_BASE_URL, 'drive', 'v3', 'files'),
+            headers={
+                'Content-Type': 'application/json',
+            },
+            data=json.dumps({
+                'name': name,
+                'parents': [{
+                    'id': base_folder
+                }],
+                'mimeType': 'application/vnd.google-apps.folder',
+            }),
+            expects=(200, ),
+            throws=HTTPError(401),
+        )
+        return
+
+    def rmdir(self, base_folder, name):
+        query = ' and '.join([
+            "'{0}' in parents".format(base_folder),
+            'trashed = false',
+            "mimeType = 'application/vnd.google-apps.folder'",
+            "name = '{}'".format(name),
+        ])
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files'),
+            params={'q': query, 'fields': 'files(id)'},
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+
+        rmdir_id = res.json()['files'][0]['id']
+
+        self._make_request(
+            'DELETE',
+            self.build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', rmdir_id),
+            expects=(204, ),
+            throws=HTTPError(401)
+        )
+        return
+
+    def rename(self, base_folder, old_name, new_name):
+        query = ' and '.join([
+            "'{0}' in parents".format(base_folder),
+            'trashed = false',
+            "mimeType = 'application/vnd.google-apps.folder'",
+            "name = '{}'".format(old_name),
+        ])
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files'),
+            params={'q': query, 'fields': 'files(id)'},
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+
+        old_dir_id = res.json()['files'][0]['id']
+
+        self._make_request(
+            'PATCH',
+            self.build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', old_dir_id),
+            data=json.dumps({
+                'name': new_name,
+            }),
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return
 
     def rootFolderId(self):
         return self._make_request(

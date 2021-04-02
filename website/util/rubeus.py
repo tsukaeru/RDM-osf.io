@@ -265,7 +265,8 @@ class NodeFileCollector(object):
             if addon.config.has_hgrid_files:
                 if addon == osfstorage and region_disabled:
                     continue  # skip (hide osfstorage)
-                if addon.config.for_institutions:
+                # 'for_institutions' of 'googledriveinstitutions' is 'True', but it can be set to extended storage.
+                if addon.config.for_institutions and addon.short_name != 'googledriveinstitutions':
                     if region_provider != addon.config.short_name:
                         continue  # skip (hide this *institutions)
 
