@@ -9,7 +9,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('osf', '0215_auto_20210324_0126'),
         ('addons_googledriveinstitutions', '0001_initial'),
     ]
 
