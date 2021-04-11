@@ -124,3 +124,26 @@ class GoogleDriveInstitutionsClient(BaseClient):
             throws=HTTPError(401)
         )
         return res.json()['files']
+
+    def get_properties(self, file_id):
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', file_id),
+            params={'fields': 'properties'},
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()['properties']
+
+    def set_properties(self, file_id, properties):
+        res = self._make_request(
+            'PATCH',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files', file_id),
+            params={'fields': 'properties'},
+            data=json.dumps({
+                'properties': properties
+            }),
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()['properties']

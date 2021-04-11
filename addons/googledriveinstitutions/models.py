@@ -2,13 +2,20 @@
 import logging
 import os
 from django.db import models
+# 
+import six
+from osf.models.rdm_addons import RdmAddonOption
+from admin.rdm.utils import get_institution_id
+from osf.models.institution import Institution
+from website import settings as website_settings
+# 
 from framework.auth import Auth
 from framework.exceptions import HTTPError
 from osf.models.external import ExternalProvider, ExternalAccount
 from osf.models.files import File, Folder, BaseFileNode
 from addons.base import exceptions
-# from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings, BaseStorageAddon)
-from addons.base.models import (BaseNodeSettings, BaseOAuthUserSettings, BaseStorageAddon)
+from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings, BaseStorageAddon)
+from addons.base.models import BaseNodeSettings
 from addons.googledriveinstitutions import settings
 from addons.googledriveinstitutions import utils
 from addons.googledriveinstitutions.client import (GoogleAuthClient, GoogleDriveInstitutionsClient)
@@ -37,12 +44,12 @@ class GoogleDriveInstitutionsFolder(GoogleDriveInstitutionsFileNode, Folder):
 
 
 class GoogleDriveInstitutionsFile(GoogleDriveInstitutionsFileNode, File):
-    HASH_TYPE = 'md5'
+    HASH_TYPE = 'sha512'
 
     @property
     def _hashes(self):
         try:
-            DEBUG('md5(_hashes): {}'.format(self._history[-1]['extra']['hashes'][self.HASH_TYPE]))
+            DEBUG('sha512(_hashes): {}'.format(self._history[-1]['extra']['hashes'][self.HASH_TYPE]))
             return {self.HASH_TYPE: self._history[-1]['extra']['hashes'][self.HASH_TYPE]}
         except (IndexError, KeyError) as e:
             logger.exception('Raise Exception: {}'.format(e))
@@ -79,21 +86,40 @@ class GoogleDriveInstitutionsProvider(ExternalProvider):
         self.refresh_oauth_key(force=force_refresh)
         return self.account.oauth_key
 
-class UserSettings(BaseOAuthUserSettings):
-    oauth_provider = GoogleDriveInstitutionsProvider
-    serializer = GoogleDriveInstitutionsSerializer
 
 class NodeSettings(BaseNodeSettings, BaseStorageAddon):
-# class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
     oauth_provider = GoogleDriveInstitutionsProvider
     provider_name = 'googledriveinstitutions'
 
     folder_id = models.TextField(null=True, blank=True)
     folder_path = models.TextField(null=True, blank=True)
     serializer = GoogleDriveInstitutionsSerializer
-    user_settings = models.ForeignKey(UserSettings, null=True, blank=True, on_delete=models.CASCADE)
+
+    fileaccess_option = models.ForeignKey(
+        RdmAddonOption, null=True, blank=True,
+        related_name='googledriveinstitutions_fileaccess_option',
+        on_delete=models.CASCADE)
 
     _api = None
+
+    def _get_token(self, name):
+        # fileacces_option
+        option = getattr(self, '{}_option'.format(name.lower()), None)
+        if not option:
+            return None
+        if name == 'fileaccess' and option.is_allowed is False:
+            return None
+
+        # DEBUG_FILEACCESS_TOKEN
+        debug = getattr(settings, 'DEBUG_{}_TOKEN'.format(name.upper()), None)
+        if debug:
+            return debug
+
+        return utils.addon_option_to_token(option)
+
+    @property
+    def fileaccess_token(self):
+        return self._get_token('fileaccess')
 
     @property
     def api(self):
@@ -208,7 +234,7 @@ class NodeSettings(BaseNodeSettings, BaseStorageAddon):
     def serialize_waterbutler_credentials(self):
         if not self.has_auth:
             raise exceptions.AddonError('Addon is not authorized')
-        return {'token': self.fetch_access_token()}
+        return {'token': self.fileaccess_token}
 
     def serialize_waterbutler_settings(self):
         if not self.folder_id:

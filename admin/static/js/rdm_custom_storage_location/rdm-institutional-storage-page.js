@@ -32,7 +32,7 @@ function preload(provider, callback) {
         }
     } else if (preload_accounts_type2.indexOf(provider) >= 0) {
         // getCredentials(provider, callback);
- 	getCredentials(provider, null);
+        getCredentials(provider, null);
         if (callback) {
             callback();
         }
@@ -45,7 +45,7 @@ function preload(provider, callback) {
 
 function disable_storage_name(provider) {
     $('#storage_name').attr('disabled',
-			    no_storage_name_providers.indexOf(provider) >= 0);
+                no_storage_name_providers.indexOf(provider) >= 0);
 }
 
 function selectedProvider() {
@@ -158,6 +158,14 @@ $('#nextcloudinstitutions_modal input').keyup(function () {
 
 $('#nextcloudinstitutions_modal input').on('paste', function(e) {
     validateRequiredFields('nextcloudinstitutions');
+});
+
+$('#googledriveinstitutions_modal input').keyup(function () {
+    validateRequiredFields('googledriveinstitutions');
+});
+
+$('#googledriveinstitutions_modal input').on('paste', function(e) {
+    validateRequiredFields('googledriveinstitutions');
 });
 
 $('#googledrive_modal input').keyup(function () {
@@ -502,14 +510,14 @@ function setParameters(provider_short_name, data) {
     var providerClass = provider_short_name + '-params';
     $('.' + providerClass).each(function(i, e) {
         var val = data[$(e).attr('id')];
-	if (val) {
+    if (val) {
             $(e).val(val);
         }
     });
 
     if (provider_short_name === 'nextcloudinstitutions') {
-	update_nextcloudinstitutions_notification_connid();
-	update_nextcloudinstitutions_notification_url();
+    update_nextcloudinstitutions_notification_connid();
+    update_nextcloudinstitutions_notification_url();
     }
 }
 

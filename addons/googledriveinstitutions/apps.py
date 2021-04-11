@@ -50,7 +50,7 @@ class GoogleDriveInstitutionsAddonConfig(BaseAddonAppConfig):
     @property
     def routes(self):
         from . import routes
-        return [routes.api_routes]
+        return [routes.auth_routes, routes.api_routes]
 
     @property
     def user_settings(self):

@@ -165,6 +165,12 @@ class TestConnectionView(InstitutionalStorageBaseView, View):
         elif provider_short_name == 'dropboxbusiness':
             institution = request.user.affiliated_institutions.first()
             result = utils.test_dropboxbusiness_connection(institution)
+        elif provider_short_name == 'googledriveinstitutions':
+            institution = request.user.affiliated_institutions.first()
+            result = utils.test_googledriveinstitutions_connection(
+                institution,
+                data.get('googledriveinstitutions_folder'),
+            )
 
         else:
             result = ({'message': 'Invalid provider.'}, http_status.HTTP_400_BAD_REQUEST)
@@ -267,7 +273,7 @@ class SaveCredentialsView(InstitutionalStorageBaseView, View):
             )
         elif provider_short_name == 'googledriveinstitutions':
             result = utils.save_googledriveinstitutions_credentials(
-                request.user,
+                institution,
                 storage_name,
                 data.get('googledriveinstitutions_folder'),
                 provider_short_name,

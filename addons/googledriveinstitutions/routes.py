@@ -6,6 +6,12 @@ from framework.routing import Rule, json_renderer
 
 from . import views
 
+auth_routes = {
+    'rules': [
+    ],
+    'prefix': '/api/v1'
+}
+
 # JSON endpoints
 api_routes = {
     'rules': [

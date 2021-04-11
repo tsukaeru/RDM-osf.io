@@ -17,6 +17,7 @@ from addons.googledrive.client import GoogleDriveClient
 from addons.googledriveinstitutions.client import GoogleDriveInstitutionsClient
 from addons.googledriveinstitutions.models import GoogleDriveInstitutionsProvider
 from addons.googledriveinstitutions import settings as googledriveinstitutions_settings
+from addons.googledriveinstitutions import utils as googledriveinstitutions_utils
 from addons.osfstorage.models import Region
 from addons.box import settings as box_settings
 from addons.owncloud import settings as owncloud_settings
@@ -401,15 +402,22 @@ def test_googledrive_connection(institution_id, folder_id):
         'message': 'Credentials are valid'
     }, http_status.HTTP_200_OK)
 
-def test_googledriveinstitutions_connection(institution_id, folder_id):
-    validation_result = oauth_validation('googledriveinstitutions', institution_id, folder_id)
-    if isinstance(validation_result, tuple):
-        return validation_result
+def test_googledriveinstitutions_connection(institution, folder_id):
+    fm = googledriveinstitutions_utils.get_addon_option(institution.id,
+                                                        allowed_check=False)
+    if fm is None:
+        return ({
+            'message': u'Invalid Institution ID.: {}'.format(institution.id)
+        }, http_status.HTTP_400_BAD_REQUEST)
 
-    access_token = ExternalAccountTemporary.objects.get(
-        _id=institution_id, provider='googledriveinstitutions'
-    ).oauth_key
-    client = GoogleDriveInstitutionsClient(access_token)
+    f_option = fm
+    f_token = googledriveinstitutions_utils.addon_option_to_token(f_option)
+    if f_token is None:
+        return ({
+            'message': 'No tokens.'
+        }, http_status.HTTP_400_BAD_REQUEST)
+    
+    client = GoogleDriveInstitutionsClient(f_token)
 
     try:
         client.folders(folder_id)
@@ -849,6 +857,21 @@ def save_dropboxbusiness_credentials(institution, storage_name, provider_name):
         'message': 'Dropbox Business was set successfully!!'
     }, http_status.HTTP_200_OK)
 
+def save_googledriveinstitutions_credentials(institution, storage_name, folder_id, provider_name):
+    test_connection_result = test_googledriveinstitutions_connection(institution, folder_id)
+    if test_connection_result[1] != http_status.HTTP_200_OK:
+        return test_connection_result
+
+    wb_credentials, wb_settings = wd_info_for_institutions(provider_name)
+    region = update_storage(institution._id,  # not institution.id
+                            storage_name,
+                            wb_credentials, wb_settings)
+    external_util.remove_region_external_account(region)
+
+    return ({
+        'message': 'Google Drive in G Suite / Google Workspace was set successfully'
+    }, http_status.HTTP_200_OK)
+
 def save_basic_storage_institutions_credentials_common(
         institution, storage_name, folder, provider_name, provider, separator=':', extended_data=None):
     try:
@@ -935,53 +958,6 @@ def save_ociinstitutions_credentials(institution, storage_name, host_url, access
 
     return save_basic_storage_institutions_credentials_common(
         institution, storage_name, bucket, provider_name, provider, separator)
-
-def save_googledriveinstitutions_credentials(user, storage_name, folder, provider_name):
-    institution = user.affiliated_institutions.first()
-    institution_id = institution._id
-
-    test_connection_result = test_googledriveinstitutions_connection(institution_id, folder)
-    if test_connection_result[1] != http_status.HTTP_200_OK:
-        return test_connection_result
-
-    account = transfer_to_external_account(user, institution_id, provider_name)
-
-    provider = GoogleDriveInstitutionsProvider(account)
-    # provider = GoogleDriveInstitutionsProvider(account=None)
-
-    # return save_basic_storage_institutions_credentials_common(
-    #     institution, storage_name, folder, provider_name, provider)
-
-    try:
-        provider.account.save()
-    except ValidationError:
-        provider.account = ExternalAccount.objects.get(
-            provider=provider_name
-        )
-
-    # Storage Addons for Institutions must have only one ExternalAccont.
-    rdm_addon_option = get_rdm_addon_option(institution.id, provider_name)
-    if rdm_addon_option.external_accounts.count() > 0:
-        rdm_addon_option.external_accounts.clear()
-    rdm_addon_option.external_accounts.add(provider.account)
-
-    rdm_addon_option.extended[KEYNAME_BASE_FOLDER] = folder
-    # if type(extended_data) is dict:
-    #     rdm_addon_option.extended.update(extended_data)
-    rdm_addon_option.save()
-
-    wb_credentials, wb_settings = wd_info_for_institutions(provider_name)
-    region = update_storage(institution._id,  # not institution.id
-                            storage_name,
-                            wb_credentials, wb_settings)
-    external_util.remove_region_external_account(region)
-
-    save_usermap_from_tmp(provider_name, institution)
-    sync_all(institution._id, target_addons=[provider_name])
-
-    return ({
-        'message': 'Saved credentials successfully!!'
-    }, http_status.HTTP_200_OK)
 
 def get_credentials_common(institution, provider_name):
     clear_usermap_tmp(provider_name, institution)
