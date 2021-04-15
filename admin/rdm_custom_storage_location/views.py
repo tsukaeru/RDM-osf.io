@@ -403,6 +403,7 @@ class UserMapView(InstitutionalStorageBaseView, View):
                 report.append(u'{}, {}: {}'.format(status, reason, joined))
 
         try:
+            permission_ids_setting = []
             for line in csv_reader:
                 if len(line) == 0:
                     continue
@@ -446,6 +447,8 @@ class UserMapView(InstitutionalStorageBaseView, View):
                     if permissionResult[1] != http_status.HTTP_200_OK:
                         add_report(NG, 'INVALID_EXTUSER', line, permissionResult)
                         continue
+                    elif permissionResult[1] == http_status.HTTP_200_OK:
+                        permission_ids_setting.append(permissionResult[2])
 
                 if u._id in user_to_extuser:
                     add_report(NG, DUPLICATED_USER, line)
@@ -456,6 +459,14 @@ class UserMapView(InstitutionalStorageBaseView, View):
                 user_to_extuser[u._id] = extuser   # guid.lower() -> extuser
                 extuser_set.add(extuser)
                 add_report(OK, None, line)
+
+            if provider_name == 'googledriveinstitutions':
+                 # delete permissions
+                 permission_ids_setted = utils.getFolderPermissions(institution_id, folder_id)
+                 for item in permission_ids_setted[2]:
+                     if item['id'] not in permission_ids_setting and (item['role'] != 'owner' or item['role'] != 'organizer') :
+                         utils.deletePermissions(institution_id, folder_id, item['id'])
+
         except Exception as e:
             add_report(NG, INVALID_FORMAT, [str(e)])
 

@@ -73,3 +73,38 @@ class GoogleDriveInstitutionsClient(BaseClient):
             throws=HTTPError(401)
         )
         return res.json()
+
+    def permission_list(self, folder_id):
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files',
+                            folder_id, 'permissions'),
+            params={'supportsAllDrives': 'true'},
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()['permissions']
+
+    # "getIdForEmail" is a method only available in Google Drive v2 api. 
+    # Setting the permission is must know the email's permission id. 
+    # So, creat this method and used the "getIdForEmail".
+    def getIdForEmail(self, extuser):
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v2', 'permissionIds', extuser, ),
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()['id']
+
+    def deletePermissions(self, folder_id, permission_id):
+        print(permission_id)
+        res = self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'files',
+                            folder_id, 'permissions', permission_id, ),
+            params={'supportsAllDrives': 'true'},
+            expects=(200, ),
+            throws=HTTPError(401)
+        )
+        return res.json()

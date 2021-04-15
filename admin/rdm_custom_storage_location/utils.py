@@ -886,6 +886,13 @@ def extuser_permission(institution_id, extuser, folder_id):
     client = GoogleDriveInstitutionsClient(access_token)
 
     try:
+        extuser_permission_id = client.getIdForEmail(extuser)
+        permissions = client.permission_list(folder_id)
+        for item in permissions:
+            # check the extuser is created.
+            if extuser_permission_id == item['id']:
+                return ({'message': 'Permission is created now.'
+                }, http_status.HTTP_200_OK, extuser_permission_id)
         client.permission_creat(folder_id, extuser)
     except HTTPError:
         return ({
@@ -894,4 +901,41 @@ def extuser_permission(institution_id, extuser, folder_id):
 
     return ({
         'message': 'Permission is created.'
+    }, http_status.HTTP_200_OK, extuser_permission_id)
+
+def getFolderPermissions(institution_id, folder_id):
+
+    access_token = ExternalAccountTemporary.objects.get(
+        _id=institution_id, provider='googledrive'
+    ).oauth_key
+    client = GoogleDriveInstitutionsClient(access_token)
+
+    try:
+        permissions = client.permission_list(folder_id)
+    except HTTPError:
+        return ({
+            'message': 'Invalid extuser.'
+        }, http_status.HTTP_400_BAD_REQUEST)
+
+    return ({
+        'message': 'Permission is created.'
+    }, http_status.HTTP_200_OK, permissions)
+
+def deletePermissions(institution_id, folder_id, permission_id):
+
+    access_token = ExternalAccountTemporary.objects.get(
+        _id=institution_id, provider='googledrive'
+    ).oauth_key
+    client = GoogleDriveInstitutionsClient(access_token)
+
+    try:
+        client.deletePermissions(folder_id, permission_id)
+    except HTTPError:
+        return ({
+            'message': 'Invalid extuser.'
+        }, http_status.HTTP_400_BAD_REQUEST)
+
+    return ({
+        'message': 'Permission is deleted.'
     }, http_status.HTTP_200_OK)
+
