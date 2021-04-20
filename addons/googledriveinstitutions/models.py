@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 import os
 from django.db import models
 
@@ -9,10 +10,18 @@ from osf.models.files import File, Folder, BaseFileNode
 from addons.base import exceptions
 from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings, BaseStorageAddon)
 from addons.googledriveinstitutions import settings as drive_settings
+from addons.googledriveinstitutions import utils
 from addons.googledriveinstitutions.client import (GoogleAuthClient, GoogleDriveInstitutionsClient)
 from addons.googledriveinstitutions.serializer import GoogleDriveInstitutionsSerializer
-from addons.googledriveinstitutions.utils import to_hgrid
-from website.util import api_v2_url
+from website.util import api_v2_url, timestamp
+
+logger = logging.getLogger(__name__)
+
+ENABLE_DEBUG = True
+
+def DEBUG(msg):
+    if ENABLE_DEBUG:
+        logger.error(u'DEBUG_googledriveinstitutions: {}'.format(msg))
 
 # TODO make googledriveinstitutions "pathfollowing"
 # A migration will need to be run that concats
@@ -28,13 +37,47 @@ class GoogleDriveInstitutionsFolder(GoogleDriveInstitutionsFileNode, Folder):
 
 
 class GoogleDriveInstitutionsFile(GoogleDriveInstitutionsFileNode, File):
+    HASH_TYPE = 'sha512'
+
     @property
     def _hashes(self):
         try:
-            return {'md5': self._history[-1]['extra']['hashes']['md5']}
-        except (IndexError, KeyError):
+            DEBUG('sha512(_hashes): {}'.format(self._history[-1]['extra']['hashes'][self.HASH_TYPE]))
+            return {self.HASH_TYPE: self._history[-1]['extra']['hashes'][self.HASH_TYPE]}
+        except (IndexError, KeyError) as e:
+            logger.exception('Raise Exception: {}'.format(e))
             return None
 
+    # return (hash_type, hash_value)
+    def get_hash_for_timestamp(self):
+        DEBUG('self._hashes: {}'.format(self._hashes))
+        if self._hashes:
+            sha512 = self._hashes.get(self.HASH_TYPE)
+            DEBUG('sha512: {}'.format(sha512))
+            if sha512:
+                return timestamp.HASH_TYPE_SHA512, sha512
+        return None, None  # unsupported
+
+    def _my_node_settings(self):
+        node = self.target
+        if node:
+            addon = node.get_addon(self.provider)
+            if addon:
+                DEBUG('_my_node_settings addon: {}'.format(addon))
+                return addon
+        return None
+
+    def get_timestamp(self):
+        node_settings = self._my_node_settings()
+        if node_settings:
+            return utils.get_timestamp(node_settings, self.path)
+        return None, None, None
+
+    def set_timestamp(self, timestamp_data, timestamp_status, context):
+        node_settings = self._my_node_settings()
+        if node_settings:
+            utils.set_timestamp(node_settings, self.path, timestamp_data,
+                                timestamp_status, context=context)
 
 class GoogleDriveInstitutionsProvider(ExternalProvider):
     name = 'Google Drive in G Suite / Google Workspace'
@@ -127,6 +170,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         client = GoogleDriveInstitutionsClient(access_token)
         if folder_id == 'root':
             rootFolderId = client.rootFolderId()
+            DEBUG('rootFolderId: {}'.format(rootFolderId))
 
             return [{
                 'addon': self.config.short_name,
@@ -144,7 +188,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
             }]
 
         contents = [
-            to_hgrid(item, node, path=path)
+            utils.to_hgrid(item, node, path=path)
             for item in client.folders(folder_id)
         ]
         return contents
@@ -157,6 +201,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         """
         self.folder_id = folder['id']
         self.folder_path = folder['path']
+        DEBUG('folder_id: {}'.format(self.folder_id))
 
         # Tell the user's addon settings that this node is connecting
         self.user_settings.grant_oauth_access(
