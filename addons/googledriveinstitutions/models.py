@@ -2,25 +2,36 @@
 import logging
 import os
 from django.db import models
-# 
-import six
-from osf.models.rdm_addons import RdmAddonOption
-from admin.rdm.utils import get_institution_id
-from osf.models.institution import Institution
-from website import settings as website_settings
-# 
+from django.db.models.signals import pre_save, post_save, post_delete
+from django.dispatch import receiver
+from flask import request
+from requests_oauthlib import OAuth2Session
+from oauthlib.oauth2 import (AccessDeniedError, InvalidGrantError,
+    TokenExpiredError, MissingTokenError)
+from requests.exceptions import HTTPError as RequestsHTTPError
+
 from framework.auth import Auth
 from framework.exceptions import HTTPError
+from framework.exceptions import HTTPError, PermissionsError
+from framework.sessions import session
 from osf.models.external import ExternalProvider, ExternalAccount
 from osf.models.files import File, Folder, BaseFileNode
+from osf.models.node import Node
+from osf.models.contributor import Contributor
+from osf.models.institution import Institution
+from osf.models.rdm_addons import RdmAddonOption
 from addons.base import exceptions
 from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings, BaseStorageAddon)
 from addons.base.models import BaseNodeSettings
+from addons.base.institutions_utils import KEYNAME_BASE_FOLDER
 from addons.googledriveinstitutions import settings
 from addons.googledriveinstitutions import utils
+from addons.googledriveinstitutions.apps import GoogleDriveInstitutionsAddonConfig
 from addons.googledriveinstitutions.client import (GoogleAuthClient, GoogleDriveInstitutionsClient)
 from addons.googledriveinstitutions.serializer import GoogleDriveInstitutionsSerializer
-from website.util import api_v2_url, timestamp
+from admin.rdm.utils import get_institution_id
+from website import settings as website_settings
+from website.util import api_v2_url, timestamp, web_url_for
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +66,6 @@ class GoogleDriveInstitutionsFile(GoogleDriveInstitutionsFileNode, File):
             logger.exception('Raise Exception: {}'.format(e))
             return None
 
-
 class GoogleDriveInstitutionsProvider(ExternalProvider):
     name = 'Google Drive in G Suite / Google Workspace'
     short_name = 'googledriveinstitutions'
@@ -74,9 +84,11 @@ class GoogleDriveInstitutionsProvider(ExternalProvider):
     _drive_client = GoogleDriveInstitutionsClient()
 
     def handle_callback(self, response):
+        access_token = response['access_token']
         client = self._auth_client
-        info = client.userinfo(response['access_token'])
+        info = client.userinfo(access_token)
         return {
+            'key': access_token,
             'provider_id': info['sub'],
             'display_name': info['name'],
             'profile_url': info.get('profile', None)
@@ -86,6 +98,65 @@ class GoogleDriveInstitutionsProvider(ExternalProvider):
         self.refresh_oauth_key(force=force_refresh)
         return self.account.oauth_key
 
+    def auth_callback(self, user, **kwargs):
+        # NOTE: "user" must be RdmAddonOption
+
+        try:
+            cached_credentials = session.data['oauth_states'][self.short_name]
+        except KeyError:
+            raise PermissionsError('OAuth flow not recognized.')
+
+        state = request.args.get('state')
+
+        # make sure this is the same user that started the flow
+        if cached_credentials.get('state') != state:
+            raise PermissionsError('Request token does not match')
+
+        try:
+            # Quirk: Similarly to the `oauth2/authorize` endpoint, the `oauth2/access_token`
+            #        endpoint of Bitbucket would fail if a not-none or non-empty `redirect_uri`
+            #        were provided in the body of the POST request.
+            if self.short_name in website_settings.ADDONS_OAUTH_NO_REDIRECT:
+                redirect_uri = None
+            else:
+                redirect_uri = web_url_for(
+                    'oauth_callback',
+                    service_name=self.short_name,
+                    _absolute=True
+                )
+            response = OAuth2Session(
+                self.client_id,
+                redirect_uri=redirect_uri,
+            ).fetch_token(
+                self.callback_url,
+                client_secret=self.client_secret,
+                code=request.args.get('code'),
+            )
+        except (MissingTokenError, RequestsHTTPError):
+            # raise HTTPError(http_status.HTTP_503_SERVICE_UNAVAILABLE)
+            raise HTTPError(503)
+
+        info = self.handle_callback(response)
+
+        if user.external_accounts.filter(
+                provider=self.short_name,
+                provider_id=info['provider_id']).exists():
+            # use existing ExternalAccount and set it to the RdmAddonOption
+            pass
+        elif user.external_accounts.count() > 0:
+            logger.info('Do not add multiple ExternalAccount for googledriveinstitutions.')
+            raise HTTPError(400)
+        # else: create ExternalAccount and set it to the RdmAddonOption
+
+        result = self._set_external_account(
+            user,  # RdmAddonOption
+            info
+        )
+        return result
+
+class UserSettings(BaseOAuthUserSettings):
+    oauth_provider = GoogleDriveInstitutionsProvider
+    serializer = GoogleDriveInstitutionsSerializer
 
 class NodeSettings(BaseNodeSettings, BaseStorageAddon):
     oauth_provider = GoogleDriveInstitutionsProvider
@@ -94,6 +165,7 @@ class NodeSettings(BaseNodeSettings, BaseStorageAddon):
     folder_id = models.TextField(null=True, blank=True)
     folder_path = models.TextField(null=True, blank=True)
     serializer = GoogleDriveInstitutionsSerializer
+    user_settings = models.ForeignKey(UserSettings, null=True, blank=True, on_delete=models.CASCADE)
 
     fileaccess_option = models.ForeignKey(
         RdmAddonOption, null=True, blank=True,
@@ -276,3 +348,108 @@ class NodeSettings(BaseNodeSettings, BaseStorageAddon):
     def on_delete(self):
         self.deauthorize(add_log=False)
         self.save()
+
+    def set_options(self, f_option, save=False):
+        self.fileaccess_option = f_option
+        if save:
+            self.save()
+
+def init_addon(node, addon_name):
+    if node.creator.eppn is None:
+        logger.info(u'{} has no ePPN.'.format(node.creator.username))
+        return  # disabled
+    institution_id = get_institution_id(node.creator)
+    if institution_id is None:
+        logger.info(u'{} has no institution.'.format(node.creator.username))
+        return  # disabled
+    fm = utils.get_addon_option(institution_id)
+    if fm is None:
+        institution = Institution.objects.get(id=institution_id)
+        logger.info(u'Institution({}) has no valid oauth keys.'.format(institution.name))
+        return  # disabled
+
+    f_option = fm
+    f_token = utils.addon_option_to_token(f_option)
+    if f_token is None:
+        return  # disabled
+
+    addon = node.add_addon(addon_name, auth=Auth(node.creator), log=True)
+    addon.set_options(f_option)
+
+    folder = addon.get_folders(folder_id=f_option[KEYNAME_BASE_FOLDER])
+    addon.set_folder(folder=folder, auth=Auth(node.creator))
+
+
+# store values in a short time to detect changed fields
+class SyncInfo(object):
+    sync_info_dict = {}  # Node.id -> SyncInfo
+
+    def __init__(self):
+        self.old_node_title = None
+        self.need_to_update_members = False
+
+    @classmethod
+    def get(cls, id):
+        info = cls.sync_info_dict.get(id)
+        if info is None:
+            info = SyncInfo()
+            cls.sync_info_dict[id] = info
+        return info
+
+
+@receiver(pre_save, sender=Node)
+def node_pre_save(sender, instance, **kwargs):
+    if instance.is_deleted:
+        return
+
+    addon_name = GoogleDriveInstitutionsAddonConfig.short_name
+    if addon_name not in website_settings.ADDONS_AVAILABLE_DICT:
+        return
+
+    try:
+        old_node = Node.objects.get(id=instance.id)
+        syncinfo = SyncInfo.get(old_node.id)
+        syncinfo.old_node_title = old_node.title
+    except Exception:
+        pass
+
+
+@receiver(post_save, sender=Node)
+def node_post_save(sender, instance, created, **kwargs):
+    if instance.is_deleted:
+        DEBUG('instance.is_deleted: True')
+        return
+
+    addon_name = GoogleDriveInstitutionsAddonConfig.short_name
+    if addon_name not in website_settings.ADDONS_AVAILABLE_DICT:
+        return
+    DEBUG('created: {}'.format(created))
+    if created:
+        init_addon(instance, addon_name)
+    else:
+        ns = instance.get_addon(addon_name)
+        DEBUG('ns: {}'.format(ns))
+        if ns is None or not ns.complete:  # disabled
+            return
+        syncinfo = SyncInfo.get(instance.id)
+        if ns.owner.title != syncinfo.old_node_title:
+            ns.rename_team_folder()
+        if syncinfo.need_to_update_members:
+            ns.sync_members()
+            syncinfo.need_to_update_members = False
+
+
+@receiver(post_save, sender=Contributor)
+@receiver(post_delete, sender=Contributor)
+def update_group_members(sender, instance, **kwargs):
+    addon_name = GoogleDriveInstitutionsAddonConfig.short_name
+    if addon_name not in website_settings.ADDONS_AVAILABLE_DICT:
+        return
+    node = instance.node
+    if node.is_deleted:
+        return
+    ns = node.get_addon(addon_name)
+    if ns is None or not ns.complete:  # disabled
+        return
+    syncinfo = SyncInfo.get(node.id)
+    syncinfo.need_to_update_members = True

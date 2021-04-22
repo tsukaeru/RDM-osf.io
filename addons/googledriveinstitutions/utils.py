@@ -13,7 +13,6 @@ from addons.googledriveinstitutions import settings
 from addons.googledriveinstitutions.client import GoogleDriveInstitutionsClient
 from admin.rdm_addons.utils import get_rdm_addon_option
 
-
 PROVIDER_NAME = 'googledriveinstitutions'
 
 logger = logging.getLogger(__name__)
