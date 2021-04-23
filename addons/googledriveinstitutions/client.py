@@ -75,3 +75,32 @@ class GoogleDriveInstitutionsClient(BaseClient):
             throws=HTTPError(401)
         )
         return res.json()['properties']
+
+class GetChangesClient(BaseClient):
+
+    def startPageToken(driveId):
+        return self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'changes', 'startPageToken'),
+            params={'driveId': driveid},
+            expects=(200, ),
+            throws=HTTPError(401)
+            ).json()
+
+    def channel(self):
+        return self._make_request(
+            'POST',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'changes', 'watch'),
+            params={'id': str(uuid.uuid4()), 'type': 'web_hook', 'address': '/notice/googledriveinstitutions/changes/'},
+            expects=(200, ),
+            throws=HTTPError(401)
+            ).json()
+
+    def changes(self):
+        return self._make_request(
+            'GET',
+            self._build_url(settings.API_BASE_URL, 'drive', 'v3', 'changes'),
+            params={'pageToken': ''},
+            expects=(200, ),
+            throws=HTTPError(401)
+            ).json()

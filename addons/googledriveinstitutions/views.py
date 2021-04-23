@@ -49,3 +49,10 @@ def googledriveinstitutions_folder_list(node_addon, **kwargs):
     folder_id = request.args.get('folder_id', 'root')
 
     return node_addon.get_folders(folder_path=path, folder_id=folder_id)
+
+@must_have_addon(SHORT_NAME, 'node')
+@must_be_addon_authorizer(SHORT_NAME)
+def receive_changes(node_addon, **kwargs):
+    return {
+        'test':'test'
+    }

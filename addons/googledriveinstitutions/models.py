@@ -281,3 +281,8 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
     def on_delete(self):
         self.deauthorize(add_log=False)
         self.save()
+
+class Channel():
+    user = models.TextField(null=True, blank=True)
+    channelId = models.TextField(null=True, blank=True)
+    pageToken = models.TextField(null=True, blank=True)

@@ -63,6 +63,17 @@ api_routes = {
             views.googledriveinstitutions_import_auth,
             json_renderer
         ),
+
+        ##### Get changes #####
+        
+        Rule(
+            [
+                '/notice/googledriveinstitutions/changes/',
+             ],
+            'post',
+            views.receive_changes,
+            json_renderer
+        ),
     ],
     'prefix': '/api/v1'
 }
