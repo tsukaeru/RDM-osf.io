@@ -354,6 +354,19 @@ class NodeSettings(BaseNodeSettings, BaseStorageAddon):
         if save:
             self.save()
 
+    def copy_folders(self, dest_addon):
+        root_folder = '/' + self.rootFolderId.strip('/') + '/'
+        root_folder_len = len(root_folder)
+        c = self.client
+        destc = dest_addon.client
+        for item in c.list(root_folder, depth='infinity'):  # may raise
+            # print(item.path)
+            if item.is_dir() and item.path.startswith(root_folder):
+                basepath = item.path[root_folder_len:]
+                newpath = dest_addon.folder_id + '/' + basepath
+                logger.debug(u'copy_folders: mkdir({})'.format(newpath))
+                destc.mkdir(newpath)
+
 def init_addon(node, addon_name):
     if node.creator.eppn is None:
         logger.info(u'{} has no ePPN.'.format(node.creator.username))
@@ -453,3 +466,4 @@ def update_group_members(sender, instance, **kwargs):
         return
     syncinfo = SyncInfo.get(node.id)
     syncinfo.need_to_update_members = True
+    
