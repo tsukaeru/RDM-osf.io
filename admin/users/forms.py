@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from osf.models.user import AuthControl
 
 class EmailResetForm(forms.Form):
     emails = forms.ChoiceField(label='Email')
@@ -26,3 +27,18 @@ class MergeUserForm(forms.Form):
 
 class AddSystemTagForm(forms.Form):
     system_tag_to_add = forms.CharField(label='system_tag_to_add', min_length=1, max_length=1024, required=True)
+
+class UserAuthenticationControlForm(forms.ModelForm):
+    class Meta:
+        model = AuthControl
+        fields = ('eduPersonEntilement', 'permission')
+
+    eduPersonEntilement  = forms.CharField(label='eduPersonEntilement', required=False)
+    permission = forms.NullBooleanField(required=True)
+
+    permission.widget = forms.widgets.RadioSelect(
+        choices = [
+            (True, '許可'),
+            (False, '拒否'),
+        ]
+    )

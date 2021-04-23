@@ -22,7 +22,8 @@ def used_quota(user_id, storage_type=UserQuota.NII_STORAGE):
     )
     projects_ids = AbstractNode.objects.filter(
         projectstoragetype__storage_type=storage_type,
-        creator_id=guid.object_id
+        creator_id=guid.object_id,
+        is_deleted=False
     ).values_list('id', flat=True)
 
     files_ids = OsfStorageFileNode.objects.filter(

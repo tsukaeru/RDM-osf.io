@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load node_extras %}
+{% block top_includes %}
+  <link rel="stylesheet" type="text/css" href="/static/css/users.css" />
+{% endblock %}
+{% block title %}
+    <title>ユーザ認証制御</title>
+{% endblock title %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <h3>ユーザ認証制御</h3>
+        </div>
+        <div class="row">
+			<h4>登録済み</h4>
+			<table class="userauthlist">
+				<tr>
+					<th>eduPersonEntilement</th>
+					<th>login</th>				
+				</tr>
+				{% for entilement in entilements %}
+				<tr>
+					<td>{{ entilement.eduPersonEntilement }}</td>
+					<td>{{ entilement.permission }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+        </div>
+        <div class="row">
+			<h4>登録・編集</h4>
+            <div class="col-md-6">
+                <form action="{% url 'users:authentication' institution_id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-primary" value="{% trans 'Save' %}" />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

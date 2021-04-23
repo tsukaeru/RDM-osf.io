@@ -6,10 +6,10 @@ from furl import furl
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.views.defaults import page_not_found
-from django.views.generic import FormView, DeleteView, ListView, TemplateView, View
+from django.views.generic import FormView, DeleteView, ListView, CreateView, TemplateView, View
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
@@ -17,11 +17,14 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 
 from osf.exceptions import UserStateError
+from osf.models import Institution
 from osf.models.base import Guid
-from osf.models.user import OSFUser
+from osf.models.user import OSFUser, AuthControl
 from osf.models.node import Node, NodeLog
 from osf.models.spam import SpamStatus
+from osf.models import Institution
 from osf.models import UserQuota
+from admin.base import settings as admin_settings
 from framework.auth import get_user
 from framework.auth.utils import impute_names
 from framework.auth.core import generate_verification_key
@@ -45,7 +48,7 @@ from osf.models.admin_log_entry import (
 
 from admin.rdm.utils import RdmPermissionMixin
 from admin.users.serializers import serialize_user, serialize_simple_preprint, serialize_simple_node
-from admin.users.forms import EmailResetForm, WorkshopForm, UserSearchForm, MergeUserForm, AddSystemTagForm
+from admin.users.forms import EmailResetForm, WorkshopForm, UserSearchForm, MergeUserForm, AddSystemTagForm, UserAuthenticationControlForm
 from admin.users.templatetags.user_extras import reverse_user
 from website.settings import DOMAIN, OSF_SUPPORT_EMAIL
 
@@ -800,3 +803,99 @@ class UserInstitutionQuotaView(RdmPermissionMixin, UserPassesTestMixin, BaseUser
     def post(self, request, *args, **kwargs):
         self.update_quota(request.POST.get('maxQuota'), UserQuota.CUSTOM_STORAGE)
         return redirect('users:user_details', guid=self.kwargs.get('guid'))
+
+class InstitutionListView(RdmPermissionMixin, UserPassesTestMixin, TemplateView):
+    """View for the Institution Summary Screen"""
+    template_name = 'users/institution_list.html'
+    raise_exception = True
+
+    def test_func(self):
+        
+        """check user permissions"""
+        # login check
+        if not self.is_authenticated:
+            return False
+        # permitted if superuser or institution administrator
+        if self.is_super_admin or self.is_admin:
+            return True
+        return False
+
+    def get(self, request, *args, **kwargs):
+        """get contexts"""
+        user = self.request.user
+        
+        # superuser:
+        if self.is_super_admin:
+            ctx = {
+                'institutions': Institution.objects.order_by('id').all(),
+                'logohost': admin_settings.OSF_URL,
+            }
+            return self.render_to_response(ctx)
+        # institution administrator
+        elif self.is_admin:
+            institution = user.affiliated_institutions.first()
+            if institution:
+                return redirect(reverse('users:authentication', args=[institution.id]))
+            else:
+                institution = get_dummy_institution()
+                return redirect(reverse('users:authentication', args=[institution.id]))
+
+class UserAuthenticationControlView(RdmPermissionMixin, UserPassesTestMixin, CreateView):
+    model = AuthControl
+    template_name = 'users/authentication_control.html'
+    raise_exception = True
+    form_class = UserAuthenticationControlForm
+
+    def test_func(self):
+        import logging
+        logger = logging.getLogger('development')
+        institution = self.request.user.affiliated_institutions.first()
+        logger.info(institution.id)
+        institution_id = int(self.kwargs.get('institution_id'))
+        return self.has_auth(institution_id)
+
+    def get_context_data(self, **kwargs):
+        """get contexts"""
+        ctx = super(UserAuthenticationControlView, self).get_context_data(**kwargs)
+
+        ctx['enable_force'] = admin_settings.ENABLE_FORCE_CHECK
+
+        institution_id = int(self.kwargs.get('institution_id'))
+
+        if Institution.objects.filter(pk=institution_id).exists():
+            institution = Institution.objects.get(pk=institution_id)
+        else:
+            institution = get_dummy_institution()
+        ctx['institution'] = institution
+        ctx['institution_id'] = institution.id
+        
+        entilements = AuthControl.objects.filter(institutionId=institution.id)
+        
+        import logging
+        logger = logging.getLogger('development')
+        logger.info(entilements)
+        logger.info(self.request.user)
+        
+        ctx['entilements'] = AuthControl.objects.filter(institutionId=institution.id)
+
+        return ctx
+
+    def form_valid(self, form):
+        institution = self.request.user.affiliated_institutions.first()
+        import logging
+        logger = logging.getLogger('development')
+        
+        auth_control = AuthControl.objects.update_or_create(
+            institutionId = institution.id,
+            eduPersonEntilement = form.cleaned_data['eduPersonEntilement'],
+            defaults = {'permission':form.cleaned_data['permission'],'updateUser':self.request.username}
+        )
+        
+        logger.info(auth_control)
+        logger.info(AuthControl.objects.filter(institutionId=institution.id))
+        
+        return super(UserAuthenticationControlView, self).form_valid(form)
+
+    @property
+    def success_url(self):
+        return reverse('users:authentication', kwargs={'institution_id': self.kwargs.get('institution_id')})

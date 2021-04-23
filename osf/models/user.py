@@ -1,3 +1,4 @@
+
 import datetime as dt
 import logging
 import re
@@ -2023,6 +2024,17 @@ class OSFUser(DirtyFieldsMixin, GuidMixin, BaseModel, AbstractBaseUser, Permissi
             ('view_osfuser', 'Can view user details'),
         )
 
+class AuthControl(models.Model):
+    institutionId = models.IntegerField(default=0)
+    eduPersonEntilement = models.CharField(max_length=50, blank=False, null=True)
+    permission = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updateDate = models.DateTimeField(auto_now=True)
+    updateUser = models.CharField(max_length=50, blank=False, null=True)
+ 
+    def __str__(self):
+        return self.eduPersonEntilement + ':' + str(self.permission)
+
 @receiver(post_save, sender=OSFUser)
 def add_default_user_addons(sender, instance, created, **kwargs):
     if created:
@@ -2052,3 +2064,4 @@ def create_quickfiles_project(sender, instance, created, **kwargs):
 def update_search_with_affiliated_institutions(sender, instance, action, **kwargs):
     if action in ['post_add', 'post_remove', 'post_clear']:
         instance.update_search()
+

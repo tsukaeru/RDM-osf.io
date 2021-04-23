@@ -1,3 +1,15 @@
 .storageLimitContainer {
     min-width: 115px;
 }
+
+#id_eduPersonEntilement{
+	display: block;
+}
+
+#id_permission{
+	list-style: none; 
+}
+
+.userauthlist th{
+	padding-right: 3em;
+}
