@@ -25,8 +25,8 @@ cache:
 env:
   global:
     - WHEELHOUSE="$HOME/.cache/wheelhouse"
-    - LIBXML2_DEB="libxml2-dbg_2.9.1+dfsg1-3ubuntu4.9_amd64.deb"
-    - POSTGRES_DEB="postgresql-9.6_9.6.3-1.pgdg12.4+1_amd64.deb"
+    - LIBXML2_DEB="libxml2-dbg_2.9.1+dfsg1-3ubuntu4.13_amd64.deb"
+    - POSTGRES_DEB="postgresql-9.6_9.6.11-1.pgdg100+1+b1_amd64.deb"
     - ELASTICSEARCH_ARCHIVE="elasticsearch-2.4.5.tar.gz"
     - ELASTICSEARCH6_ARCHIVE="elasticsearch-6.3.1.tar.gz"
     - LIBJEMALLOC_DEB="libjemalloc1_3.5.1-2_amd64.deb"
