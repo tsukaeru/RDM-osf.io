@@ -70,11 +70,11 @@ before_install:
       dpkg -x $POSTGRES_DEB /tmp/postgres
     - |
       export LD_LIBRARY_PATH=/tmp/libxml2/usr/lib/x86_64-linux-gnu
-      /tmp/postgres/usr/lib/postgresql/9.6/bin/initdb /tmp/postgres/data --nosync -U postgres
+      /usr/lib/postgresql/9.6/bin/initdb /tmp/postgres/data --nosync -U postgres
       sed -i -e 's/#fsync.*/fsync = off/' /tmp/postgres/data/postgresql.conf
       sed -i -e 's/#synchronous_commit.*/synchronous_commit = off/' /tmp/postgres/data/postgresql.conf
       sed -i -e 's/#full_page_writes.*/full_page_writes = off/' /tmp/postgres/data/postgresql.conf
-      /tmp/postgres/usr/lib/postgresql/9.6/bin/postgres -k /tmp -D /tmp/postgres/data -p 54321 > /dev/null & export POSTGRES_PID=$!
+      /usr/lib/postgresql/9.6/bin/postgres -k /tmp -D /tmp/postgres/data -p 54321 > /dev/null & export POSTGRES_PID=$!
     # elasticsearch
     - |
       cd $HOME/.cache/downloads
