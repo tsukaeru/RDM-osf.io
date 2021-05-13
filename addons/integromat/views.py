@@ -155,12 +155,10 @@ def integromat_get_config_ember(auth, **kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
-    appMicrosoftTeams = RdmWebMeetingApps.objects.get(app_name='MicrosoftTeams')
-
     workflows = RdmWorkflows.objects.all()
-    microsoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id).order_by('start_datetime').reverse()
-    upcomingMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
-    previousMicrosoftTeamsMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, app_id=appMicrosoftTeams.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
+    allWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id).order_by('start_datetime').reverse()
+    upcomingWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
+    previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
 
     logger.info('datetime.today:' + str(datetime.today()))
@@ -169,17 +167,18 @@ def integromat_get_config_ember(auth, **kwargs):
 
     microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
     workflowsJson = serializers.serialize('json', workflows, ensure_ascii=False)
-    microsoftTeamsMeetingsJson = serializers.serialize('json', microsoftTeamsMeetings, ensure_ascii=False)
-    upcomingMicrosoftTeamsMeetingsJson = serializers.serialize('json', upcomingMicrosoftTeamsMeetings, ensure_ascii=False)
-    previousMicrosoftTeamsMeetingsJson = serializers.serialize('json', previousMicrosoftTeamsMeetings, ensure_ascii=False)
+    allWebMeetingsJson = serializers.serialize('json', allWebMeetings, ensure_ascii=False)
+    upcomingWebMeetingsJson = serializers.serialize('json', upcomingWebMeetings, ensure_ascii=False)
+    previousWebMeetingsJson = serializers.serialize('json', previousWebMeetings, ensure_ascii=False)
+
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
                          'node_settings_id': addon._id, 
                          'webhook_url': addon.external_account.webhook_url,
-                         'microsoft_teams_meetings': microsoftTeamsMeetingsJson,
-                         'upcoming_microsoft_teams_meetings': upcomingMicrosoftTeamsMeetingsJson,
-                         'previous_microsoft_teams_meetings': previousMicrosoftTeamsMeetingsJson,
+                         'all_web_meetings': allWebMeetingsJson,
+                         'upcoming_web_meetings': upcomingWebMeetingsJson,
+                         'previous_web_meetings': previousWebMeetingsJson,
                          'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
                          'workflows': workflowsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS
