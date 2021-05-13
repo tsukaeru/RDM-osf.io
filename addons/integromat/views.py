@@ -218,7 +218,6 @@ def integromat_api_call(*args, **kwargs):
 
     return {'email': str(auth.user)}
 
-@must_be_logged_in
 def integromat_create_meeting_info(**kwargs):
 
     logger.info('integromat called integromat_create_meeting_info')
