@@ -213,8 +213,8 @@ def integromat_create_meeting_info(**kwargs):
     endDatetime = request.get_json().get('endDate')
     location = request.get_json().get('location')
     content = request.get_json().get('content')
-    joinUrl = request.get_json().get('microsoftTeamsJoinUrl')
-    meetingId = request.get_json().get('microsoftTeamsMeetingId')
+    joinUrl = request.get_json().get('joinUrl')
+    meetingId = request.get_json().get('meetingId')
 
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
@@ -267,7 +267,7 @@ def integromat_update_meeting_info(**kwargs):
     endDatetime = request.get_json().get('endDate')
     location = request.get_json().get('location')
     content = request.get_json().get('content')
-    meetingId = request.get_json().get('microsoftTeamsMeetingId')
+    meetingId = request.get_json().get('meetingId')
     logger.info('meetingId::' + str(meetingId))
     qsUpdateMeetingInfo = models.AllMeetingInformation.objects.get(meetingid=meetingId)
 
@@ -301,7 +301,7 @@ def integromat_delete_meeting_info(**kwargs):
 
     nodeId = request.get_json().get('nodeId')
     appName = request.get_json().get('meetingAppName')
-    meetingId = request.get_json().get('microsoftTeamsMeetingId')
+    meetingId = request.get_json().get('meetingId')
     logger.info('meetingId:' + str(meetingId))
 
     qsDeleteMeeting = models.AllMeetingInformation.objects.get(meetingid=meetingId)
