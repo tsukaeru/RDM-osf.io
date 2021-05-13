@@ -154,25 +154,6 @@ def project_integromat(**kwargs):
 def integromat_get_config_ember(auth, **kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
-    user = auth.user
-
-    qsUserGuid = user._prefetched_objects_cache['guids'].only()
-    userGuidSerializer = serializers.serialize('json', qsUserGuid, ensure_ascii=False)
-    userGuidJson = json.loads(userGuidSerializer)
-    userGuid = userGuidJson[0]['fields']['_id']
-    microsoftTeamsOrganizerId = ''
-
-    logger.info('userGuidJson:' + str(userGuidJson))
-    logger.info('userGuid:' + str(userGuid))
-
-    try:
-        organizer = models.Attendees.objects.get(node_settings_id=addon.id, user_guid=userGuid)
-        microsoftTeamsOrganizerId = organizer.microsoft_teams_user_object
-        logger.info('organizer:' + str(organizer))
-        logger.info('microsoftTeamsOrganizerId:' + str(microsoftTeamsOrganizerId))
-    except ObjectDoesNotExist:
-        logger.info('object des not exist1')
-        pass
 
     appMicrosoftTeams = RdmWebMeetingApps.objects.get(app_name='MicrosoftTeams')
 
@@ -201,8 +182,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'previous_microsoft_teams_meetings': previousMicrosoftTeamsMeetingsJson,
                          'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
                          'workflows': workflowsJson,
-                         'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
-                         'microsoft_teams_organizer_id': microsoftTeamsOrganizerId
+                         'app_name_microsoft_teams': settings.MICROSOFT_TEAMS
                      }}}
 
 #api for Integromat action
