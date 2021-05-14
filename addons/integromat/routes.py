@@ -173,6 +173,10 @@ api_routes = {
             '/project/<pid>/integromat/config',
             '/project/<pid>/node/<nid>/integromat/config',
         ], 'get', views.integromat_get_config_ember, json_renderer),
+        Rule([
+            '/project/<pid>/integromat/config',
+            '/project/<pid>/node/<nid>/integromat/config',
+        ], 'patch', views.integromat_set_config_ember, json_renderer),
         # ember: ここまで
 
     ],
