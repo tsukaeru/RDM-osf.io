@@ -354,23 +354,23 @@ def integromat_add_microsoft_teams_user(**kwargs):
 
         webMeetingAppAttendee = models.Attendees.objects.get(node_settings_id=nodeNum, user_guid=userGuid)
 
-        if not microsoftTeamsUserName:
+        if microsoftTeamsUserName:
             webMeetingAppAttendee.microsoft_teams_user_name = microsoftTeamsUserName
-        if not microsoftTeamsMail:
+        if microsoftTeamsMail:
             webMeetingAppAttendee.microsoft_teams_mail = microsoftTeamsMail
-        if not webexMeetingsDisplayName:
+        if webexMeetingsDisplayName:
             webMeetingAppAttendee.webex_meetings_display_name = webexMeetingsDisplayName
-        if not webexMeetingsMail:
+        if webexMeetingsMail:
             webMeetingAppAttendee.webex_meetings_mail = webexMeetingsMail
 
         webMeetingAppAttendee.save()
     else:
-        if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
+        if microsoftTeamsMail and models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
             attendee = models.Attendees.objects.get(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail)
             logger.info('Microsoft Teams Sign-in Address duplicate with ' + attendee.user_guid)
             raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-        if models.Attendees.objects.filter(node_settings_id=nodeNum, webex_meetings_mail=webexMeetingsMail).exists():
+        if webexMeetingsMail and models.Attendees.objects.filter(node_settings_id=nodeNum, webex_meetings_mail=webexMeetingsMail).exists():
             attendee = models.Attendees.objects.get(node_settings_id=nodeNum, webex_meetings_mail=webexMeetingsMail)
             logger.info('Webex Meetings Sign-in Address duplicate with ' + attendee.user_guid)
             raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
