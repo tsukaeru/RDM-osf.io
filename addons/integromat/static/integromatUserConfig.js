@@ -32,6 +32,8 @@ function ViewModel(url) {
     self.userGuid = ko.observable();
     self.microsoftTeamsUserName = ko.observable();
     self.microsoftTeamsMail = ko.observable();
+    self.webexMeetingsDisplayName = ko.observable();
+    self.webexMeetingsMail = ko.observable();
     self.userGuidToDelete = ko.observable();
 
     ChangeMessageMixin.call(self);
@@ -154,7 +156,7 @@ function ViewModel(url) {
 
     self.updateAccounts();
 
-    self.addMicrosoftTeamsUser = function() {
+    self.addWebMeetingAppsUser = function() {
         ;
     };
     self.deleteMicrosoftTeamsUser = function() {

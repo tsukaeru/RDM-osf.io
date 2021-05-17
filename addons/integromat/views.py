@@ -345,6 +345,8 @@ def integromat_add_microsoft_teams_user(**kwargs):
     userGuid = request.get_json().get('user_guid')
     microsoftTeamsUserName = request.get_json().get('microsoft_teams_user_name')
     microsoftTeamsMail = request.get_json().get('microsoft_teams_mail')
+    webexMeetingsDisplayName = request.get_json().get('webex_meetings_display_name')
+    webexMeetingsMail = request.get_json().get('webex_meetings_mail')
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
     nodeNum = nodeSettings.id
@@ -352,20 +354,22 @@ def integromat_add_microsoft_teams_user(**kwargs):
         logger.info('user_guid duplicate.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-    if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_user_name=microsoftTeamsUserName).exists():
-        attendee = models.Attendees.objects.get(node_settings_id=nodeNum, microsoft_teams_user_name=microsoftTeamsUserName)
-        logger.info('Microsoft User Object ID duplicate with ' + attendee.user_guid)
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
-
     if models.Attendees.objects.filter(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail).exists():
         attendee = models.Attendees.objects.get(node_settings_id=nodeNum, microsoft_teams_mail=microsoftTeamsMail)
         logger.info('Microsoft Teams Sign-in Address duplicate with ' + attendee.user_guid)
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+
+    if models.Attendees.objects.filter(node_settings_id=nodeNum, webex_meetings_mail=webexMeetingsMail).exists():
+        attendee = models.Attendees.objects.get(node_settings_id=nodeNum, webex_meetings_mail=webexMeetingsMail)
+        logger.info('Webex Meetings Sign-in Address duplicate with ' + attendee.user_guid)
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     microsoftTeamsUserInfo = models.Attendees(
         user_guid=userGuid,
         microsoft_teams_user_name=microsoftTeamsUserName,
         microsoft_teams_mail=microsoftTeamsMail,
+        microsoft_teams_display_name=webexMeetingsDisplayName,
+        microsoft_teams_mail=webexMeetingsMail,
         node_settings=nodeSettings,
     )
 

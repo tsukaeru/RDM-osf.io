@@ -77,8 +77,23 @@
                             <td>
                                 <input type="text" data-bind="value: microsoftTeamsUserName" style="width: 90%">
                             </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Webex Meetings Sign-in Address</td>
+                            <td>Webex Meetings Display Name</td>
+                         </tr>
+                         <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="text" data-bind="value: webexMeetingsMail" style="width: 80%">
+                            </td>
+                            <td>
+                                <input type="text" data-bind="value: webexMeetingsDisplayName" style="width: 90%">
+                            </td>
                             <td style="border-top-style:none; border-bottom-style:none;" >
-                                <button data-bind="click: addMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">
+                                <button data-bind="click: addWebMeetingAppsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">
                                     Add
                                 </button>
                             </td>

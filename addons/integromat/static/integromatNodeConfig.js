@@ -20,6 +20,8 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.userGuid = ko.observable();
         self.microsoftTeamsUserName = ko.observable();
         self.microsoftTeamsMail = ko.observable();
+        self.webexMeetingsDisplayName = ko.observable();
+        self.webexMeetingsMail = ko.observable();
         self.userGuidToDelete = ko.observable();
         // Treebeard config
         self.treebeardOptions = $.extend(
@@ -223,19 +225,10 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         });
     },
 
-    addMicrosoftTeamsUser : function() {
+    addWebMeetingAppsUser : function() {
         var self = this;
         if (!self.userGuid() ){
             self.changeMessage('Please enter an User guid.', 'text-danger');
-            return;
-        }
-        if (!self.microsoftTeamsMail() ){
-            self.changeMessage('Please enter an Microsoft Teams Sign-in Address.', 'text-danger');
-            return;
-        }
-
-        if (!self.microsoftTeamsUserName() ){
-            self.changeMessage('Please enter an Microsoft Teams User Object ID.', 'text-danger');
             return;
         }
 
@@ -245,7 +238,9 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             ko.toJS({
                 user_guid: self.userGuid(),
                 microsoft_teams_user_name: self.microsoftTeamsUserName(),
-                microsoft_teams_mail: self.microsoftTeamsMail()
+                microsoft_teams_mail: self.microsoftTeamsMail(),
+                webex_meetings_display_name: self.webexMeetingsDisplayName(),
+                webex_meetings_mail: self.webexMeetingsMail()
             })
         ).done(function() {
             self.message('');
@@ -253,6 +248,8 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.userGuid(null);
             self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
+            self.webexMeetingsDisplayName(null);
+            self.webexMeetingsMail(null);
             self.userGuidToDelete(null);
 
         }).fail(function(xhr, textStatus, error) {
@@ -284,6 +281,8 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.userGuid(null);
             self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
+            self.webexMeetingsDisplayName(null);
+            self.webexMeetingsMail(null);
             self.userGuidToDelete(null);
 
         }).fail(function(xhr, textStatus, error) {
