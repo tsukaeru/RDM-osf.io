@@ -18,7 +18,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.integromatApiToken = ko.observable();
         self.integromatWebhookUrl = ko.observable();
         self.userGuid = ko.observable();
-        self.microsoftTeamsUserObject = ko.observable();
+        self.microsoftTeamsUserName = ko.observable();
         self.microsoftTeamsMail = ko.observable();
         self.userGuidToDelete = ko.observable();
         // Treebeard config
@@ -234,7 +234,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             return;
         }
 
-        if (!self.microsoftTeamsUserObject() ){
+        if (!self.microsoftTeamsUserName() ){
             self.changeMessage('Please enter an Microsoft Teams User Object ID.', 'text-danger');
             return;
         }
@@ -244,14 +244,14 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             url,
             ko.toJS({
                 user_guid: self.userGuid(),
-                microsoft_teams_user_object: self.microsoftTeamsUserObject(),
+                microsoft_teams_user_object: self.microsoftTeamsUserName(),
                 microsoft_teams_mail: self.microsoftTeamsMail()
             })
         ).done(function() {
             self.message('');
-            $('#microsoftTeamsUserRegistrationModal').modal('hide');
+            $('#manageWebMeetingAppsAttendeesModal').modal('hide');
             self.userGuid(null);
-            self.microsoftTeamsUserObject(null);
+            self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
             self.userGuidToDelete(null);
 
@@ -280,9 +280,9 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             })
         ).done(function() {
             self.message('');
-            $('#microsoftTeamsUserRegistrationModal').modal('hide');
+            $('#manageWebMeetingAppsAttendeesModal').modal('hide');
             self.userGuid(null);
-            self.microsoftTeamsUserObject(null);
+            self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
             self.userGuidToDelete(null);
 

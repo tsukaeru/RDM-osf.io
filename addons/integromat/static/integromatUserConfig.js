@@ -30,7 +30,7 @@ function ViewModel(url) {
     self.integromatWebhookUrl = ko.observable();
 
     self.userGuid = ko.observable();
-    self.microsoftTeamsUserObject = ko.observable();
+    self.microsoftTeamsUserName = ko.observable();
     self.microsoftTeamsMail = ko.observable();
     self.userGuidToDelete = ko.observable();
 

@@ -51,12 +51,12 @@
     </div>
 </div>
 
-<div id="microsoftTeamsUserRegistrationModal" class="modal fade">
+<div id="manageWebMeetingAppsAttendeesModal" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h3>Manage Microsoft Teams Attendees</h3>
+                <h3>Manage Web Meeting Apps Attendees</h3>
             </div>
             <div class="modal-body">
                 <br>
@@ -65,7 +65,7 @@
                         <tr>
                             <td>User guid</td>
                             <td>Microsoft Teams Sign-in Address</td>
-                            <td>Microsoft User Object ID<a href="https://azure.microsoft.com/ja-jp/features/azure-portal/" target="_blank" class="text-muted addon-external-link">(Get from Microsoft Azure Portal<i class="fa fa-external-link-square"></i>)</a></td>
+                            <td>Microsoft User Name</td>
                          </tr>
                          <tr>
                             <td>
@@ -75,7 +75,7 @@
                                 <input type="text" data-bind="value: microsoftTeamsMail" style="width: 80%">
                             </td>
                             <td>
-                                <input type="text" data-bind="value: microsoftTeamsUserObject" style="width: 90%">
+                                <input type="text" data-bind="value: microsoftTeamsUserName" style="width: 90%">
                             </td>
                             <td style="border-top-style:none; border-bottom-style:none;" >
                                 <button data-bind="click: addMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">

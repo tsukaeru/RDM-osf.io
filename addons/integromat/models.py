@@ -86,8 +86,12 @@ class NodeSettings(BaseOAuthNodeSettings):
 class Attendees(BaseModel):
     id = models.AutoField(primary_key=True)
     user_guid = models.CharField(max_length=128)
-    microsoft_teams_user_object = models.CharField(max_length=256)
     microsoft_teams_mail = models.CharField(max_length=256)
+    microsoft_temas_name = models.CharField(max_length=256)
+    microsoft_teams_attendee_active = models.BooleanField(default=False)
+    webex_meetings_mail = models.CharField(max_length=256)
+    webex_meetings_name = models.CharField(max_length=256)
+    webex_meetings_attendee_active = models.BooleanField(default=False)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
 class AllMeetingInformation(BaseModel):

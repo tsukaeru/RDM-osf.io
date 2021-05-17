@@ -42,9 +42,9 @@
         % if not is_registration:
             <div  align="right">
                 <i title="Manage your Microsoft User information to create meetings." class="fa fa-question-circle text-muted"></i>
-                <a href="#microsoftTeamsUserRegistrationModal" data-toggle="modal"
+                <a href="#manageWebMeetingAppsAttendeesModal" data-toggle="modal"
                 class="btn btn-primary" style="margin-bottom:10px">
-                Manage Microsoft Teams Attendees
+                Manage Web Meeting Apps Attendees
                 </a>
             </div>
             <div id="scenarioList" ></div>
