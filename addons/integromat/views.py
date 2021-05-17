@@ -384,7 +384,7 @@ def integromat_add_microsoft_teams_user(**kwargs):
             node_settings=nodeSettings,
         )
 
-         microsoftTeamsUserInfo.save()
+        microsoftTeamsUserInfo.save()
 
     return {}
 
