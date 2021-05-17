@@ -244,7 +244,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             url,
             ko.toJS({
                 user_guid: self.userGuid(),
-                microsoft_teams_user_object: self.microsoftTeamsUserName(),
+                microsoft_teams_user_name: self.microsoftTeamsUserName(),
                 microsoft_teams_mail: self.microsoftTeamsMail()
             })
         ).done(function() {
