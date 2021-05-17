@@ -368,8 +368,8 @@ def integromat_add_microsoft_teams_user(**kwargs):
         user_guid=userGuid,
         microsoft_teams_user_name=microsoftTeamsUserName,
         microsoft_teams_mail=microsoftTeamsMail,
-        microsoft_teams_display_name=webexMeetingsDisplayName,
-        microsoft_teams_mail=webexMeetingsMail,
+        webex_meetings_display_name=webexMeetingsDisplayName,
+        webex_meetings_mail=webexMeetingsMail,
         node_settings=nodeSettings,
     )
 
