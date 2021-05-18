@@ -96,16 +96,16 @@ api_routes = {
         ),
 
         Rule(
-            '/project/<pid>/integromat/add_microsoft_teams_user',
+            '/project/<pid>/integromat/add_web_meeting_attendee',
             'post',
-            views.integromat_add_microsoft_teams_user,
+            views.integromat_add_web_meeting_attendee,
             json_renderer,
         ),
 
         Rule(
-            '/project/<pid>/integromat/delete_microsoft_teams_user',
+            '/project/<pid>/integromat/delete_web_meeting_attendee',
             'post',
-            views.integromat_delete_microsoft_teams_user,
+            views.integromat_delete_web_meeting_attendee,
             json_renderer,
         ),
 

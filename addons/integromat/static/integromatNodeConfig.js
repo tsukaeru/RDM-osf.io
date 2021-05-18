@@ -232,7 +232,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             return;
         }
 
-        var url = self.urls().add_microsoft_teams_user;
+        var url = self.urls().add_web_meeting_attendee;
         return osfHelpers.postJSON(
             url,
             ko.toJS({
@@ -269,7 +269,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.changeMessage('Please enter an User guid for Delete.', 'text-danger');
             return;
         }
-        var url = self.urls().delete_microsoft_teams_user;
+        var url = self.urls().delete_web_meeting_attendee;
         return osfHelpers.postJSON(
             url,
             ko.toJS({

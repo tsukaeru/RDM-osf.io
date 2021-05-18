@@ -337,7 +337,7 @@ def integromat_delete_meeting_info(**kwargs):
 
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
-def integromat_add_microsoft_teams_user(**kwargs):
+def integromat_add_web_meeting_attendee(**kwargs):
 
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
@@ -392,7 +392,7 @@ def integromat_add_microsoft_teams_user(**kwargs):
 
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
-def integromat_delete_microsoft_teams_user(**kwargs):
+def integromat_delete_web_meeting_attendee(**kwargs):
 
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
