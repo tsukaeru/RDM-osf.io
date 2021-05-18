@@ -88,10 +88,9 @@ class Attendees(BaseModel):
     user_guid = models.CharField(max_length=128)
     microsoft_teams_mail = models.CharField(max_length=256, blank=True, null=True)
     microsoft_teams_user_name = models.CharField(max_length=256, blank=True, null=True)
-    microsoft_teams_attendee_active = models.BooleanField(default=False)
     webex_meetings_mail = models.CharField(max_length=256, blank=True, null=True)
     webex_meetings_display_name = models.CharField(max_length=256, blank=True, null=True)
-    webex_meetings_attendee_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
 class AllMeetingInformation(BaseModel):
