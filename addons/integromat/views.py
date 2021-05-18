@@ -383,6 +383,7 @@ def integromat_add_web_meeting_attendee(**kwargs):
             microsoft_teams_mail=microsoftTeamsMail,
             webex_meetings_display_name=webexMeetingsDisplayName,
             webex_meetings_mail=webexMeetingsMail,
+            is_active = True,
             node_settings=nodeSettings,
         )
 
