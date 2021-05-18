@@ -160,18 +160,18 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
     previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     webMeetingApps = models.RdmWebMeetingApps.objects.all()
-    microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
+    webMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
 
     logger.info('datetime.today:' + str(datetime.today()))
     logger.info('datetime.now:' + str(datetime.now()))
     logger.info('datetime.now aware:' + str(make_aware(datetime.now())))
 
-    microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
     workflowsJson = serializers.serialize('json', workflows, ensure_ascii=False)
     allWebMeetingsJson = serializers.serialize('json', allWebMeetings, ensure_ascii=False)
     upcomingWebMeetingsJson = serializers.serialize('json', upcomingWebMeetings, ensure_ascii=False)
     previousWebMeetingsJson = serializers.serialize('json', previousWebMeetings, ensure_ascii=False)
     webMeetingAppsJson = serializers.serialize('json', webMeetingApps, ensure_ascii=False)
+    webMeetingAttendeesJson = serializers.serialize('json', webMeetingAttendees, ensure_ascii=False)
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
@@ -180,7 +180,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
-                         'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
+                         'web_meeting_attendees': webMeetingAttendeesJson,
                          'workflows': workflowsJson,
                          'web_meeting_apps': webMeetingAppsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS
