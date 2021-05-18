@@ -401,7 +401,7 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
     nodeNum = nodeSettings.id
-    qsWebMeetingAppAttendeeInfo = models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid)
+    qsWebMeetingAppAttendeeInfo = models.Attendees.objects.get(node_settings_id=nodeNum, user_guid=userGuid)
 
     qsWebMeetingAppAttendeeInfo.is_active = False
     qsWebMeetingAppAttendeeInfo.save()
