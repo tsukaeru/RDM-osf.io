@@ -159,6 +159,7 @@ def integromat_get_config_ember(auth, **kwargs):
     allWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id).order_by('start_datetime').reverse()
     upcomingWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
     previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
+    webMeetingApps = models.RdmWebMeetingApps.objects.all()
     microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id)
 
     logger.info('datetime.today:' + str(datetime.today()))
@@ -170,7 +171,7 @@ def integromat_get_config_ember(auth, **kwargs):
     allWebMeetingsJson = serializers.serialize('json', allWebMeetings, ensure_ascii=False)
     upcomingWebMeetingsJson = serializers.serialize('json', upcomingWebMeetings, ensure_ascii=False)
     previousWebMeetingsJson = serializers.serialize('json', previousWebMeetings, ensure_ascii=False)
-
+    webMeetingAppsJson = serializers.serialize('json', webMeetingApps, ensure_ascii=False)
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
@@ -181,6 +182,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'previous_web_meetings': previousWebMeetingsJson,
                          'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
                          'workflows': workflowsJson,
+                         'web_meeting_apps': webMeetingAppsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS
                      }}}
 
