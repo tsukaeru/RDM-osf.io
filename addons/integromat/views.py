@@ -362,6 +362,8 @@ def integromat_add_microsoft_teams_user(**kwargs):
             webMeetingAppAttendee.webex_meetings_display_name = webexMeetingsDisplayName
         if webexMeetingsMail:
             webMeetingAppAttendee.webex_meetings_mail = webexMeetingsMail
+        if not webMeetingAppAttendee.is_active:
+            webMeetingAppAttendee.is_active = True
 
         webMeetingAppAttendee.save()
     else:
@@ -375,7 +377,7 @@ def integromat_add_microsoft_teams_user(**kwargs):
             logger.info('Webex Meetings Sign-in Address duplicate with ' + attendee.user_guid)
             raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-        microsoftTeamsUserInfo = models.Attendees(
+        webMeetingAppAttendeeInfo = models.Attendees(
             user_guid=userGuid,
             microsoft_teams_user_name=microsoftTeamsUserName,
             microsoft_teams_mail=microsoftTeamsMail,
@@ -384,7 +386,7 @@ def integromat_add_microsoft_teams_user(**kwargs):
             node_settings=nodeSettings,
         )
 
-        microsoftTeamsUserInfo.save()
+        webMeetingAppAttendeeInfo.save()
 
     return {}
 
@@ -399,9 +401,10 @@ def integromat_delete_microsoft_teams_user(**kwargs):
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
     nodeNum = nodeSettings.id
-    qsMicrosoftTeamsUserInfo = models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid)
+    qsWebMeetingAppAttendeeInfo = models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid)
 
-    qsMicrosoftTeamsUserInfo.delete()
+    qsWebMeetingAppAttendeeInfo.is_active = False
+    qsWebMeetingAppAttendeeInfo.save()
 
     return {}
 
