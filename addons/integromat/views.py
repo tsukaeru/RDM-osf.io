@@ -279,11 +279,21 @@ def integromat_create_meeting_info(**kwargs):
 
         attendeeIds = []
 
-        for attendeeMail in attendees:
+        if appName == settings.MICROSOFT_TEAMS:
 
-            qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
-            attendeeId = qsAttendee.id
-            attendeeIds.append(attendeeId)
+            for attendeeMail in attendees:
+
+                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
+                attendeeId = qsAttendee.id
+                attendeeIds.append(attendeeId)
+
+        elif appName == settings.WebexMeetings:
+
+            for attendeeMail in attendees:
+
+                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=attendeeMail)
+                attendeeId = qsAttendee.id
+                attendeeIds.append(attendeeId)
 
         meetingInfo.attendees = attendeeIds
         meetingInfo.save()
@@ -543,9 +553,6 @@ def integromat_get_meetings(**kwargs):
 
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
-
-    
-
 
     amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
     amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today() + timedelta(days=1)).order_by('start_datetime')
