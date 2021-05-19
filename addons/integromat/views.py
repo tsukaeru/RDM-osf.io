@@ -287,7 +287,7 @@ def integromat_create_meeting_info(**kwargs):
                 attendeeId = qsAttendee.id
                 attendeeIds.append(attendeeId)
 
-        elif appName == settings.WebexMeetings:
+        elif appName == settings.WEBEX_MEETINGS:
 
             for attendeeMail in attendees:
 
