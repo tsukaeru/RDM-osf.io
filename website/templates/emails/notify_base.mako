@@ -41,7 +41,12 @@
               <tbody>
                 <tr>
                   <td style="border-collapse: collapse;">
-                  The Japanese statement will be followed by an English statement.<br>
+                  英語版については、下部を参照してください。<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-collapse: collapse;">
+                  See below for English version.<br>
                   </td>
                 </tr>
               </tbody>
