@@ -161,8 +161,8 @@ def integromat_get_config_ember(auth, **kwargs):
     previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     webMeetingApps = models.RdmWebMeetingApps.objects.all()
     webMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
-    microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__isnull=True, microsoft_teams_mail__exact='')
-    webexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__isnull=True, webex_meetings_mail__exact='')
+    microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__isnull=True | microsoft_teams_mail__exact='')
+    webexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__isnull=True | webex_meetings_mail__exact='')
 
     logger.info('datetime.today:' + str(datetime.today()))
     logger.info('datetime.now:' + str(datetime.now()))
