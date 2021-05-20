@@ -329,11 +329,16 @@ def integromat_update_meeting_info(**kwargs):
 
     attendeeIds = []
 
-    for attendeeMail in attendees:
+    if appName == settings.MICROSOFT_TEAMS:
 
-        qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
-        attendeeId = qsAttendee.id
-        attendeeIds.append(attendeeId)
+        for attendeeMail in attendees:
+
+            qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
+            attendeeId = qsAttendee.id
+            attendeeIds.append(attendeeId)
+
+    elif appName == settings.WEBEX_MEETINGS:
+        pass
 
     qsUpdateMeetingInfo.attendees = attendeeIds
 
