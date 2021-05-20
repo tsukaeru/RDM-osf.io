@@ -27,6 +27,7 @@ RUN apk add --no-cache --virtual .run-deps \
     xvfb \
     jq \
     python3-tkinter \
+    curl \
     && yarn global add bower
 
 WORKDIR /code
