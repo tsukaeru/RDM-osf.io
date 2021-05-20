@@ -189,7 +189,8 @@ def integromat_get_config_ember(auth, **kwargs):
                          'webex_meetings_attendees': webexMeetingsAttendeesJson,
                          'workflows': workflowsJson,
                          'web_meeting_apps': webMeetingAppsJson,
-                         'app_name_microsoft_teams': settings.MICROSOFT_TEAMS
+                         'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
+                         'app_name_webex_meetings': settings.WEBEX_MEETINGS
                      }}}
 
 @must_be_valid_project
