@@ -160,9 +160,9 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
     previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     webMeetingApps = models.RdmWebMeetingApps.objects.all()
-    webMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
-    microsoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
-    webexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
+    nodeWebMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
+    nodeMicrosoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
+    nodeWebexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
 
     logger.info('datetime.today:' + str(datetime.today()))
     logger.info('datetime.now:' + str(datetime.now()))
@@ -173,9 +173,9 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingWebMeetingsJson = serializers.serialize('json', upcomingWebMeetings, ensure_ascii=False)
     previousWebMeetingsJson = serializers.serialize('json', previousWebMeetings, ensure_ascii=False)
     webMeetingAppsJson = serializers.serialize('json', webMeetingApps, ensure_ascii=False)
-    webMeetingAttendeesJson = serializers.serialize('json', webMeetingAttendees, ensure_ascii=False)
-    microsoftTeamsAttendeesJson = serializers.serialize('json', microsoftTeamsAttendees, ensure_ascii=False)
-    webexMeetingsAttendeesJson = serializers.serialize('json', webexMeetingsAttendees, ensure_ascii=False)
+    nodeWebMeetingAttendeesJson = serializers.serialize('json', nodeWebMeetingAttendees, ensure_ascii=False)
+    nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
+    nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
@@ -184,9 +184,9 @@ def integromat_get_config_ember(auth, **kwargs):
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
-                         'web_meeting_attendees': webMeetingAttendeesJson,
-                         'microsoft_teams_attendees': microsoftTeamsAttendeesJson,
-                         'webex_meetings_attendees': webexMeetingsAttendeesJson,
+                         'node_web_meeting_attendees': nodeWebMeetingAttendeesJson,
+                         'node_microsoft_teams_attendees': nodeMicrosoftTeamsAttendeesJson,
+                         'node_webex_meetings_attendees': nodeWebexMeetingsAttendeesJson,
                          'workflows': workflowsJson,
                          'web_meeting_apps': webMeetingAppsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
