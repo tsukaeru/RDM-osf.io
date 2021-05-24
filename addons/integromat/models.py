@@ -83,6 +83,14 @@ class NodeSettings(BaseOAuthNodeSettings):
     def after_delete(self, user):
         self.deauthorize(Auth(user=user), log=True)
 
+class workflowExecutionMessages(BaseModel):
+
+    id = models.AutoField(primary_key=True)
+    notified = models.BooleanField(default=False)
+    integromat_msg = models.CharField(blank=True, null=True, max_length=128)
+    timestamp = models.CharField(blank=True, null=True, max_length=128)
+    node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
+
 class Attendees(BaseModel):
     id = models.AutoField(primary_key=True)
     user_guid = models.CharField(max_length=128)
@@ -97,20 +105,19 @@ class AllMeetingInformation(BaseModel):
     id = models.AutoField(primary_key=True)
     subject = models.CharField(blank=True, null=True, max_length=254)
     organizer = models.CharField(max_length=254)
-    attendees = models.ManyToManyField(Attendees, blank=True, null=True)
+    attendees = models.ManyToManyField(Attendees, blank=True, null=True, through='MeetingAttendeeRelation')
     start_datetime = models.DateTimeField(blank=True, null=True)
     end_datetime = models.DateTimeField(blank=True, null=True)
     location = models.CharField(blank=True, null=True, max_length=254)
     content = models.TextField(blank=True, null=True, max_length=10000)
     join_url = models.TextField(max_length=512)
     meetingid = models.TextField(max_length=512)
+    meeting_password = models.EncryptedTextField(blank=True, null=True)
     app = models.ForeignKey(RdmWebMeetingApps, to_field='id', on_delete=models.CASCADE)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
-class workflowExecutionMessages(BaseModel):
-
+class MeetingAttendeeRelation(BaseModel):
     id = models.AutoField(primary_key=True)
-    notified = models.BooleanField(default=False)
-    integromat_msg = models.CharField(blank=True, null=True, max_length=128)
-    timestamp = models.CharField(blank=True, null=True, max_length=128)
-    node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
+    allMeetingInformation = models.ForeignKey(AllMeetingInformation, on_delete=models.CASCADE)
+    attendees = models.ForeignKey(Attendees, on_delete=models.CASCADE)
+    webex_meetings_invitee_id = models.CharField(blank=True, null=True, max_length=128)
