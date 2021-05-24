@@ -249,6 +249,9 @@ def integromat_create_meeting_info(**kwargs):
     content = request.get_json().get('content')
     joinUrl = request.get_json().get('joinUrl')
     meetingId = request.get_json().get('meetingId')
+    meetingInviteeId = request.get_json().get('meetingInviteeId')
+
+    logger.info('meetingInviteeId:' + str(meetingInviteeId))
 
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
