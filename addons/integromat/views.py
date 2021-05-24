@@ -249,6 +249,7 @@ def integromat_create_meeting_info(**kwargs):
     content = request.get_json().get('content')
     joinUrl = request.get_json().get('joinUrl')
     meetingId = request.get_json().get('meetingId')
+    password = request.get_json().get('password')
     meetingInviteeId = request.get_json().get('meetingInviteeId')
 
     logger.info('meetingInviteeId:' + str(meetingInviteeId))
@@ -276,6 +277,7 @@ def integromat_create_meeting_info(**kwargs):
             content=content,
             join_url=joinUrl,
             meetingid=meetingId,
+            meeting_password=password,
             app_id=webApp.id,
             node_settings_id=node.id,
         )
