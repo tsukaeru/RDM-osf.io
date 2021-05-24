@@ -15,6 +15,7 @@ import addons.integromat.settings as settings
 
 from framework.auth.core import Auth
 from osf.models.files import File, Folder, BaseFileNode
+from osf.utils.fields import EncryptedTextField
 
 logger = logging.getLogger(__name__)
 
