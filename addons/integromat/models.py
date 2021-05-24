@@ -113,7 +113,7 @@ class AllMeetingInformation(BaseModel):
     content = models.TextField(blank=True, null=True, max_length=10000)
     join_url = models.TextField(max_length=512)
     meetingid = models.TextField(max_length=512)
-    meeting_password = models.EncryptedTextField(blank=True, null=True)
+    meeting_password = EncryptedTextField(blank=True, null=True)
     app = models.ForeignKey(RdmWebMeetingApps, to_field='id', on_delete=models.CASCADE)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
