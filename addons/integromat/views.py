@@ -250,9 +250,9 @@ def integromat_create_meeting_info(**kwargs):
     joinUrl = request.get_json().get('joinUrl')
     meetingId = request.get_json().get('meetingId')
     password = request.get_json().get('password')
-    meetingInviteeId = request.get_json().get('meetingInviteeId')
+    meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
 
-    logger.info('meetingInviteeId:' + str(meetingInviteeId))
+    logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
 
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
@@ -295,11 +295,24 @@ def integromat_create_meeting_info(**kwargs):
 
         elif appName == settings.WEBEX_MEETINGS:
 
-            for attendeeMail in attendees:
+            for meetingInvitee in meetingInviteesInfo:
 
-                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=attendeeMail)
-                attendeeId = qsAttendee.id
-                attendeeIds.append(attendeeId)
+                meetingInviteeInfo = None
+
+                for attendeeMail in attendees:
+
+                    qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=attendeeMail)
+                    attendeeId = qsAttendee.id
+                    attendeeIds.append(attendeeId)
+
+                    if meetingInvitee.email == attendeeMail:
+
+                        meetingInviteeInfo = models.AllMeetingInformationAttendeeRelation(
+                            attendees_id = attendeeId,
+                            allMeetingInformation_id = meetingInfo.id,
+                            webex_meetings_invitee_id = meetingInvitee.id
+                        )
+                        meetingInviteeInfo.save()
 
         meetingInfo.attendees = attendeeIds
         meetingInfo.save()
