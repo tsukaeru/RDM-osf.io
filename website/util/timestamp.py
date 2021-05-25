@@ -333,6 +333,7 @@ def check_file_timestamp(uid, node, data, verify_external_only=False):
     result = None
     try:
         tmp_dir = tempfile.mkdtemp()
+        os.chmod(tmp_dir, 0o755)
         if not os.path.exists(tmp_dir):
             os.mkdir(tmp_dir)
         download_file_path = waterbutler.download_file(cookie, file_node, tmp_dir)
@@ -552,6 +553,7 @@ def add_token(uid, node, data):
     try:
         # Request To Download File
         tmp_dir = tempfile.mkdtemp()
+        os.chmod(tmp_dir, 0o755)
         download_file_path = waterbutler.download_file(cookie, file_node, tmp_dir)
         if download_file_path is None:
             intentional_remove_status = [
@@ -1567,6 +1569,7 @@ class TimeStampTokenVerifyCheckHash:
 
         if STATUS_IS_NO_ERROR(ret):
             tmp_dir = tempfile.mkdtemp()
+            os.chmod(tmp_dir, 0o755)
             try:
                 verify_result, verify_result_title, ret = cls._verify(
                     tmp_dir, ext_info, user_guid, project_id, verify_result)
