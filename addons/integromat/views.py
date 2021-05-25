@@ -177,6 +177,8 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
     nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
 
+    logger.info('upcomingWebMeetings:::' + str(upcomingWebMeetingsJson))
+
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
                          'node_settings_id': addon._id, 
