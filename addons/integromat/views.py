@@ -254,7 +254,7 @@ def integromat_create_meeting_info(**kwargs):
 
     logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
 
-    meetingInviteesInfoJson = json.dumps(meetingInviteesInfo)
+    meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
 
     logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
     try:
