@@ -251,9 +251,10 @@ def integromat_create_meeting_info(**kwargs):
     meetingId = request.get_json().get('meetingId')
     password = request.get_json().get('password')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
+    meetingInviteesInfoJson = serializers.serialize('json', meetingInviteesInfo, ensure_ascii=False)
 
     logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
-
+    logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
     except:
@@ -295,7 +296,7 @@ def integromat_create_meeting_info(**kwargs):
 
         elif appName == settings.WEBEX_MEETINGS:
 
-            for meetingInvitee in meetingInviteesInfo:
+            for meetingInvitee in meetingInviteesInfoJson:
 
                 meetingInviteeInfo = None
 
@@ -307,12 +308,12 @@ def integromat_create_meeting_info(**kwargs):
 
                     logger.info('meetingInvitee:::' + str(meetingInvitee))
 
-                    if meetingInvitee[0]['email'] == attendeeMail:
+                    if meetingInviteesInfoJson['email'] == attendeeMail:
 
                         meetingInviteeInfo = models.AllMeetingInformationAttendeeRelation(
                             attendees_id = attendeeId,
                             allMeetingInformation_id = meetingInfo.id,
-                            webex_meetings_invitee_id = meetingInvitee['id']
+                            webex_meetings_invitee_id = meetingInviteesInfoJson['id']
                         )
                         meetingInviteeInfo.save()
 
