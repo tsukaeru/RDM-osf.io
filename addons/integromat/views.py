@@ -305,7 +305,9 @@ def integromat_create_meeting_info(**kwargs):
                     attendeeId = qsAttendee.id
                     attendeeIds.append(attendeeId)
 
-                    if meetingInvitee['email'] == attendeeMail:
+                    logger.info('meetingInvitee:::' + str(meetingInvitee))
+
+                    if meetingInvitee[0]['email'] == attendeeMail:
 
                         meetingInviteeInfo = models.AllMeetingInformationAttendeeRelation(
                             attendees_id = attendeeId,
