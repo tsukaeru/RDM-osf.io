@@ -124,6 +124,6 @@ class AllMeetingInformation(BaseModel):
 
 class AllMeetingInformationAttendeesRelation(BaseModel):
     id = models.AutoField(primary_key=True)
-    allMeetingInformation = models.ForeignKey(AllMeetingInformation, on_delete=models.CASCADE)
+    all_meeting_information = models.ForeignKey(AllMeetingInformation, on_delete=models.CASCADE)
     attendees = models.ForeignKey(Attendees, on_delete=models.CASCADE)
     webex_meetings_invitee_id = models.CharField(blank=True, null=True, max_length=128)
