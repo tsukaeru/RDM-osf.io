@@ -312,7 +312,7 @@ def integromat_create_meeting_info(**kwargs):
 
                     if meetingInvitee['email'] == attendeeMail:
 
-                        meetingInviteeInfo = models.AllMeetingInformationAttendeeRelation(
+                        meetingInviteeInfo = models.AllMeetingInformationAttendeesRelation(
                             attendees_id = attendeeId,
                             allMeetingInformation_id = meetingInfo.id,
                             webex_meetings_invitee_id = meetingInvitee['id']
