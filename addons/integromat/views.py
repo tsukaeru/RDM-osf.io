@@ -318,7 +318,7 @@ def integromat_create_meeting_info(**kwargs):
 
                         meetingInviteeInfo = models.AllMeetingInformationAttendeesRelation(
                             attendees_id = attendeeId,
-                            all_meeting_information = meetingInfo.id,
+                            all_meeting_information_id = meetingInfo.id,
                             webex_meetings_invitee_id = meetingInvitee['id']
                         )
                         meetingInviteeInfo.save()
