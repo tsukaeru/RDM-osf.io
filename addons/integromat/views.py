@@ -164,6 +164,8 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeMicrosoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
     nodeWebexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
 
+    nodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(allmeetinginformation__node_settings_id=addon.id)
+
     logger.info('datetime.today:' + str(datetime.today()))
     logger.info('datetime.now:' + str(datetime.now()))
     logger.info('datetime.now aware:' + str(make_aware(datetime.now())))
@@ -176,6 +178,7 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeWebMeetingAttendeesJson = serializers.serialize('json', nodeWebMeetingAttendees, ensure_ascii=False)
     nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
     nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
+    nodeWebMeetingsAttendeesRelationJson = serializers.serialize('json', nodeWebMeetingsAttendeesRelation, ensure_ascii=False)
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
@@ -187,6 +190,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'node_web_meeting_attendees': nodeWebMeetingAttendeesJson,
                          'node_microsoft_teams_attendees': nodeMicrosoftTeamsAttendeesJson,
                          'node_webex_meetings_attendees': nodeWebexMeetingsAttendeesJson,
+                         'node_web_meetings_attendees_relation': nodeWebMeetingsAttendeesRelationJson,
                          'workflows': workflowsJson,
                          'web_meeting_apps': webMeetingAppsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
