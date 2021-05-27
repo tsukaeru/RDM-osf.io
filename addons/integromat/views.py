@@ -345,7 +345,7 @@ def integromat_update_meeting_info(**kwargs):
     content = request.get_json().get('content')
     meetingId = request.get_json().get('meetingId')
     meetingCreatedInviteesInfo = request.get_json().get('meetingCreatedInviteesInfo')
-    meetingCreatedInviteesInfoJson = json.loads(meetingInviteesInfo)
+    meetingCreatedInviteesInfoJson = json.loads(meetingCreatedInviteesInfo)
     logger.info('meetingCreatedInviteesInfoJson_update::' + str(meetingCreatedInviteesInfoJson))
     logger.info('meetingId::' + str(meetingId))
     qsUpdateMeetingInfo = models.AllMeetingInformation.objects.get(meetingid=meetingId)
