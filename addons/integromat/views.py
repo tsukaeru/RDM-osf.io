@@ -365,7 +365,7 @@ def integromat_update_meeting_info(**kwargs):
 
     attendeesIdsBefore = qsUpdateMeetingInfo.attendees
 
-    logger.infor('attendeesIdsBefore::' + str(attendeesIdsBefore))
+    logger.info('attendeesIdsBefore::' + str(attendeesIdsBefore))
 
     attendeeIds = []
 
