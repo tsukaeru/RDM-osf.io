@@ -344,9 +344,9 @@ def integromat_update_meeting_info(**kwargs):
     location = request.get_json().get('location')
     content = request.get_json().get('content')
     meetingId = request.get_json().get('meetingId')
-    meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
-    meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
-    logger.info('meetingInviteesInfoJson_update::' + str(meetingInviteesInfoJson))
+    meetingCreatedInviteesInfo = request.get_json().get('meetingCreatedInviteesInfo')
+    meetingCreatedInviteesInfoJson = json.loads(meetingInviteesInfo)
+    logger.info('meetingCreatedInviteesInfoJson_update::' + str(meetingCreatedInviteesInfoJson))
     logger.info('meetingId::' + str(meetingId))
     qsUpdateMeetingInfo = models.AllMeetingInformation.objects.get(meetingid=meetingId)
 
@@ -362,6 +362,10 @@ def integromat_update_meeting_info(**kwargs):
         logger.error('nodesettings _id is invalid.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
+    attendeesIdsBefore = qsUpdateMeetingInfo.attendees
+
+    logger.infor('attendeesIdsBefore::' + str(attendeesIdsBefore))
+
     attendeeIds = []
 
     with transaction.atomic():
@@ -376,7 +380,7 @@ def integromat_update_meeting_info(**kwargs):
 
         elif appName == settings.WEBEX_MEETINGS:
 
-            for meetingInvitee in meetingInviteesInfoJson:
+            for meetingInvitee in meetingCreatedInviteesInfoJson:
 
                 meetingInviteeInfo = None
 
