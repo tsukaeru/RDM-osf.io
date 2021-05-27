@@ -345,7 +345,6 @@ def integromat_update_meeting_info(**kwargs):
     content = request.get_json().get('content')
     meetingId = request.get_json().get('meetingId')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
-    logger.info('meetingInviteesInfo_update::' + str(meetingInviteesInfo))
     meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
     logger.info('meetingInviteesInfoJson_update::' + str(meetingInviteesInfoJson))
     logger.info('meetingId::' + str(meetingId))
@@ -365,20 +364,42 @@ def integromat_update_meeting_info(**kwargs):
 
     attendeeIds = []
 
-    if appName == settings.MICROSOFT_TEAMS:
+    with transaction.atomic():
 
-        for attendeeMail in attendees:
+        if appName == settings.MICROSOFT_TEAMS:
 
-            qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
-            attendeeId = qsAttendee.id
-            attendeeIds.append(attendeeId)
+            for attendeeMail in attendees:
 
-    elif appName == settings.WEBEX_MEETINGS:
-        pass
+                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, microsoft_teams_mail=attendeeMail)
+                attendeeId = qsAttendee.id
+                attendeeIds.append(attendeeId)
 
-    qsUpdateMeetingInfo.attendees = attendeeIds
+        elif appName == settings.WEBEX_MEETINGS:
 
-    qsUpdateMeetingInfo.save()
+            for meetingInvitee in meetingInviteesInfoJson:
+
+                meetingInviteeInfo = None
+
+                for attendeeMail in attendees:
+
+                    qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=attendeeMail)
+                    attendeeId = qsAttendee.id
+                    attendeeIds.append(attendeeId)
+
+                    logger.info('meetingInvitee:::' + str(meetingInvitee))
+
+                    if meetingInvitee['body']['email'] == attendeeMail:
+
+                        meetingInviteeInfo = models.AllMeetingInformationAttendeesRelation(
+                            attendees_id = attendeeId,
+                            all_meeting_information_id = meetingInfo.id,
+                            webex_meetings_invitee_id = meetingInvitee['body']['id']
+                        )
+                        meetingInviteeInfo.save()
+
+        qsUpdateMeetingInfo.attendees = attendeeIds
+
+        qsUpdateMeetingInfo.save()
 
     return {}
 
