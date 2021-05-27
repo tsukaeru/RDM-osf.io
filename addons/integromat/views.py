@@ -260,10 +260,11 @@ def integromat_create_meeting_info(**kwargs):
     meetingId = request.get_json().get('meetingId')
     password = request.get_json().get('password')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
-
+    meetingInviteesInfoJson = '';
     logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
 
-    meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
+    if meetingInviteesInfo:
+        meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
 
     logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
     try:
