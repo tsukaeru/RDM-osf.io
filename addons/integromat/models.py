@@ -111,6 +111,7 @@ class AllMeetingInformation(BaseModel):
     id = models.AutoField(primary_key=True)
     subject = models.CharField(blank=True, null=True, max_length=254)
     organizer = models.CharField(max_length=254)
+    organizer_fullname = models.CharField(max_length=254)
     attendees = models.ManyToManyField(Attendees, related_name='attendees_meetings')
     attendees_specific = models.ManyToManyField(Attendees, related_name='attendees_specific_meetings', through='AllMeetingInformationAttendeesRelation')
     start_datetime = models.DateTimeField(blank=True, null=True)
