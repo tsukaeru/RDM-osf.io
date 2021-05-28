@@ -274,11 +274,28 @@ def integromat_create_meeting_info(**kwargs):
         logger.error('web app name is invalid.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
+    if appName == settings.MICROSOFT_TEAMS:
+
+        try:
+            organizer_fullname = models.Attendees.objects.get(node_settings_id=nodeId, microsoft_teams_mail=organizer).fullname
+        except ObjectDoesNotExist:
+            logger.info('organizer is not registered.')
+            organizer_fullname = organizer
+
+    elif appName == settings.WEBEX_MEETINGS:
+
+        try:
+            organizer_fullname = models.Attendees.objects.get(node_settings_id=nodeId, webext_meetings_mail=organizer).fullname
+        except ObjectDoesNotExist:
+            logger.info('organizer is not registered.')
+            organizer_fullname = organizer
+
     with transaction.atomic():
 
         meetingInfo = models.AllMeetingInformation(
             subject=subject,
             organizer=organizer,
+            organizer_fullname=organizer_fullname,
             start_datetime=startDatetime,
             end_datetime=endDatetime,
             location=location,
