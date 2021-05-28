@@ -260,13 +260,8 @@ def integromat_create_meeting_info(**kwargs):
     meetingId = request.get_json().get('meetingId')
     password = request.get_json().get('password')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
-    meetingInviteesInfoJson = '';
     logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
 
-    if meetingInviteesInfo:
-        meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
-
-    logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
     except:
@@ -308,6 +303,13 @@ def integromat_create_meeting_info(**kwargs):
 
         elif appName == settings.WEBEX_MEETINGS:
 
+            try:
+                meetingInviteesInfoJson = json.loads(meetingInviteesInfo)
+            except:
+                logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
+                logger.error('meetingInviteesInfo is None')
+                raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+
             for meetingInvitee in meetingInviteesInfoJson:
 
                 meetingInviteeInfo = None
@@ -346,11 +348,7 @@ def integromat_update_meeting_info(**kwargs):
     content = request.get_json().get('content')
     meetingId = request.get_json().get('meetingId')
     meetingCreatedInviteesInfo = request.get_json().get('meetingCreatedInviteesInfo')
-    meetingCreatedInviteesInfoJson = json.loads(meetingCreatedInviteesInfo)
     meetingDeletedInviteesInfo = request.get_json().get('meetingDeletedInviteesInfo')
-    meetingDeletedInviteesInfoJson = json.loads(meetingDeletedInviteesInfo)
-    logger.info('meetingCreatedInviteesInfoJson_update::' + str(meetingCreatedInviteesInfoJson))
-    logger.info('meetingDeletedInviteesInfoJson_update::' + str(meetingDeletedInviteesInfoJson))
     logger.info('meetingId::' + str(meetingId))
     qsUpdateMeetingInfo = models.AllMeetingInformation.objects.get(meetingid=meetingId)
 
@@ -384,6 +382,14 @@ def integromat_update_meeting_info(**kwargs):
             qsNodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(all_meeting_information__meetingid=meetingId)
             nodeWebMeetingsAttendeesRelationJson = serializers.serialize('json', qsNodeWebMeetingsAttendeesRelation, ensure_ascii=False)
 
+            try:
+                meetingCreatedInviteesInfoJson = json.loads(meetingCreatedInviteesInfo)
+                meetingDeletedInviteesInfoJson = json.loads(meetingDeletedInviteesInfo)
+            except:
+                logger.info('meetingInviteesInfoJson:' + str(meetingInviteesInfoJson))
+                logger.info('meetingDeletedInviteesInfoJson:' + str(meetingDeletedInviteesInfoJson))
+                logger.error('meetingInviteesInfo or meetingDeletedInviteesInfoJson is None')
+                raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
             logger.info(str(qsNodeWebMeetingsAttendeesRelation))
             logger.info(str(nodeWebMeetingsAttendeesRelationJson))
@@ -396,7 +402,6 @@ def integromat_update_meeting_info(**kwargs):
                 attendeeIdsFormer.append(meetingAttendeeRelation.attendees)
 
             logger.info('attendeeIdsFormer::' +  str(attendeeIdsFormer))
-
 
             for meetingCreateInvitee in meetingCreatedInviteesInfoJson:
 
