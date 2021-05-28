@@ -347,7 +347,10 @@ def integromat_update_meeting_info(**kwargs):
     meetingId = request.get_json().get('meetingId')
     meetingCreatedInviteesInfo = request.get_json().get('meetingCreatedInviteesInfo')
     meetingCreatedInviteesInfoJson = json.loads(meetingCreatedInviteesInfo)
+    meetingDeletedInviteesInfo = request.get_json().get('meetingDeletedInviteesInfo')
+    meetingDeletedInviteesInfoJson = json.loads(meetingDeletedInviteesInfo)
     logger.info('meetingCreatedInviteesInfoJson_update::' + str(meetingCreatedInviteesInfoJson))
+    logger.info('meetingDeletedInviteesInfoJson_update::' + str(meetingDeletedInviteesInfoJson))
     logger.info('meetingId::' + str(meetingId))
     qsUpdateMeetingInfo = models.AllMeetingInformation.objects.get(meetingid=meetingId)
 
@@ -363,11 +366,8 @@ def integromat_update_meeting_info(**kwargs):
         logger.error('nodesettings _id is invalid.')
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
-    attendeesIdsBefore = qsUpdateMeetingInfo.attendees
-
-    logger.info('attendeesIdsBefore::' + str(attendeesIdsBefore))
-
     attendeeIds = []
+    attendeeIdsFormer = []
 
     with transaction.atomic():
 
@@ -381,26 +381,49 @@ def integromat_update_meeting_info(**kwargs):
 
         elif appName == settings.WEBEX_MEETINGS:
 
-            for meetingInvitee in meetingCreatedInviteesInfoJson:
+            qsNodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(all_meeting_information__meetingid=meetingId)
+
+            for meetingAttendeeRelation in qsNodeWebMeetingsAttendeesRelation:
+
+                logger.info('meetingAttendeeRelation::' + str(meetingAttendeeRelation))
+
+                attendeeIdsFormer.append(meetingAttendeeRelation.attendee_id)
+
+            logger.info('attendeeIdsFormer::' +  str(attendeeIdsFormer))
+
+
+            for meetingCreateInvitee in meetingCreatedInviteesInfoJson:
 
                 meetingInviteeInfo = None
 
-                for attendeeMail in attendees:
+                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=meetingCreateInvitee['body']['email'])
+                attendeeId = qsAttendee.id
+                attendeeIdsFormer.append(attendeeId)
 
-                    qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=attendeeMail)
-                    attendeeId = qsAttendee.id
-                    attendeeIds.append(attendeeId)
+                logger.info('meetingCreateInvitee:::' + str(meetingCreateInvitee))
 
-                    logger.info('meetingInvitee:::' + str(meetingInvitee))
+                meetingInviteeInfo = models.AllMeetingInformationAttendeesRelation(
+                    attendees_id = attendeeId,
+                    all_meeting_information_id = qsUpdateMeetingInfo.id,
+                    webex_meetings_invitee_id = meetingCreateInvitee['body']['id']
+                )
+                meetingInviteeInfo.save()
 
-                    if meetingInvitee['body']['email'] == attendeeMail:
+            for meetingDeletedInvitee in meetingDeletedInviteesInfoJson:
 
-                        meetingInviteeInfo = models.AllMeetingInformationAttendeesRelation(
-                            attendees_id = attendeeId,
-                            all_meeting_information_id = qsUpdateMeetingInfo.id,
-                            webex_meetings_invitee_id = meetingInvitee['body']['id']
-                        )
-                        meetingInviteeInfo.save()
+                meetingInviteeInfo = None
+
+                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=meetingDeletedInvitee['body']['email'])
+                attendeeId = qsAttendee.id
+                attendeeIdsFormer.remove(attendeeId)
+
+                logger.info('meetingCreateInvitee:::' + str(meetingCreateInvitee))
+
+                qsDeleteMeetingAttendeeRelation = models.AllMeetingInformationAttendeesRelation.objects.get(webex_meetings_invitee_id=meetingDeletedInvitee['body']['id'])
+
+                qsDeleteMeetingAttendeeRelation.delete()
+
+            attendeeIds = attendeeIdsFormer
 
         qsUpdateMeetingInfo.attendees = attendeeIds
 
