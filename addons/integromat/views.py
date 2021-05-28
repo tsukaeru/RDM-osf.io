@@ -419,13 +419,11 @@ def integromat_update_meeting_info(**kwargs):
 
                 meetingInviteeInfo = None
 
-                qsAttendee = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=meetingDeletedInvitee['body']['email'])
-                attendeeId = qsAttendee.id
+                logger.info('meetingCreateInvitee:::' + str(meetingDeletedInvitee))
+
+                qsDeleteMeetingAttendeeRelation = models.AllMeetingInformationAttendeesRelation.objects.get(webex_meetings_invitee_id=meetingDeletedInvitee['value'])
+                attendeeId = qsDeleteMeetingAttendeeRelation.attendees
                 attendeeIdsFormer.remove(attendeeId)
-
-                logger.info('meetingCreateInvitee:::' + str(meetingCreateInvitee))
-
-                qsDeleteMeetingAttendeeRelation = models.AllMeetingInformationAttendeesRelation.objects.get(webex_meetings_invitee_id=meetingDeletedInvitee['body']['id'])
 
                 qsDeleteMeetingAttendeeRelation.delete()
 
