@@ -382,12 +382,18 @@ def integromat_update_meeting_info(**kwargs):
         elif appName == settings.WEBEX_MEETINGS:
 
             qsNodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(all_meeting_information__meetingid=meetingId)
+            nodeWebMeetingsAttendeesRelationJson = serializers.serialize('json', qsNodeWebMeetingsAttendeesRelation, ensure_ascii=False)
+
+
+            logger.info(str(qsNodeWebMeetingsAttendeesRelation))
+            logger.info(str(nodeWebMeetingsAttendeesRelationJson))
+
 
             for meetingAttendeeRelation in qsNodeWebMeetingsAttendeesRelation:
 
                 logger.info('meetingAttendeeRelation::' + str(meetingAttendeeRelation))
 
-                attendeeIdsFormer.append(meetingAttendeeRelation.attendee_id)
+                attendeeIdsFormer.append(meetingAttendeeRelation.attendee)
 
             logger.info('attendeeIdsFormer::' +  str(attendeeIdsFormer))
 
