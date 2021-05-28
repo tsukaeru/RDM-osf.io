@@ -285,7 +285,7 @@ def integromat_create_meeting_info(**kwargs):
     elif appName == settings.WEBEX_MEETINGS:
 
         try:
-            organizer_fullname = models.Attendees.objects.get(node_settings_id=node.id, webext_meetings_mail=organizer).fullname
+            organizer_fullname = models.Attendees.objects.get(node_settings_id=node.id, webex_meetings_mail=organizer).fullname
         except ObjectDoesNotExist:
             logger.info('organizer is not registered.')
             organizer_fullname = organizer
