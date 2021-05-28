@@ -95,6 +95,7 @@ class workflowExecutionMessages(BaseModel):
 class Attendees(BaseModel):
     id = models.AutoField(primary_key=True)
     user_guid = models.CharField(max_length=128)
+    fullname = models.CharField(max_length=128)
     microsoft_teams_mail = models.CharField(max_length=256, blank=True, null=True)
     microsoft_teams_user_name = models.CharField(max_length=256, blank=True, null=True)
     webex_meetings_mail = models.CharField(max_length=256, blank=True, null=True)

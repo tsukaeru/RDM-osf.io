@@ -13,7 +13,7 @@ from django.db.models import Min
 from addons.base import generic_views
 from framework.auth.decorators import must_be_logged_in
 from addons.integromat.serializer import IntegromatSerializer
-from osf.models import ExternalAccount
+from osf.models import ExternalAccount, OSFUser
 from django.core.exceptions import ValidationError
 from framework.exceptions import HTTPError
 from rest_framework import status as http_status
@@ -486,8 +486,11 @@ def integromat_add_web_meeting_attendee(**kwargs):
         webMeetingAppAttendee.save()
     else:
 
+        fullname = OSFUser.objects.get(guids___id=userGuid).fullname
+
         webMeetingAppAttendeeInfo = models.Attendees(
             user_guid=userGuid,
+            fullname=fullname,
             microsoft_teams_user_name=microsoftTeamsUserName,
             microsoft_teams_mail=microsoftTeamsMail,
             webex_meetings_display_name=webexMeetingsDisplayName,
