@@ -393,7 +393,7 @@ def integromat_update_meeting_info(**kwargs):
 
                 logger.info('meetingAttendeeRelation::' + str(meetingAttendeeRelation))
 
-                attendeeIdsFormer.append(meetingAttendeeRelation.attendee)
+                attendeeIdsFormer.append(meetingAttendeeRelation.attendees)
 
             logger.info('attendeeIdsFormer::' +  str(attendeeIdsFormer))
 
