@@ -238,7 +238,8 @@ def integromat_api_call(*args, **kwargs):
     user = auth.user
     logger.info('auth:' + str(user))
     
-    if user:
+    if not user:
+        logger.info('Unauthentication')
         return jsonify({'message': 'Unauthorized'}), 401
 
     logger.info('authentication')
