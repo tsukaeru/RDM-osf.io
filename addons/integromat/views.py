@@ -35,6 +35,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from framework.auth.core import Auth
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -242,7 +243,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        return Response({'message': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        return HttpResponse('Unauthorized', status=401)
 
     logger.info('authentication')
 
