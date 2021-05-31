@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import request, jsonify
+from flask import request, abort
 import logging
 import requests
 import json
@@ -243,7 +243,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+        raise abort(401, {'message', 'Unauthorized'})
 
     logger.info('authentication')
 
