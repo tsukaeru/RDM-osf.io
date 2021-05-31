@@ -33,6 +33,7 @@ from osf.models.rdm_integromat import RdmWebMeetingApps, RdmWorkflows
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from framework.auth.core import Auth
+from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 
@@ -240,7 +241,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        return jsonify({'message': 'Unauthorized'}), 401
+        return Response({'message': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
 
     logger.info('authentication')
 
