@@ -243,7 +243,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        return HttpResponse('Unauthorized', status=401)
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     logger.info('authentication')
 
