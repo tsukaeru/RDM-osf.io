@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import request
+from flask import request, jsonify
 import logging
 import requests
 import json
@@ -235,8 +235,12 @@ def integromat_api_call(*args, **kwargs):
     logger.info('args' + str(dict(args)))
     logger.info('headers' + str(dict(request.headers)))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
     logger.info('auth:' + str(auth))
-    logger.info('auth:' + str(auth.user))
+    logger.info('auth:' + str(user))
+    
+    if user:
+        return jsonify({'message': 'Unauthorized'}), 401
 
     return {'email': str(auth.user)}
 
