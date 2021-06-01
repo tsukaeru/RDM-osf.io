@@ -92,7 +92,7 @@ api_routes = {
             '/integromat/integromat_api_call',
             'get',
             views.integromat_api_call,
-            json_renderer,
+            notemplate,
         ),
 
         Rule(
