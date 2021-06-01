@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import request, abort
+from flask import request
 import logging
 import requests
 import json
@@ -33,11 +33,6 @@ from osf.models.rdm_integromat import RdmWebMeetingApps, RdmWorkflows
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from framework.auth.core import Auth
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import HttpResponse
-from werkzeug.exceptions import Unauthorized
-
 
 logger = logging.getLogger(__name__)
 
@@ -245,7 +240,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        raise Unauthorized
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     logger.info('authentication')
 
