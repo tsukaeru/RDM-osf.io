@@ -26,6 +26,7 @@ from website.project.decorators import (
     must_be_addon_authorizer,
     must_have_permission,
 )
+from admin.rdm_addons.decorators import must_be_rdm_addons_allowed
 from website.ember_osf_web.views import use_ember_app
 from addons.integromat import settings
 
