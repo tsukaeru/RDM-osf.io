@@ -240,10 +240,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST, data={
-                'message_short': 'short test',
-                'message_long': 'long test',
-            })
+        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
 
     logger.info('authentication')
 
