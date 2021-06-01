@@ -241,10 +241,8 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        raise HTTPError(httplib.UNAUTHORIZED, data={
-            'message_short': 'Unauthorized',
-            'message_long': 'error'
-        })
+        raise HTTPError(httplib.UNAUTHORIZED)
+        return {'message': 'Unauthorized'}
 
     logger.info('authentication')
 
