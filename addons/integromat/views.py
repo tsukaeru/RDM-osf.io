@@ -5,6 +5,7 @@ import requests
 import json
 import time
 import pytz
+import httplib
 from django.utils.timezone import make_aware
 from datetime import date, datetime, timedelta
 from addons.integromat import SHORT_NAME, FULL_NAME
@@ -240,7 +241,7 @@ def integromat_api_call(*args, **kwargs):
     
     if not user:
         logger.info('Unauthentication')
-        raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
+        raise HTTPError(httplib.UNAUTHORIZED)
 
     logger.info('authentication')
 
