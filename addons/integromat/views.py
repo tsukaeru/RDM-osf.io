@@ -64,6 +64,7 @@ integromat_set_config = generic_views.set_config(
 )
 
 @must_be_logged_in
+@must_be_rdm_addons_allowed(SHORT_NAME)
 def integromat_add_user_account(auth, **kwargs):
     """Verifies new external account credentials and adds to user's list"""
 
@@ -149,7 +150,6 @@ def authIntegromat(access_token, hSdkVersion):
 def project_integromat(**kwargs):
     return use_ember_app()
 
-@must_be_logged_in
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
 def integromat_get_config_ember(auth, **kwargs):
@@ -242,8 +242,6 @@ def integromat_api_call(*args, **kwargs):
     if not user:
         logger.info('Unauthentication1')
         raise HTTPError(httplib.UNAUTHORIZED)
-        logger.info('Unauthentication2')
-        return {'message': 'Unauthorized'}
 
     logger.info('authentication')
 
@@ -252,9 +250,12 @@ def integromat_api_call(*args, **kwargs):
 def integromat_create_meeting_info(**kwargs):
 
     logger.info('integromat called integromat_create_meeting_info')
-    logger.info('headers' + str(dict(request.headers)))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
-    logger.info('auth:' + str(auth))
+    user = auth.user
+    logger.info('auth:' + str(user))
+    
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
     appName = request.get_json().get('meetingAppName')
@@ -269,7 +270,7 @@ def integromat_create_meeting_info(**kwargs):
     meetingId = request.get_json().get('meetingId')
     password = request.get_json().get('password')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
-    logger.info('meetingInviteesInfo:' + str(meetingInviteesInfo))
+    logger.info('content:::::' + str(content))
 
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
@@ -363,6 +364,13 @@ def integromat_create_meeting_info(**kwargs):
     return {}
 
 def integromat_update_meeting_info(**kwargs):
+
+    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
+    logger.info('auth:' + str(user))
+    
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
     appName = request.get_json().get('meetingAppName')
@@ -467,6 +475,13 @@ def integromat_update_meeting_info(**kwargs):
     return {}
 
 def integromat_delete_meeting_info(**kwargs):
+
+    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
+    logger.info('auth:' + str(user))
+    
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
     appName = request.get_json().get('meetingAppName')
@@ -626,6 +641,14 @@ def integromat_req_next_msg(**kwargs):
 def integromat_info_msg(**kwargs):
 
     logger.info('integromat_info_msg start')
+
+    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
+    logger.info('auth:' + str(user))
+    
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
+
     logger.info('integromat_info_msg 1')
     msg = request.json['notifyType']
     nodeId = request.json['nodeId']
@@ -647,6 +670,13 @@ def integromat_info_msg(**kwargs):
 def integromat_error_msg(**kwargs):
 
     logger.info('integromat_error_msg start')
+
+    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
+    logger.info('auth:' + str(user))
+    
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
 
     msg = request.json['notifyType']
     nodeId = request.json['nodeId']
