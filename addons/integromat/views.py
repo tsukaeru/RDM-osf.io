@@ -259,7 +259,7 @@ def integromat_create_meeting_info(**kwargs):
         raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
-    appName = request.get_json().get('meetingAppName')
+    appName = request.get_json().get('appName')
     subject = request.get_json().get('subject')
     organizer = request.get_json().get('organizer')
     attendees = request.get_json().get('attendees')
@@ -373,7 +373,7 @@ def integromat_update_meeting_info(**kwargs):
         raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
-    appName = request.get_json().get('meetingAppName')
+    appName = request.get_json().get('appName')
     subject = request.get_json().get('subject')
     attendees = request.get_json().get('attendees')
     startDatetime = request.get_json().get('startDate')
@@ -484,7 +484,7 @@ def integromat_delete_meeting_info(**kwargs):
         raise HTTPError(httplib.UNAUTHORIZED)
 
     nodeId = request.get_json().get('nodeId')
-    appName = request.get_json().get('meetingAppName')
+    appName = request.get_json().get('appName')
     meetingId = request.get_json().get('meetingId')
     logger.info('meetingId:' + str(meetingId))
 
