@@ -38,32 +38,18 @@
             </small>
         </h4>
     </div>
-    <div data-bind="if: nodeHasAuth">
+    <div data-bind="if: nodeHasAuth" style="text-align: right;">
         % if not is_registration:
-            <div  align="right">
-                <i title="Manage your Microsoft User information to create meetings." class="fa fa-question-circle text-muted"></i>
-                <a href="#manageWebMeetingAppsAttendeesModal" data-toggle="modal"
-                class="btn btn-primary" style="margin-bottom:10px">
-                Manage Web Meeting Apps Attendees
-                </a>
+            <div class="btn-group dropup">
+                <button
+                class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Manage
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">webhook URL</a></li>
+                    <li><a href="#manageWebMeetingAppsAttendeesModal" data-toggle="modal">Web Meeting Attendees</a></li>
+                </ul>
             </div>
-            <div id="scenarioList" ></div>
-            <table width="100%" border="1" bordercolor="#f0f8ff">
-                <th>
-                <div class="tb-row-titles">
-                    <div style="width: 75%" data-tb-th-col="0" class="tb-th">
-                        <span class="m-r-sm">Scenario Name</span>
-                    </div>
-                </div>
-                </th>
-                <th>
-                <div class="tb-row-titles">
-                    <div style="width: 75%" data-tb-th-col="1" class="tb-th">
-                        <span class="m-r-sm">Activate / Deactivate</span>
-                    </div>
-                </div>
-                </th>
-            </table>
         % endif
     </div>
 </div>
