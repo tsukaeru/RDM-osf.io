@@ -170,7 +170,7 @@ MIGRATION_MODULES = {
     'addons_dropboxbusiness': None,
     'addons_nextcloudinstitutions': None,
     'addons_s3compatinstitutions': None,
-    'addons.integromat': None,
+    'addons_integromat': None,
 }
 
 UNSUPPORTED_FORCE_TO_USE_ADDONS = [
