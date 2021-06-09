@@ -79,6 +79,9 @@ class BaseAddonAppConfig(AppConfig):
     is_allowed_default = True
     for_institutions = False
 
+    # specify Idp Name to limit available addon for GRDM Admin
+    available_idp = []
+
     def __init__(self, *args, **kwargs):
         ret = super(BaseAddonAppConfig, self).__init__(*args, **kwargs).__init__()
         # Build template lookup

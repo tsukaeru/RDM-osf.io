@@ -24,6 +24,9 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
     node_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_node_settings.mako')
     user_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_user_settings.mako')
 
+    # specify Idp Name to limit available addon for GRDM Admin
+    available_idp = ['GakuNin RDM Idp']
+
     @property
     def routes(self):
         from . import routes
