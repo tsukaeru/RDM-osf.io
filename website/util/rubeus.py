@@ -18,7 +18,6 @@ from website.settings import DISK_SAVING_MODE
 from osf.utils import sanitize
 from osf.utils.permissions import WRITE_NODE
 
-from osf.models import Institution
 
 logger = logging.getLogger(__name__)
 
@@ -269,11 +268,6 @@ class NodeFileCollector(object):
                 if addon.config.for_institutions:
                     if region_provider != addon.config.short_name:
                         continue  # skip (hide this *institutions)
-                if addon.config.available_idp:
-                    institutoin_id = get_institution_id(self.auth.user)
-                    institution = Institution.objects.get(pk=institution_id)
-                    if not (institution.name in addon.config.available_idp):
-                        continue # skip (hide this addon)
 
                 # WARNING: get_hgrid_data can return None if the addon is added but has no credentials.
                 try:
