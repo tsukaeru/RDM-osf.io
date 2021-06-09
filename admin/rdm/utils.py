@@ -61,6 +61,12 @@ def get_institution_id(user):
         return user.affiliated_institutions.first().id
     return None
 
+def get_institution_name(user):
+    """get the institutionName for the institution the user belongs to"""
+    if user.affiliated_institutions.exists():
+        return user.affiliated_institutions.first().name
+    return None
+
 def get_dummy_institution():
     """if the user doesn't belong to an institution, get the dummy institution model"""
     class DummyInstitution(object):
