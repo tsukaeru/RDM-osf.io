@@ -93,7 +93,7 @@ def get_rdm_addon_option(institution_id, addon_name, create=True):
         else:
             is_allowed_default = getattr(app, 'is_allowed_default', True)
             # is_allowed_default is False when app is integroat
-            if app == 'integromat':
+            if addon_name == 'integromat':
                 is_allowed_default = getattr(app, 'is_allowed_default', False)
         if is_allowed_default is False:
             rdm_addon_option.is_allowed = False
