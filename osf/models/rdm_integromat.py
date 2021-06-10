@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from osf.utils.fields import EncryptedTextField
 
 class RdmWorkflows(models.Model):
     id = models.AutoField(primary_key=True)
