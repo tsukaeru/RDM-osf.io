@@ -91,31 +91,6 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             });
         });
     },
-    /**
-     * Tests if the given string is a valid Integromat bucket name.  Supports two modes: strict and lax.
-     * Strict is for bucket creation and follows the guidelines at:
-     *
-     *   http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules
-     *
-     * However, the US East (N. Virginia) region currently permits much laxer naming rules.  The S3
-     * docs claim this will be changed at some point, but to support our user's already existing
-     * buckets, we provide the lax mode checking.
-     *
-     * Strict checking is the default.
-     *
-     * @param {String} bucketName user-provided name of bucket to validate
-     * @param {Boolean} laxChecking whether to use the more permissive validation
-     */
-    isValidBucketName: function(bucketName, laxChecking) {
-        if (laxChecking === true) {
-            return /^[a-zA-Z0-9.\-_]{1,255}$/.test(bucketName);
-        }
-        var label = '[a-z0-9]+(?:[a-z0-9\-]*[a-z0-9])?';
-        var strictBucketName = new RegExp('^' + label + '(?:\\.' + label + ')*$');
-        var isIpAddress = /^[0-9]+(?:\.[0-9]+){3}$/;
-        return bucketName.length >= 3 && bucketName.length <= 63 &&
-            strictBucketName.test(bucketName) && !isIpAddress.test(bucketName);
-    },
 
     /** Reset all fields from Integromat credentials input modal */
     clearModal: function() {
@@ -124,105 +99,6 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.messageClass('text-info');
         self.integromatApiToken(null);
         self.integromatWebhookUrl(null);
-    },
-
-    createBucket: function(self, bucketName) {
-        $osf.block();
-        bucketName = bucketName.toLowerCase();
-        return $osf.postJSON(
-            self.urls().createBucket, {bucket_name: bucketName}
-        ).done(function(response) {
-            $osf.unblock();
-            self.loadedFolders(false);
-            self.activatePicker();
-            var msg = 'Successfully created bucket "' + $osf.htmlEscape(bucketName) + '". You can now select it from the list.';
-            var msgType = 'text-success';
-            self.changeMessage(msg, msgType, null, true);
-        }).fail(function(xhr) {
-            var resp = JSON.parse(xhr.responseText);
-            var message = resp.message;
-            var title = resp.title || 'Problem creating bucket';
-            $osf.unblock();
-            if (!message) {
-                message = 'Looks like that name is taken. Try another name?';
-            }
-            bootbox.confirm({
-                title: $osf.htmlEscape(title),
-                message: $osf.htmlEscape(message),
-                callback: function(result) {
-                    if (result) {
-                        self.openCreateBucket();
-                    }
-                },
-                buttons:{
-                    confirm:{
-                        label:'Try again'
-                    }
-                }
-            });
-        });
-    },
-
-    openCreateBucket: function() {
-        var self = this;
-
-        bootbox.dialog({
-            title: 'Create a new bucket',
-            message:
-                    '<div class="row"> ' +
-                        '<div class="col-md-12"> ' +
-                            '<form class="form-horizontal" onsubmit="return false"> ' +
-                                '<div class="form-group"> ' +
-                                    '<label class="col-md-4 control-label" for="bucketName">Bucket Name</label> ' +
-                                    '<div class="col-md-8"> ' +
-                                        '<input id="bucketName" name="bucketName" type="text" placeholder="Enter bucket name" class="form-control" autofocus> ' +
-                                        '<div>' +
-                                            '<span id="bucketModalErrorMessage" ></span>' +
-                                        '</div>'+
-                                    '</div>' +
-                                '</div>' +
-                            '</form>' +
-                        '</div>' +
-                    '</div>',
-            buttons: {
-                cancel: {
-                    label: 'Cancel',
-                    className: 'btn-default'
-                },
-                confirm: {
-                    label: 'Create',
-                    className: 'btn-success',
-                    callback: function () {
-                        var bucketName = $('#bucketName').val();
-
-                        if (!bucketName) {
-                            var errorMessage = $('#bucketModalErrorMessage');
-                            errorMessage.text('Bucket name cannot be empty');
-                            errorMessage[0].classList.add('text-danger');
-                            return false;
-                        } else if (!self.isValidBucketName(bucketName, false)) {
-                            bootbox.confirm({
-                                title: 'Invalid bucket name',
-                                message: 'Integromat buckets can contain lowercase letters, numbers, and hyphens separated by' +
-                                ' periods.  Please try another name.',
-                                callback: function (result) {
-                                    if (result) {
-                                        self.openCreateBucket();
-                                    }
-                                },
-                                buttons: {
-                                    confirm: {
-                                        label: 'Try again'
-                                    }
-                                }
-                            });
-                        } else {
-                            self.createBucket(self, bucketName);
-                        }
-                    }
-                }
-            }
-        });
     },
 
     addWebMeetingAppsUser : function() {
