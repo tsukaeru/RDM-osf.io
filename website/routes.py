@@ -797,12 +797,12 @@ def make_url_map(app):
         ),
 
         # user sign up page
-        Rule(
-            '/register/',
-            'get',
-            auth_views.auth_register,
-            OsfWebRenderer('public/register.mako', trust=False)
-        ),
+        # Rule(
+        #     '/register/',
+        #     'get',
+        #     auth_views.auth_register,
+        #     OsfWebRenderer('public/register.mako', trust=False)
+        # ),
 
         # osf login and campaign login
         Rule(
@@ -816,12 +816,12 @@ def make_url_map(app):
         ),
 
         # create user account via api
-        Rule(
-            '/api/v1/register/',
-            'post',
-            auth_views.register_user,
-            json_renderer
-        ),
+        # Rule(
+        #     '/api/v1/register/',
+        #     'post',
+        #     auth_views.register_user,
+        #     json_renderer
+        # ),
 
         # osf logout and cas logout
         Rule(
