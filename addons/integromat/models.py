@@ -133,7 +133,7 @@ class AllMeetingInformationAttendeesRelation(BaseModel):
 class nodeWorkflows(BaseModel):
 
     id = models.AutoField(primary_key=True)
-    workflow = models.ForeignKey(RdmWorkflows, to_field='id', on_delete=models.CASCADE)
+    workflow = models.ForeignKey(RdmWorkflows, on_delete=models.CASCADE)
     # An alternative webhook url to the external service
     alternative_webhook_url = EncryptedTextField(blank=True, null=True)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
