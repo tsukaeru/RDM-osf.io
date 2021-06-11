@@ -145,6 +145,13 @@ api_routes = {
         ),
 
         Rule(
+            '/integromat/register_alternative_webhook_url',
+            'post',
+            views.integromat_register_alternative_webhook_url,
+            json_renderer,
+        ),
+
+        Rule(
             '/integromat/info_msg',
             'post',
             views.integromat_info_msg,
