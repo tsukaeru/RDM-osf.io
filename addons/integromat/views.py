@@ -642,8 +642,7 @@ def integromat_req_next_msg(**kwargs):
             'notify': notify,
             }
 
-@must_be_valid_project
-@must_have_addon(SHORT_NAME, 'node')
+@must_have_permission('admin')
 def integromat_register_alternative_webhook_url(**kwargs):
 
     logger.info('integromat_register_alternative_webhook_url start')

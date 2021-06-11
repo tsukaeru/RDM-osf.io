@@ -145,8 +145,7 @@ api_routes = {
         ),
 
         Rule(
-            '/project/<pid>/integromat/register_alternative_webhook_url',
-            '/project/<pid>/node/<nid>/integromat/register_alternative_webhook_url',
+            '/integromat/register_alternative_webhook_url',
             'post',
             views.integromat_register_alternative_webhook_url,
             json_renderer,
