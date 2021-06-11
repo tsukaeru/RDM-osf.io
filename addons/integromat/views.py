@@ -730,6 +730,9 @@ def integromat_get_meetings(**kwargs):
     logger.info('integromat_get_meetings start')
 
     node = kwargs['node'] or kwargs['project']
+
+    logger.info('node' + str(node))
+
     addon = node.get_addon(SHORT_NAME)
 
     amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
