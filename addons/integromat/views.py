@@ -650,6 +650,8 @@ def integromat_register_alternative_webhook_url(**kwargs):
     user = auth.user
     logger.info('auth:' + str(user))
 
+    logger.info('kwargs:' + str(kwargs))
+
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
