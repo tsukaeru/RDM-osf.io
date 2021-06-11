@@ -642,10 +642,13 @@ def integromat_req_next_msg(**kwargs):
             'notify': notify,
             }
 
-@must_have_permission('admin')
 def integromat_register_alternative_webhook_url(**kwargs):
 
     logger.info('integromat_register_alternative_webhook_url start')
+
+    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
+    user = auth.user
+    logger.info('auth:' + str(user))
 
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
