@@ -646,6 +646,8 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
     logger.info('integromat_register_alternative_webhook_url start')
 
+    logger.info('request.args.to_dict():' + str(request.args.to_dict()))
+
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
     logger.info('auth:' + str(user))
@@ -736,6 +738,8 @@ def integromat_get_meetings(**kwargs):
     node = kwargs['node'] or kwargs['project']
 
     logger.info('node' + str(node))
+
+    logger.info('request.args.to_dict():' + str(request.args.to_dict()))
 
     addon = node.get_addon(SHORT_NAME)
 
