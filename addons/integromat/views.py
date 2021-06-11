@@ -658,7 +658,7 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
     with transaction.atomic():
 
-        nodeWorkflow, created = models.nodeWorkflows.objects.get_or_create(node_settings_id=addon.id, workflows.id)
+        nodeWorkflow, created = models.nodeWorkflows.objects.get_or_create(node_settings_id=addon.id, workflow_id=workflows.id)
         nodeWorkflow.alternative_webhook_url = alternativeWebhookUrl
         nodeWorkflow.save()
 
