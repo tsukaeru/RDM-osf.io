@@ -129,3 +129,11 @@ class AllMeetingInformationAttendeesRelation(BaseModel):
     all_meeting_information = models.ForeignKey(AllMeetingInformation, on_delete=models.CASCADE)
     attendees = models.ForeignKey(Attendees, on_delete=models.CASCADE)
     webex_meetings_invitee_id = models.CharField(blank=True, null=True, max_length=128)
+
+class nodeWorkflows(BaseModel):
+
+    id = models.AutoField(primary_key=True)
+    workflow = models.ForeignKey(RdmWorkflows, to_field='id', on_delete=models.CASCADE)
+    # An alternative webhook url to the external service
+    alternative_webhook_url = EncryptedTextField(blank=True, null=True)
+    node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
