@@ -165,6 +165,7 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeWebMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
     nodeMicrosoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
     nodeWebexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
+    nodeWorkflows = models.nodeWorkflows.objects.filter(node_settings_id=addon.id)
 
     nodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(all_meeting_information__node_settings_id=addon.id)
 
@@ -180,12 +181,15 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeWebMeetingAttendeesJson = serializers.serialize('json', nodeWebMeetingAttendees, ensure_ascii=False)
     nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
     nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
+    nodeWorkflowsJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
+
     nodeWebMeetingsAttendeesRelationJson = serializers.serialize('json', nodeWebMeetingsAttendeesRelation, ensure_ascii=False)
 
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
                          'node_settings_id': addon._id, 
                          'webhook_url': addon.external_account.webhook_url,
+                         'alternative_webhook_urls': nodeWorkflowsJson,
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
@@ -637,6 +641,30 @@ def integromat_req_next_msg(**kwargs):
             'timestamp': timestamp,
             'notify': notify,
             }
+
+@must_be_valid_project
+@must_have_addon(SHORT_NAME, 'node')
+def integromat_register_alternative_webhook_url(**kwargs):
+
+    logger.info('integromat_register_alternative_webhook_url start')
+
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+
+    workflowDescription = request.json['workflowDescription']
+    alternativeWebhookUrl = request.json['alternativeWebhookUrl']
+
+    workflows = RdmWorkflows.objects.get(workflow_description=workflowDescription)
+
+    with transaction.atomic():
+
+        nodeWorkflow, created = models.nodeWorkflows.objects.get_or_create(node_settings_id=addon.id, workflows.id)
+        nodeWorkflow.alternative_webhook_url = alternativeWebhookUrl
+        nodeWorkflow.save()
+
+    logger.info('integromat_register_alternative_webhook_url end')
+
+    return {}
 
 def integromat_info_msg(**kwargs):
 
