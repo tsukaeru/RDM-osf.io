@@ -663,10 +663,13 @@ def integromat_register_alternative_webhook_url(**kwargs):
     logger.info('requestHeaders:::' + str(request.headers))
     logger.info('request:' + str(request))
     logger.info('request.get_data:' + str(request.get_data()))
-    logger.info('request.json:' + str(request.json))
 
-    workflowDescription = request.json['workflowDescription']
-    alternativeWebhookUrl = request.json['alternativeWebhookUrl']
+    request_data = request.get_data()
+
+    logger.info('attribute:' + str(request_data.attribute))
+
+    workflowDescription = request_data.attribute.workflowDescription
+    alternativeWebhookUrl = request_data.attribute.alternativeWebhookUrl
     nodeId = request.json['nodeId']
     node = models.NodeSettings.objects.get(_id=nodeId)
 
