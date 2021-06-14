@@ -660,7 +660,7 @@ def integromat_register_alternative_webhook_url(**kwargs):
 #    node = kwargs['node'] or kwargs['project']
 #    addon = node.get_addon(SHORT_NAME)
 
-    logger.info('requestHeaders:::' + str(request.headers)
+    logger.info('requestHeaders:::' + str(request.headers))
     logger.info('request:' + str(request))
     logger.info('request.get_data:' + str(request.get_data()))
     logger.info('request.json:' + str(request.json))
