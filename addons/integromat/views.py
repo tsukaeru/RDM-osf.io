@@ -676,9 +676,12 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
     workflows = RdmWorkflows.objects.get(workflow_description=workflowDescription)
 
+    logger.info('workflowDescription:' + str(workflowDescription))
+    logger.info('alternativeWebhookUrl:' + str(alternativeWebhookUrl))
+
     with transaction.atomic():
 
-        nodeWorkflow, created = models.nodeWorkflows.objects.get_or_update(node_settings_id=node.id, workflow_id=workflows.id, defaults={ alternative_webhook_url: alternativeWebhookUrl})
+        nodeWorkflow, created = models.nodeWorkflows.objects.update_or_create(node_settings_id=node.id, workflow_id=workflows.id, defaults={ alternative_webhook_url: alternativeWebhookUrl})
 
     logger.info('integromat_register_alternative_webhook_url end')
 
