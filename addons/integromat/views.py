@@ -181,7 +181,7 @@ def integromat_get_config_ember(auth, **kwargs):
     nodeWebMeetingAttendeesJson = serializers.serialize('json', nodeWebMeetingAttendees, ensure_ascii=False)
     nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
     nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
-    nodeWorkflowsJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
+    nodeWorkflowsJson = serializers.serialize('json', nodeWorkflows, ensure_ascii=False)
 
     nodeWebMeetingsAttendeesRelationJson = serializers.serialize('json', nodeWebMeetingsAttendeesRelation, ensure_ascii=False)
 
