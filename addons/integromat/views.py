@@ -189,7 +189,6 @@ def integromat_get_config_ember(auth, **kwargs):
                      'attributes': {
                          'node_settings_id': addon._id, 
                          'webhook_url': addon.external_account.webhook_url,
-                         'alternative_webhook_urls': nodeWorkflowsJson,
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
@@ -198,6 +197,7 @@ def integromat_get_config_ember(auth, **kwargs):
                          'node_webex_meetings_attendees': nodeWebexMeetingsAttendeesJson,
                          'node_web_meetings_attendees_relation': nodeWebMeetingsAttendeesRelationJson,
                          'workflows': workflowsJson,
+                         'node_workflows': nodeWorkflowsJson,
                          'web_meeting_apps': webMeetingAppsJson,
                          'app_name_microsoft_teams': settings.MICROSOFT_TEAMS,
                          'app_name_webex_meetings': settings.WEBEX_MEETINGS
