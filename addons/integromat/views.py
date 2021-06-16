@@ -235,19 +235,15 @@ def integromat_set_config_ember(**kwargs):
 #api for Integromat action
 def integromat_api_call(*args, **kwargs):
 
-    logger.info('integromat called integromat_api_call.GRDM-Integromat connection test scceeeded.:')
-    logger.info('kwargs' + str(dict(kwargs)))
-    logger.info('args' + str(dict(args)))
-    logger.info('headers' + str(dict(request.headers)))
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
-    logger.info('auth:' + str(user))
-    
-    if not user:
-        logger.info('Unauthentication1')
+
+    # User must be logged in
+    if user is None:
         raise HTTPError(httplib.UNAUTHORIZED)
 
-    logger.info('authentication')
+    logger.info('Integromat called integromat_api_call by ' + str(user) + '.')
+    logger.info('GRDM-Integromat connection test scceeeded.')
 
     return {'email': str(user)}
 
@@ -571,17 +567,23 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
+
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+
     logger.info('kwargs:' + str(kwargs))
-    nodeId = request.json['nodeId']
-    timestamp = request.json['timestamp']
-    webhook_url = request.json['webhook_url']
 
     integromatMsg = ''
-    node = models.NodeSettings.objects.get(_id=nodeId)
 
     logger.info('request:' + str(request))
     logger.info('request:' + str(request.get_data()))
     logger.info('request.json:' + str(request.json))
+
+    requestData = request.get_data()
+    requestDataJson = json.loads(requestData)
+
+    timestamp = requestDataJson['timestamp']
+    webhook_url = requestDataJson['webhook_url']
 
     response = requests.post(webhook_url, data=request.get_data(), headers={'Content-Type': 'application/json'})
 
@@ -589,7 +591,7 @@ def integromat_start_scenario(**kwargs):
         time.sleep(1)
         logger.info(str(i))
         try:
-            wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
+            wem = models.workflowExecutionMessages.objects.filter(node_settings_id=addon.id, timestamp=timestamp, notified=False).earliest('created')
             logger.info('wem:' + str(wem))
             integromatMsg = wem.integromat_msg
             wem.notified = True
@@ -606,7 +608,7 @@ def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario end')
 
-    return {'nodeId': nodeId,
+    return {'nodeId': addon._id,
             'integromatMsg': integromatMsg,
             'timestamp': timestamp
             }
@@ -620,15 +622,16 @@ def integromat_req_next_msg(**kwargs):
     logger.info('kwargs:' + str(kwargs))
     time.sleep(1)
 
-    nodeId = request.json['nodeId']
-    timestamp = request.json['timestamp']
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+
+    timestamp = requestDataJson['timestamp']
     notify = False
 
     integromatMsg = ''
-    node = models.NodeSettings.objects.get(_id=nodeId)
 
     try:
-        wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
+        wem = models.workflowExecutionMessages.objects.filter(node_settings_id=addon.id, timestamp=timestamp, notified=False).earliest('created')
         logger.info('wem:' + str(wem))
         integromatMsg = wem.integromat_msg
         wem.notified = True
@@ -642,7 +645,7 @@ def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg end')
 
-    return {'nodeId': nodeId,
+    return {'nodeId': addon._id,
             'integromatMsg': integromatMsg,
             'timestamp': timestamp,
             'notify': notify,
@@ -664,19 +667,15 @@ def integromat_register_alternative_webhook_url(**kwargs):
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
 
-    logger.info('requestDataJson:' + str(requestDataJson))
-
     workflowDescription = requestDataJson['data']['attribute']['workflowDescription']
     alternativeWebhookUrl = requestDataJson['data']['attribute']['alternativeWebhookUrl']
 
     workflows = RdmWorkflows.objects.get(workflow_description=workflowDescription)
 
     with transaction.atomic():
-
         nodeWorkflow, created = models.nodeWorkflows.objects.update_or_create(node_settings_id=addon.id, workflow_id=workflows.id, defaults={ 'alternative_webhook_url': alternativeWebhookUrl})
 
     logger.info('integromat_register_alternative_webhook_url end')
-
     return {}
 
 def integromat_info_msg(**kwargs):
