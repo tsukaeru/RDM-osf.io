@@ -648,23 +648,11 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
     logger.info('integromat_register_alternative_webhook_url start')
 
-    logger.info('request.args.to_dict():' + str(request.args.to_dict()))
-
-    auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
-    user = auth.user
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+    user = kwargs['auth'].user
     logger.info('auth:' + str(user))
-    
-    if not user:
-        raise HTTPError(httplib.UNAUTHORIZED)
-
     logger.info('kwargs:' + str(kwargs))
-
-#    node = kwargs['node'] or kwargs['project']
-#    addon = node.get_addon(SHORT_NAME)
-
-    logger.info('requestHeaders:::' + str(request.headers))
-    logger.info('request:' + str(request))
-    logger.info('request.get_data:' + str(request.get_data()))
 
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
@@ -673,17 +661,12 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
     workflowDescription = requestDataJson['data']['attribute']['workflowDescription']
     alternativeWebhookUrl = requestDataJson['data']['attribute']['alternativeWebhookUrl']
-    nodeId = requestDataJson['data']['id']
-    node = models.NodeSettings.objects.get(_id=nodeId)
 
     workflows = RdmWorkflows.objects.get(workflow_description=workflowDescription)
 
-    logger.info('workflowDescription:' + str(workflowDescription))
-    logger.info('alternativeWebhookUrl:' + str(alternativeWebhookUrl))
-
     with transaction.atomic():
 
-        nodeWorkflow, created = models.nodeWorkflows.objects.update_or_create(node_settings_id=node.id, workflow_id=workflows.id, defaults={ 'alternative_webhook_url': alternativeWebhookUrl})
+        nodeWorkflow, created = models.nodeWorkflows.objects.update_or_create(node_settings_id=addon.id, workflow_id=workflows.id, defaults={ 'alternative_webhook_url': alternativeWebhookUrl})
 
     logger.info('integromat_register_alternative_webhook_url end')
 
