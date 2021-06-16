@@ -567,21 +567,15 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
+    logger.info('integromat_start_scenario kwargs:' + str(kwargs))
+    logger.info('integromat_start_scenario request.data:' + str(request.get_data()))
 
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
-    logger.info('kwargs:' + str(kwargs))
-
     integromatMsg = ''
-
-    logger.info('request:' + str(request))
-    logger.info('request:' + str(request.get_data()))
-    logger.info('request.json:' + str(request.json))
-
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
-
     timestamp = requestDataJson['timestamp']
     webhook_url = requestDataJson['webhook_url']
 
@@ -604,8 +598,6 @@ def integromat_start_scenario(**kwargs):
     if not integromatMsg:
         integromatMsg = 'integromat.error.didNotStart'
 
-    logger.info('integromatMsg:' + integromatMsg)
-
     logger.info('integromat_start_scenario end')
 
     return {'nodeId': addon._id,
@@ -619,7 +611,7 @@ def integromat_start_scenario(**kwargs):
 def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg start')
-    logger.info('kwargs:' + str(kwargs))
+    logger.info('integromat_req_next_msg kwargs:' + str(kwargs))
     time.sleep(1)
 
     node = kwargs['node'] or kwargs['project']
@@ -661,8 +653,8 @@ def integromat_register_alternative_webhook_url(**kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
     user = kwargs['auth'].user
-    logger.info('auth:' + str(user))
-    logger.info('kwargs:' + str(kwargs))
+    logger.info('integromat_register_alternative_webhook_url auth:' + str(user))
+    logger.info('integromat_register_alternative_webhook_url kwargs:' + str(kwargs))
 
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
