@@ -571,6 +571,7 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
+    logger.info('kwargs:' + str(kwargs))
     nodeId = request.json['nodeId']
     timestamp = request.json['timestamp']
     webhook_url = request.json['webhook_url']
@@ -616,7 +617,7 @@ def integromat_start_scenario(**kwargs):
 def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg start')
-
+    logger.info('kwargs:' + str(kwargs))
     time.sleep(1)
 
     nodeId = request.json['nodeId']
