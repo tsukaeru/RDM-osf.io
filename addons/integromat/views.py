@@ -188,7 +188,6 @@ def integromat_get_config_ember(auth, **kwargs):
     return {'data': {'id': node._id, 'type': 'integromat-config',
                      'attributes': {
                          'node_settings_id': addon._id, 
-                         'webhook_url': addon.external_account.webhook_url,
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
