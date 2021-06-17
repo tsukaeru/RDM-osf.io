@@ -673,14 +673,14 @@ def integromat_register_alternative_webhook_url(**kwargs):
 def integromat_info_msg(**kwargs):
 
     logger.info('integromat_info_msg start')
-    '''
+
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
     logger.info('auth:' + str(user))
     
     if not user:
         raise HTTPError(httplib.UNAUTHORIZED)
-   '''
+
     logger.info('integromat_info_msg 1')
     msg = request.json['notifyType']
     nodeId = request.json['nodeId']
