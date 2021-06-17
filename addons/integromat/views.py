@@ -603,7 +603,7 @@ def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario end')
 
-    return {'nodeId': addon._id,
+    return {'nodeId': nodeId,
             'integromatMsg': integromatMsg,
             'timestamp': timestamp
             }
@@ -644,7 +644,7 @@ def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg end')
 
-    return {'nodeId': addon._id,
+    return {'nodeId': nodeId,
             'integromatMsg': integromatMsg,
             'timestamp': timestamp,
             'notify': notify,
