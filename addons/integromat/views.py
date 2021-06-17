@@ -564,10 +564,6 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
-    user = Auth.from_kwargs(request.args.to_dict(), kwargs).user
-    logger.info('auth:' + str(user))
-    if not user:
-        raise HTTPError(httplib.UNAUTHORIZED)
 
     logger.info('integromat_start_scenario kwargs:' + str(kwargs))
     logger.info('request:' + str(request))
