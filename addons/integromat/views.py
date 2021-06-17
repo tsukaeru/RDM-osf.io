@@ -617,6 +617,8 @@ def integromat_req_next_msg(**kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
+    requestData = request.get_data()
+    requestDataJson = json.loads(requestData)
     timestamp = requestDataJson['timestamp']
     notify = False
 
