@@ -679,12 +679,18 @@ def integromat_register_alternative_webhook_url(**kwargs):
 
 @must_be_valid_project
 @must_have_permission('admin')
-@must_have_addon(SHORT_NAME, 'node')
 def integromat_info_msg(**kwargs):
 
     logger.info('integromat_info_msg start')
 
     logger.info('integromat_info_msg 1')
+
+    node = kwargs['node'] or kwargs['project']
+    addon = node.get_addon(SHORT_NAME)
+    logger.info('addon::' + str(addon))
+    logger.info('addon::' + str(addon.id))
+    logger.info('integromat_info_msg 2')
+
     msg = request.json['notifyType']
     nodeId = request.json['nodeId']
     timestamp = request.json['timestamp']
