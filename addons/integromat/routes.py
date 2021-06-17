@@ -161,7 +161,10 @@ api_routes = {
         ),
 
         Rule(
-            '/integromat/info_msg',
+            [
+                '/project/<pid>/integromat/info_msg',
+                '/project/<pid>/node/<nid>/integromat/info_msg',
+            ],
             'post',
             views.integromat_info_msg,
             json_renderer,
