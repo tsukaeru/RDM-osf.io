@@ -561,21 +561,26 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 
     return {}
 
-@must_be_valid_project
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
+    user = Auth.from_kwargs(request.args.to_dict(), kwargs).user
+    logger.info('auth:' + str(user))
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
+
     logger.info('integromat_start_scenario kwargs:' + str(kwargs))
-    logger.info('integromat_start_scenario request.data:' + str(request.get_data()))
-
-    node = kwargs['node'] or kwargs['project']
-    addon = node.get_addon(SHORT_NAME)
-
-    integromatMsg = ''
+    logger.info('request:' + str(request))
+    logger.info('request:' + str(request.get_data()))
+    logger.info('request.json:' + str(request.json))
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
     timestamp = requestDataJson['timestamp']
+    nodeId = requestDataJson['nodeId']
     webhook_url = requestDataJson['webhook_url']
+
+    integromatMsg = ''
+    node = models.NodeSettings.objects.get(_id=nodeId)
 
     response = requests.post(webhook_url, data=request.get_data(), headers={'Content-Type': 'application/json'})
 
@@ -583,7 +588,7 @@ def integromat_start_scenario(**kwargs):
         time.sleep(1)
         logger.info(str(i))
         try:
-            wem = models.workflowExecutionMessages.objects.filter(node_settings_id=addon.id, timestamp=timestamp, notified=False).earliest('created')
+            wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
             logger.info('wem:' + str(wem))
             integromatMsg = wem.integromat_msg
             wem.notified = True
@@ -603,25 +608,29 @@ def integromat_start_scenario(**kwargs):
             'timestamp': timestamp
             }
 
-@must_be_valid_project
 def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg start')
+
+    user = Auth.from_kwargs(request.args.to_dict(), kwargs).user
+    logger.info('auth:' + str(user))
+    if not user:
+        raise HTTPError(httplib.UNAUTHORIZED)
+
     logger.info('integromat_req_next_msg kwargs:' + str(kwargs))
     time.sleep(1)
-
-    node = kwargs['node'] or kwargs['project']
-    addon = node.get_addon(SHORT_NAME)
 
     requestData = request.get_data()
     requestDataJson = json.loads(requestData)
     timestamp = requestDataJson['timestamp']
+    nodeId = requestDataJson['nodeId']
     notify = False
 
     integromatMsg = ''
+    node = models.NodeSettings.objects.get(_id=nodeId)
 
     try:
-        wem = models.workflowExecutionMessages.objects.filter(node_settings_id=addon.id, timestamp=timestamp, notified=False).earliest('created')
+        wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
         logger.info('wem:' + str(wem))
         integromatMsg = wem.integromat_msg
         wem.notified = True
