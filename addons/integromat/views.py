@@ -562,7 +562,6 @@ def integromat_delete_web_meeting_attendee(**kwargs):
     return {}
 
 @must_be_valid_project
-@must_have_permission('admin')
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
@@ -605,7 +604,6 @@ def integromat_start_scenario(**kwargs):
             }
 
 @must_be_valid_project
-@must_have_permission('admin')
 def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg start')
