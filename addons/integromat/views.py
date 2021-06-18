@@ -609,6 +609,11 @@ def integromat_req_next_msg(**kwargs):
     integromatMsg = ''
     node = models.NodeSettings.objects.get(_id=nodeId)
 
+    if count == settings.TIME_LIMIT_START_SCENARIO:
+        notifyCnt = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp).count()
+        if not notifyCnt:
+            integromatMsg = 'integromat.error.didNotStart'
+
     try:
         wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
         logger.info('wem:' + str(wem))
@@ -616,10 +621,7 @@ def integromat_req_next_msg(**kwargs):
         wem.notified = True
         wem.save()
     except ObjectDoesNotExist:
-        if count == settings.TIME_LIMIT_START_SCENARIO:
-            integromatMsg = 'integromat.error.didNotStart'
-        else:
-            pass
+        pass
 
     if integromatMsg:
         notify = True
