@@ -120,7 +120,7 @@ def must_be_valid_project(func=None, retractions_valid=False, quickfiles_valid=F
 
     if func:
         return must_be_valid_project_inner(func)
-    logger.info('mustbevalidproject-end')
+
     return must_be_valid_project_inner
 
 
@@ -335,7 +335,6 @@ def must_have_addon(addon_name, model):
         @functools.wraps(func)
         @collect_auth
         def wrapped(*args, **kwargs):
-            logger.info('musthaveaddon-1')
             if model == 'node':
                 _inject_nodes(kwargs)
                 owner = kwargs['node']
@@ -346,17 +345,17 @@ def must_have_addon(addon_name, model):
                     raise HTTPError(http.UNAUTHORIZED)
             else:
                 raise HTTPError(http.BAD_REQUEST)
-            logger.info('musthaveaddon-2')
+
             addon = owner.get_addon(addon_name)
             if addon is None:
                 raise HTTPError(http.BAD_REQUEST)
 
             kwargs['{0}_addon'.format(model)] = addon
-            logger.info('musthaveaddon-3')
+
             return func(*args, **kwargs)
 
         return wrapped
-    logger.info('musthaveaddon-end')
+
     return wrapper
 
 
@@ -439,7 +438,7 @@ def must_have_permission(permission):
 
             # Call view function
             return func(*args, **kwargs)
-        logger.info('musthavepermission-end')
+
         # Return decorated function
         return wrapped
 
