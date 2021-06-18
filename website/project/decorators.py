@@ -20,8 +20,6 @@ from website.util import web_url_for
 
 _load_node_or_fail = lambda pk: get_or_http_error(AbstractNode, pk)
 
-import logging
-logger = logging.getLogger(__name__)
 
 def _kwargs_to_nodes(kwargs):
     """Retrieve project and component objects from keyword arguments.
@@ -37,9 +35,6 @@ def _kwargs_to_nodes(kwargs):
 
     pid = kwargs.get('pid')
     nid = kwargs.get('nid')
-    logger.info('kwargs::' + str(kwargs))
-    logger.info('pid::' + str(pid))
-    logger.info('nid::' + str(nid))
     if pid and nid:
         node = _load_node_or_fail(nid)
         parent = _load_node_or_fail(pid)
@@ -98,16 +93,14 @@ def must_be_valid_project(func=None, retractions_valid=False, quickfiles_valid=F
             if groups_valid and OSFGroup.load(kwargs.get('pid')):
                 kwargs['node'] = OSFGroup.load(kwargs.get('pid'))
                 return func(*args, **kwargs)
-            logger.info('mustbevalidproject-1')
-            _inject_nodes(kwargs)
 
-            logger.info('mustbevalidproject' + str(kwargs))
+            _inject_nodes(kwargs)
 
             if getattr(kwargs['node'], 'is_collection', True) or (getattr(kwargs['node'], 'is_quickfiles', True) and not quickfiles_valid):
                 raise HTTPError(
                     http.NOT_FOUND
                 )
-            logger.info('mustbevalidproject-2')
+
             if not retractions_valid and getattr(kwargs['node'].retraction, 'is_retracted', False):
                 raise HTTPError(
                     http.BAD_REQUEST,
@@ -371,6 +364,7 @@ def must_be_addon_authorizer(addon_name):
         @functools.wraps(func)
         @collect_auth
         def wrapped(*args, **kwargs):
+
             node_addon = kwargs.get('node_addon')
             if not node_addon:
                 _inject_nodes(kwargs)
@@ -411,13 +405,11 @@ def must_have_permission(permission):
 
         @functools.wraps(func)
         def wrapped(*args, **kwargs):
-            logger.info('musthavepermission-1')
             # Ensure `project` and `node` kwargs
             if kwargs.get('nid') or kwargs.get('pid'):
-                logger.info('musthavepermission-2')
                 _inject_nodes(kwargs)
             target = kwargs.get('node') or getattr(Guid.load(kwargs.get('guid')), 'referent', None)
-            logger.info('musthavepermission-3')
+
             kwargs['auth'] = Auth.from_kwargs(request.args.to_dict(), kwargs)
             auth = kwargs['auth']
             user = auth.user
