@@ -734,8 +734,13 @@ def integromat_get_meetings(**kwargs):
 
     addon = node.get_addon(SHORT_NAME)
 
-    amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today()).order_by('start_datetime')
-    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=date.today() + timedelta(days=1)).order_by('start_datetime')
+    tz = pytz.timezone('utc')
+    offsetHours = time.timezone / 3600
+    sToday = datetime.now(tz).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(hours=offsetHours)
+    sTomorrow = sToday + timedelta(days=1)
+
+    amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=sToday, start_datetime__lt=sTomorrow).order_by('start_datetime')
+    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=sTomorrow, start_datetime__lt=sTomorrow + timedelta(days=1)).order_by('start_datetime')
     logger.info('today:' + str(date.today()))
     amiTodayJson = serializers.serialize('json', amiToday, ensure_ascii=False)
     amiTomorrowJson = serializers.serialize('json', amiTomorrow, ensure_ascii=False)
