@@ -616,7 +616,7 @@ def integromat_req_next_msg(**kwargs):
         wem.notified = True
         wem.save()
     except ObjectDoesNotExist:
-        if count == TIME_LIMIT_START_SCENARIO:
+        if count == settings.TIME_LIMIT_START_SCENARIO:
             integromatMsg = 'integromat.error.didNotStart'
         else:
             pass
