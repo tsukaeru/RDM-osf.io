@@ -580,27 +580,10 @@ def integromat_start_scenario(**kwargs):
 
     response = requests.post(webhook_url, data=request.get_data(), headers={'Content-Type': 'application/json'})
 
-    for i in range(0, 10):
-        time.sleep(1)
-        logger.info(str(i))
-        try:
-            wem = models.workflowExecutionMessages.objects.filter(node_settings_id=node.id, timestamp=timestamp, notified=False).earliest('created')
-            logger.info('wem:' + str(wem))
-            integromatMsg = wem.integromat_msg
-            wem.notified = True
-            wem.save()
-            break
-        except ObjectDoesNotExist:
-            logger.info('object des not exist1')
-            pass
-
-    if not integromatMsg:
-        integromatMsg = 'integromat.error.didNotStart'
-
     logger.info('integromat_start_scenario end')
 
-    return {'nodeId': nodeId,
-            'integromatMsg': integromatMsg,
+    return {
+            'nodeId': nodeId,
             'timestamp': timestamp
             }
 
@@ -621,6 +604,7 @@ def integromat_req_next_msg(**kwargs):
     timestamp = requestDataJson['timestamp']
     nodeId = requestDataJson['nodeId']
     notify = False
+    count = requestDataJson['count']
 
     integromatMsg = ''
     node = models.NodeSettings.objects.get(_id=nodeId)
@@ -632,8 +616,10 @@ def integromat_req_next_msg(**kwargs):
         wem.notified = True
         wem.save()
     except ObjectDoesNotExist:
-        logger.info('object des not exist2')
-        pass
+        if count == TIME_LIMIT_START_SCENARIO:
+            integromatMsg = 'integromat.error.didNotStart'
+        else:
+            pass
 
     if integromatMsg:
         notify = True
@@ -644,6 +630,7 @@ def integromat_req_next_msg(**kwargs):
             'integromatMsg': integromatMsg,
             'timestamp': timestamp,
             'notify': notify,
+            'count': count,
             }
 
 @must_be_valid_project
