@@ -131,14 +131,20 @@ api_routes = {
         ),
 
         Rule(
-            '/integromat/start_scenario',
+            [
+                '/project/<pid>/integromat/start_scenario',
+                '/project/<pid>/node/<nid>/integromat/start_scenario',
+            ],
             'post',
             views.integromat_start_scenario,
             json_renderer,
         ),
 
         Rule(
-            '/integromat/requestNextMessages',
+            [
+                '/project/<pid>/integromat/requestNextMessages',
+                '/project/<pid>/node/<nid>/integromat/requestNextMessages',
+            ],
             'post',
             views.integromat_req_next_msg,
             json_renderer,

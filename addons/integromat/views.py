@@ -565,6 +565,9 @@ def integromat_delete_web_meeting_attendee(**kwargs):
 
     return {}
 
+@must_be_valid_project
+@must_have_permission('admin')
+@must_have_addon(SHORT_NAME, 'node')
 def integromat_start_scenario(**kwargs):
 
     logger.info('integromat_start_scenario start')
@@ -591,15 +594,12 @@ def integromat_start_scenario(**kwargs):
             'timestamp': timestamp
             }
 
+@must_be_valid_project
+@must_have_permission('admin')
+@must_have_addon(SHORT_NAME, 'node')
 def integromat_req_next_msg(**kwargs):
 
     logger.info('integromat_req_next_msg start')
-
-    user = Auth.from_kwargs(request.args.to_dict(), kwargs).user
-    logger.info('auth:' + str(user))
-    if not user:
-        raise HTTPError(httplib.UNAUTHORIZED)
-
     logger.info('integromat_req_next_msg kwargs:' + str(kwargs))
     time.sleep(1)
 
@@ -743,7 +743,7 @@ def integromat_get_meetings(**kwargs):
 
     tz = pytz.timezone('utc')
     offsetHours = time.timezone / 3600
-    sToday = (datetime.now(tz) - timedelta(hours=offsetHours).replace(hour=0, minute=0, second=0, microsecond=0))
+    sToday = (datetime.now(tz) - timedelta(hours=offsetHours)).replace(hour=0, minute=0, second=0, microsecond=0))
     sTomorrow = sToday + timedelta(days=1)
 
     logger.info('sToday' + str(sToday))
