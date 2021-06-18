@@ -5,6 +5,7 @@ import requests
 import json
 import time
 import pytz
+import dateutil
 import httplib
 from django.utils.timezone import make_aware
 from datetime import date, datetime, timedelta
@@ -739,8 +740,11 @@ def integromat_get_meetings(**kwargs):
 
     tz = pytz.timezone('utc')
     offsetHours = time.timezone / 3600
-    sToday = datetime.now(tz).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(hours=offsetHours)
+    sToday = (datetime.now(tz) - timedelta(hours=offsetHours).replace(hour=0, minute=0, second=0, microsecond=0))
     sTomorrow = sToday + timedelta(days=1)
+
+    logger.info('sToday' + str(sToday))
+    logger.info('sTomorrow' + str(sTomorrow))
 
     amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=sToday, start_datetime__lt=sTomorrow).order_by('start_datetime')
     amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=sTomorrow, start_datetime__lt=sTomorrow + timedelta(days=1)).order_by('start_datetime')
