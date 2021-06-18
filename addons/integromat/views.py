@@ -749,8 +749,8 @@ def integromat_get_meetings(**kwargs):
     sTodayUtc = sTodayLocal + timedelta(hours=offsetHours)
     sTomorrowUtc =  sTomorrowLocal + timedelta(hours=offsetHours)
 
-    logger.info('sToday' + str(sToday))
-    logger.info('sTomorrow' + str(sTomorrow))
+    logger.info('sToday' + str(sTodayUtc))
+    logger.info('sTomorrow' + str(sTomorrowUtc))
 
     amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=sTodayUtc, start_datetime__lt=sTomorrowUtc).order_by('start_datetime')
     amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=sTomorrowUtc, start_datetime__lt=sTomorrowUtc + timedelta(days=1)).order_by('start_datetime')
