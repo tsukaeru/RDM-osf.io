@@ -624,6 +624,7 @@ def integromat_req_next_msg(**kwargs):
     if integromatMsg:
         notify = True
 
+    logger.info('count::' + str(count))
     logger.info('integromat_req_next_msg end')
 
     return {'nodeId': nodeId,
