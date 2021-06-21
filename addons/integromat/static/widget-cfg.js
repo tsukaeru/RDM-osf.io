@@ -31,9 +31,6 @@ function IntegromatWidget() {
     var sTomorrowUtc = new Date(sTodayUtc.setDate(sTodayUtc.getDate() + 1));
     var sDayAfterTomorrowUtc = new Date(sTomorrowUtc.setDate(sTomorrowUtc.getDate() + 1));
 
-    var todaysMeetings = [];
-    var tomorrowsMeetings = [];
-
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
         console.log(logPrefix, 'loading: ', url);
@@ -47,19 +44,17 @@ function IntegromatWidget() {
             self.loading(false);
             self.loadCompleted(true);
             const recentMeetings = data.recentMeetings;
+            var todaysMeetings = [];
+            var tomorrowsMeetings = [];
 
-            todaysMeetings = recentMeetings.filter( recentMeetings => {
-                if(sTodayUtc <= recentMeetings.fields.start_date && recentMeetings.fields.start_date < sTomorrowUtc){
-                    return recentMeetings;
+            for(var i = 0; i < recentMeetings.length; i++){
+
+                if(sTodayUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sTomorrowUtc){
+                    todaysMeetings.push(recentMeetings[i]);
+                }else if(sTomorrowUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sDayAfterTomorrowUtc){
+                    tomorrowsMeetings.push(recentMeetings[i]);
                 }
-            });
-
-            tomorrowsMeetings = recentMeetings.filter( recentMeetings => {
-                if(sTomorrowUtc <= recentMeetings.fields.start_date && recentMeetings.fields.start_date < sDayAfterTomorrowUtc){
-                    return recentMeetings;
-                }
-            });
-
+            }
             self.todaysMeetings(todaysMeetings);
             self.tomorrowsMeetings(tomorrowsMeetings);
         }).fail(function(xhr, status, error) {
