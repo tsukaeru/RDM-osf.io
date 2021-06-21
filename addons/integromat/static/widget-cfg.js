@@ -48,14 +48,18 @@ function IntegromatWidget() {
             self.loadCompleted(true);
             const recentMeetings = data.recentMeetings;
 
-            for(let i = 0; i < recentMeetings.length; i++){
-
-                if(sTodayUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sTomorrowUtc){
-                    todaysMeetings.push(recentMeetings[i]);
-                }else if(sTomorrowUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sDayAfterTomorrowUtc){
-                    tomorrowsMeetings.push(recentMeetings[i]);
+            todaysMeetings = recentMeetings.filter( recentMeetings => {
+                if(sTodayUtc <== recentMeetings.fields.start_date && recentMeetings.fields.start_date < sTomorrowUtc){
+                    return recentMeetings;
                 }
-            }
+            });
+
+            tomorrowsMeetings = recentMeetings.filter( recentMeetings => {
+                if(sTomorrowUtc <== recentMeetings.fields.start_date && recentMeetings.fields.start_date < sDayAfterTomorrowUtc){
+                    return recentMeetings;
+                }
+            });
+
             self.todaysMeetings(todaysMeetings);
             self.tomorrowsMeetings(tomorrowsMeetings);
         }).fail(function(xhr, status, error) {
