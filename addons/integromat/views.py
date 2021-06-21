@@ -742,29 +742,18 @@ def integromat_get_meetings(**kwargs):
     addon = node.get_addon(SHORT_NAME)
 
     tz = pytz.timezone('utc')
-    offsetHours = time.timezone / 3600
-    sTodayLocal = (datetime.now(tz) - timedelta(hours=offsetHours)).replace(hour=0, minute=0, second=0, microsecond=0)
-    sTomorrowLocal = sTodayLocal + timedelta(days=1)
+    sToday = datetime.now(tz).replace(hour=0, minute=0, second=0, microsecond=0)
+    sYesterday = sTodayLocal + timedelta(days=-1)
+    sTomorrow = sTodayLocal + timedelta(days=1)
 
-    sTodayUtc = sTodayLocal + timedelta(hours=offsetHours)
-    sTomorrowUtc =  sTomorrowLocal + timedelta(hours=offsetHours)
-
-    logger.info('tz' + str(tz))
-    logger.info('offsetHours' + str(offsetHours))
-    logger.info('sTodayLocal' + str(sTodayLocal))
-    logger.info('sTomorrowLocal' + str(sTomorrowLocal))
-    logger.info('sTodayUtc' + str(sTodayUtc))
-    logger.info('sTomorrowUtc' + str(sTomorrowUtc))
-
-    amiToday = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=sTodayUtc, start_datetime__lt=sTomorrowUtc).order_by('start_datetime')
-    amiTomorrow = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__date=sTomorrowUtc, start_datetime__lt=sTomorrowUtc + timedelta(days=1)).order_by('start_datetime')
-    logger.info('today:' + str(date.today()))
-    amiTodayJson = serializers.serialize('json', amiToday, ensure_ascii=False)
-    amiTomorrowJson = serializers.serialize('json', amiTomorrow, ensure_ascii=False)
-    amiTodayDict = json.loads(amiTodayJson)
-    amiTomorrowDict = json.loads(amiTomorrowJson)
+    logger.info('sToday' + str(sToday))
+    logger.info('sYesterday' + str(sYesterday))
+    logger.info('sTomorrow' + str(sTomorrow))
+    recentMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=sYesterday, start_datetime__lt=sTomorrow + timedelta(days=1)).order_by('start_datetime')
+    recentMeetingsJson = serializers.serialize('json', recentMeetings, ensure_ascii=False)
+    recentMeetingsDict = json.loads(recentMeetingsJson)
     logger.info('integromat_get_meetings end')
 
-    return {'todaysMeetings': amiTodayDict,
-            'tomorrowsMeetings': amiTomorrowDict,
+    return {
+            'recentMeetings': recentMeetingsDict,
             }
