@@ -743,8 +743,8 @@ def integromat_get_meetings(**kwargs):
 
     tz = pytz.timezone('utc')
     sToday = datetime.now(tz).replace(hour=0, minute=0, second=0, microsecond=0)
-    sYesterday = sTodayLocal + timedelta(days=-1)
-    sTomorrow = sTodayLocal + timedelta(days=1)
+    sYesterday = sToday + timedelta(days=-1)
+    sTomorrow = sToday + timedelta(days=1)
 
     logger.info('sToday' + str(sToday))
     logger.info('sYesterday' + str(sYesterday))
