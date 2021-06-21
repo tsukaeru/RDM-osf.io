@@ -53,9 +53,9 @@ function IntegromatWidget() {
 
                 start_datetime = new Date(recentMeetings[i].fields.start_datetime);
 
-                if(sTodayUtc <= start_datetime && start_datetime < sTomorrowUtc){
+                if(today <= start_datetime && start_datetime < tomorrow){
                     todaysMeetings.push(recentMeetings[i]);
-                }else if(sTomorrowUtc <= start_datetime && start_datetime < sDayAfterTomorrowUtc){
+                }else if(tomorrow <= start_datetime && start_datetime < dayAfterTomorrow){
                     tomorrowsMeetings.push(recentMeetings[i]);
                 }
             }
