@@ -24,19 +24,13 @@ function IntegromatWidget() {
     self.today = (now.getMonth() + 1) + '/' + now.getDate();
     self.tomorrow = (now.getMonth() + 1) + '/' + (now.getDate() + 1)
 
-    var now = new Date();
     var today = new Date();
-    var tommorrow = new Date();
+    var tomorrow = new Date();
     var dayAfterTomorrow = new Date();
 
-    var sTodayLocal = new Date(today.setHours(0, 0, 0, 0));
-    var sTomorrowLocal = new Date( new Date(tommorrow.setDate(tommorrow.getDate() + 1)).setHours(0, 0, 0, 0));
-    var sDayAfterTomorrowLocal = new Date(new Date(dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)).setHours(0, 0, 0, 0));
-
-    var offsetHours = now.getTimezoneOffset() / 60;
-    var sTodayUtc = new Date(sTodayLocal.setHours(sTodayLocal.getHours() + offsetHours));
-    var sTomorrowUtc = new Date(sTomorrowLocal.setHours(sTomorrowLocal.getHours() + offsetHours));
-    var sDayAfterTomorrowUtc = new Date(sDayAfterTomorrowLocal.setHours(sDayAfterTomorrowLocal.getHours() + offsetHours));
+    var today = new Date(today.setHours(0, 0, 0, 0));
+    var tomorrow = new Date( new Date(tomorrow.setDate(tomorrow.getDate() + 1)).setHours(0, 0, 0, 0));
+    var dayAfterTomorrow = new Date(new Date(dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)).setHours(0, 0, 0, 0));
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
