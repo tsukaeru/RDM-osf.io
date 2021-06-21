@@ -24,10 +24,6 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
     node_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_node_settings.mako')
     user_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_user_settings.mako')
 
-    # default value for RdmAddonOption.is_allowed for GRDM Admin
-    is_allowed_default = False
-    for_institutions = True
-
     # specify Idp Name to limit available addon for GRDM Admin
     available_idp = ['GakuNin RDM Idp']
 
