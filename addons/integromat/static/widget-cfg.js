@@ -29,7 +29,7 @@ function IntegromatWidget() {
     var offsetHours = now.getTimezoneOffset() / 60;
     var sTodayUtc = new Date(now.setHours(now.getHours() + offsetHours));
     var sTomorrowUtc = new Date(sTodayUtc.setDate(sTodayUtc.getDate() + 1));
-    var sDayAfterTomorrowUtc = new Date(sTomorrowUtc.setDate(sTomorrowUtc.getDate() + 1));
+    var sDayAfterTomorrowUtc = new Date(sTodayUtc.setDate(sTodayUtc.getDate() + 2));
 
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
@@ -46,12 +46,15 @@ function IntegromatWidget() {
             const recentMeetings = data.recentMeetings;
             var todaysMeetings = [];
             var tomorrowsMeetings = [];
+            var start_datetime;
 
             for(var i = 0; i < recentMeetings.length; i++){
 
-                if(sTodayUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sTomorrowUtc){
+                start_datetime = new Date(recentMeetings[i].fields.start_datetime);
+
+                if(sTodayUtc <= start_datetime && start_datetime < sTomorrowUtc){
                     todaysMeetings.push(recentMeetings[i]);
-                }else if(sTomorrowUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sDayAfterTomorrowUtc){
+                }else if(sTomorrowUtc <= start_datetime && start_datetime < sDayAfterTomorrowUtc){
                     tomorrowsMeetings.push(recentMeetings[i]);
                 }
             }
