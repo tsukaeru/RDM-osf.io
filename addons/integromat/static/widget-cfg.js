@@ -44,18 +44,18 @@ function IntegromatWidget() {
             self.loading(false);
             self.loadCompleted(true);
             const recentMeetings = data.recentMeetings;
-            let todaysMeetings = [];
-            let tomorrowsMeetings = [];
+            let arrayTodaysMeetings = [];
+            let arrayTomorrowsMeetings = [];
             for(let i = 0; i < recentMeetings.length; i++){
 
                 if(sTodayUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sTomorrowUtc){
-                    todaysMeetings.push(recentMeetings[i]);
+                    arrayTodaysMeetings.push(recentMeetings[i]);
                 }else if(sTomorrowUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sDayAfterTomorrowUtc){
-                    tomorrowsMeetings.push(recentMeetings[i]);
+                    arrayTomorrowsMeetings.push(recentMeetings[i]);
                 }
             }
-            self.todaysMeetings(todaysMeetings);
-            self.tomorrowsMeetings(tomorrowsMeetings);
+            self.todaysMeetings(arrayTodaysMeetings);
+            self.tomorrowsMeetings(arrayTomorrowsMeetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
