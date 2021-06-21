@@ -31,6 +31,9 @@ function IntegromatWidget() {
     var sTomorrowUtc = new Date(sTodayUtc.setDate(sTodayUtc.getDate() + 1));
     var sDayAfterTomorrowUtc = new Date(sTomorrowUtc.setDate(sTomorrowUtc.getDate() + 1));
 
+    var todaysMeetings = [];
+    var tomorrowsMeetings = [];
+
     self.loadConfig = function() {
         var url = self.baseUrl + 'get_meetings';
         console.log(logPrefix, 'loading: ', url);
@@ -44,18 +47,17 @@ function IntegromatWidget() {
             self.loading(false);
             self.loadCompleted(true);
             const recentMeetings = data.recentMeetings;
-            let arrayTodaysMeetings = [];
-            let arrayTomorrowsMeetings = [];
+
             for(let i = 0; i < recentMeetings.length; i++){
 
                 if(sTodayUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sTomorrowUtc){
-                    arrayTodaysMeetings.push(recentMeetings[i]);
+                    todaysMeetings.push(recentMeetings[i]);
                 }else if(sTomorrowUtc <= recentMeetings[i].fields.start_date && recentMeetings[i].fields.start_date < sDayAfterTomorrowUtc){
-                    arrayTomorrowsMeetings.push(recentMeetings[i]);
+                    tomorrowsMeetings.push(recentMeetings[i]);
                 }
             }
-            self.todaysMeetings(arrayTodaysMeetings);
-            self.tomorrowsMeetings(arrayTomorrowsMeetings);
+            self.todaysMeetings(todaysMeetings);
+            self.tomorrowsMeetings(tomorrowsMeetings);
         }).fail(function(xhr, status, error) {
             self.loading(false);
             self.loadFailed(true);
