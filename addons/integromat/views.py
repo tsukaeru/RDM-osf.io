@@ -275,6 +275,8 @@ def integromat_create_meeting_info(**kwargs):
     password = request.get_json().get('password')
     meetingInviteesInfo = request.get_json().get('meetingInviteesInfo')
 
+    logger.info('startDatetime::' + str(startDatetime))
+
     try:
         node = models.NodeSettings.objects.get(_id=nodeId)
     except:
