@@ -28,9 +28,6 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
     is_allowed_default = False
     for_institutions = True
 
-    # specify Idp Name to limit available addon for GRDM Admin
-    available_idp = ['GakuNin RDM Idp']
-
     @property
     def routes(self):
         from . import routes

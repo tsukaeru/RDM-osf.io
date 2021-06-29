@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from framework.exceptions import PermissionsError
 
-from osf.models import RdmAddonOption, RdmAddonNoInstitutionOption, Institution
+from osf.models import RdmAddonOption, RdmAddonNoInstitutionOption
 from website import settings
 from admin.base.settings import BASE_DIR
 from admin.rdm.utils import get_institution_id
@@ -90,14 +90,6 @@ def get_rdm_addon_option(institution_id, addon_name, create=True):
         for_institutions = getattr(app, 'for_institutions', False)
         if for_institutions:
             is_allowed_default = False
-        elif addon_name == 'integromat':
-            # is_allowed_default is False when inavailable idp for integromat
-            institution = Institution.objects.get(pk=institution_id)
-            if institution.name in addon.available_idp:
-                is_allowed_default = getattr(app, 'is_allowed_default', True)
-            else:
-                is_allowed_default = getattr(app, 'is_allowed_default', False)
-            
         else:
             is_allowed_default = getattr(app, 'is_allowed_default', True)
         if is_allowed_default is False:
