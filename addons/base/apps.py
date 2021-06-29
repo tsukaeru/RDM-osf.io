@@ -76,8 +76,7 @@ class BaseAddonAppConfig(AppConfig):
     tab_name = ''
 
     # default value for RdmAddonOption.is_allowed for GRDM Admin
-    is_allowed_default = True
-    for_institutions = False
+    is_allowed_default = False
 
     def __init__(self, *args, **kwargs):
         ret = super(BaseAddonAppConfig, self).__init__(*args, **kwargs).__init__()
