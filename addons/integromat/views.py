@@ -72,7 +72,6 @@ def integromat_add_user_account(auth, **kwargs):
 
     try:
         access_token = request.json.get('integromat_api_token')
-        webhook_url = request.json.get('integromat_webhook_url')
 
     except KeyError:
         raise HTTPError(http_status.HTTP_400_BAD_REQUEST)
@@ -95,7 +94,6 @@ def integromat_add_user_account(auth, **kwargs):
             display_name=integromat_username,
             oauth_key=access_token,
             provider_id=integromat_userid,
-            webhook_url=webhook_url,
         )
         account.save()
     except ValidationError:
@@ -105,10 +103,6 @@ def integromat_add_user_account(auth, **kwargs):
         )
         if account.oauth_key != access_token:
             account.oauth_key = access_token
-            account.save()
-
-        if account.webhook_url != webhook_url:
-            account.webhook_url = webhook_url
             account.save()
 
     if not user.external_accounts.filter(id=account.id).exists():

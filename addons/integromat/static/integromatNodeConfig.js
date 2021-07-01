@@ -16,7 +16,6 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.super.constructor(addonName, url, selector, folderPicker, tbOpts);
         // Non-OAuth fields
         self.integromatApiToken = ko.observable();
-        self.integromatWebhookUrl = ko.observable();
         self.userGuid = ko.observable();
         self.microsoftTeamsUserName = ko.observable();
         self.microsoftTeamsMail = ko.observable();
@@ -56,16 +55,11 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             self.changeMessage('Please enter an API token.', 'text-danger');
             return;
         }
-        if (!self.integromatWebhookUrl() ){
-            self.changeMessage('Please enter an Webhook URL.', 'text-danger');
-            return;
-        }
         $osf.block();
 
         return $osf.postJSON(
             self.urls().create, {
                 integromat_api_token: self.integromatApiToken(),
-                integromat_webhook_url: self.integromatWebhookUrl()
             }
         ).done(function(response) {
             $osf.unblock();
@@ -98,7 +92,6 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.message('');
         self.messageClass('text-info');
         self.integromatApiToken(null);
-        self.integromatWebhookUrl(null);
     },
 
     addWebMeetingAppsUser : function() {

@@ -46,7 +46,6 @@
                 Manage
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="#">webhook URL</a></li>
                     <li><a href="#manageWebMeetingAppsAttendeesModal" data-toggle="modal">Web Meeting Attendees</a></li>
                 </ul>
             </div>

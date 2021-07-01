@@ -27,7 +27,6 @@ function ViewModel(url) {
     self.accounts = ko.observableArray();
 
     self.integromatApiToken = ko.observable();
-    self.integromatWebhookUrl = ko.observable();
 
     self.userGuid = ko.observable();
     self.microsoftTeamsUserName = ko.observable();
@@ -43,7 +42,6 @@ function ViewModel(url) {
         self.message('');
         self.messageClass('text-info');
         self.integromatApiToken(null);
-        self.integromatWebhookUrl(null);
     };
     /** Send POST request to authorize Integromat */
     self.connectAccount = function() {
@@ -52,16 +50,11 @@ function ViewModel(url) {
             self.changeMessage('Please enter an API token.', 'text-danger');
             return;
         }
-        if (!self.integromatWebhookUrl() ){
-            self.changeMessage('Please enter an Webhook URL.', 'text-danger');
-            return;
-        }
 
         return osfHelpers.postJSON(
             self.account_url,
             ko.toJS({
                 integromat_api_token: self.integromatApiToken(),
-                integromat_webhook_url: self.integromatWebhookUrl()
             })
         ).done(function() {
             self.clearModal();
@@ -90,7 +83,6 @@ function ViewModel(url) {
             self.accounts($.map(data.accounts, function(account) {
                 var externalAccount =  new ExternalAccount(account);
                 externalAccount.integromatApiToken = account.integromat_api_token;
-                externalAccount.integromatWebhookUrl = account.integromat_webhook_url;
                 return externalAccount;
             }));
             $('#integromat-header').osfToggleHeight({height: 160});
