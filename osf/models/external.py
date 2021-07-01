@@ -89,8 +89,7 @@ class ExternalAccountBase(base.ObjectIDMixin, base.BaseModel):
         abstract = True
 
 class ExternalAccount(ExternalAccountBase):
-    # A webhook url to the external service
-    webhook_url = EncryptedTextField(blank=True, null=True)
+    pass
 
 class ExternalAccountTemporary(ExternalAccountBase):
     pass
