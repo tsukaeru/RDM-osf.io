@@ -245,9 +245,9 @@ def integromat_api_call(*args, **kwargs):
 
     return {'email': str(user)}
 
-def integromat_create_meeting_info(**kwargs):
+def integromat_register_meeting(**kwargs):
 
-    logger.info('integromat called integromat_create_meeting_info')
+    logger.info('integromat called integromat_register_meeting')
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
     logger.info('auth:' + str(user))
@@ -362,7 +362,7 @@ def integromat_create_meeting_info(**kwargs):
 
     return {}
 
-def integromat_update_meeting_info(**kwargs):
+def integromat_update_meeting_registration(**kwargs):
 
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
@@ -473,7 +473,7 @@ def integromat_update_meeting_info(**kwargs):
 
     return {}
 
-def integromat_delete_meeting_info(**kwargs):
+def integromat_delete_meeting_registration(**kwargs):
 
     auth = Auth.from_kwargs(request.args.to_dict(), kwargs)
     user = auth.user
