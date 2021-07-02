@@ -110,23 +110,23 @@ api_routes = {
         ),
 
         Rule(
-            '/integromat/create_meeting_info',
+            '/integromat/register_meeting',
             'post',
-            views.integromat_create_meeting_info,
+            views.integromat_register_meeting,
             json_renderer,
         ),
 
         Rule(
-            '/integromat/update_meeting_info',
+            '/integromat/update_meeting_registration',
             'post',
-            views.integromat_update_meeting_info,
+            views.integromat_update_meeting_registration,
             json_renderer,
         ),
 
         Rule(
-            '/integromat/delete_meeting_info',
+            '/integromat/delete_meeting_registration',
             'post',
-            views.integromat_delete_meeting_info,
+            views.integromat_delete_meeting_registration,
             json_renderer,
         ),
 
