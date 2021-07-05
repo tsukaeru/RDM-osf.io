@@ -482,8 +482,6 @@ def integromat_delete_meeting_registration(**kwargs):
     if not user:
         raise HTTPError(httplib.UNAUTHORIZED)
 
-    nodeId = request.get_json().get('nodeId')
-    appName = request.get_json().get('appName')
     meetingId = request.get_json().get('meetingId')
     logger.info('meetingId:' + str(meetingId))
 
