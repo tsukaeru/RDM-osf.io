@@ -151,7 +151,7 @@ function ViewModel(url) {
     self.addWebMeetingAppsUser = function() {
         ;
     };
-    self.deleteMicrosoftTeamsUser = function() {
+    self.deleteWebMeetingAppsUser = function() {
         ;
     };
 }

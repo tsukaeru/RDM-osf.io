@@ -97,7 +97,12 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
     addWebMeetingAppsUser : function() {
         var self = this;
         if (!self.userGuid() ){
-            self.changeMessage('Please enter an User guid.', 'text-danger');
+            self.changeMessage('Please enter an User Guid.', 'text-danger');
+            return;
+        }
+
+        if (!self.microsoft_teams_user_name() && !self.microsoft_teams_mail() && !self.webex_meetings_display_name() && !self.webex_meetings_mail()){
+            self.changeMessage('Please enter at least one item.', 'text-danger');
             return;
         }
 
@@ -113,7 +118,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             })
         ).done(function() {
             self.message('');
-            $('#manageWebMeetingAppsAttendeesModal').modal('hide');
+            $('#addWebMeetingAppsAttendeesModal').modal('hide');
             self.userGuid(null);
             self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
@@ -124,7 +129,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         }).fail(function(xhr, textStatus, error) {
             var errorMessage = (xhr.status === 401) ? '401' : 'Duplicate';
             self.changeMessage(errorMessage, 'text-danger');
-            Raven.captureMessage('Could not add Micorosoft Teams user', {
+            Raven.captureMessage('Could not add Web Meeting Attendee', {
                 url: self.url,
                 textStatus: textStatus,
                 error: error
@@ -132,10 +137,10 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         });
     },
 
-    deleteMicrosoftTeamsUser : function() {
+    deleteWebMeetingAppsUser : function() {
         var self = this;
         if (!self.userGuidToDelete() ){
-            self.changeMessage('Please enter an User guid for Delete.', 'text-danger');
+            self.changeMessage('Please enter an User Guid.', 'text-danger');
             return;
         }
         var url = self.urls().delete_web_meeting_attendee;
@@ -146,7 +151,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             })
         ).done(function() {
             self.message('');
-            $('#manageWebMeetingAppsAttendeesModal').modal('hide');
+            $('#deleteWebMeetingAppsAttendeesModal').modal('hide');
             self.userGuid(null);
             self.microsoftTeamsUserName(null);
             self.microsoftTeamsMail(null);
@@ -157,7 +162,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         }).fail(function(xhr, textStatus, error) {
             var errorMessage = (xhr.status === 401) ? '401' : 'Error';
             self.changeMessage(errorMessage, 'text-danger');
-            Raven.captureMessage('Could not delete Micorosoft Teams user', {
+            Raven.captureMessage('Could not delete Web Meeting Attendee', {
                 url: self.url,
                 textStatus: textStatus,
                 error: error
