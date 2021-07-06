@@ -163,18 +163,6 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
                 error: error
             });
         });
-    }.
-
-    showAddAttendees: function() {
-
-        $('#addWebMeetingAttendees').show();
-        $('#deleteWebMeetingAttendees').hide();
-    },
-
-    showDeleteAttendees: function() {
-
-        $('#addWebMeetingAttendees').hide();
-        $('#deleteWebMeetingAttendees').show();
     }
 
 });
