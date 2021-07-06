@@ -47,8 +47,6 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="#addWebMeetingAppsAttendeesModal" data-toggle="modal">Add Web Meeting Attendees</a></li>
-                </ul>
-                <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="#deleteWebMeetingAppsAttendeesModal" data-toggle="modal">Delete Web Meeting Attendees</a></li>
                 </ul>
             </div>

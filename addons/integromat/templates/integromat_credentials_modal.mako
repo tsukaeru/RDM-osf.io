@@ -90,7 +90,7 @@
             <div class="modal-footer">
                 <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
                 <!-- Save Button -->
-                <button data-bind="click: addWebMeetingAppsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">Add</button>
+                <button data-bind="click: addWebMeetingAppsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success">Add</button>
             </div><!-- end modal-fotter -->
         </div><!-- end modal-content -->
     </div>
@@ -119,7 +119,7 @@
             <div class="modal-footer">
                 <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
                 <!-- Save Button -->
-                <button data-bind="click: deleteMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-danger pull-right">Delete</button>
+                <button data-bind="click: deleteMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-danger">Delete</button>
             </div><!-- end modal-fotter -->
         </div><!-- end modal-content -->
     </div>
