@@ -101,7 +101,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
             return;
         }
 
-        if (!self.microsoft_teams_user_name() && !self.microsoft_teams_mail() && !self.webex_meetings_display_name() && !self.webex_meetings_mail()){
+        if (!self.microsoftTeamsUserName() && !self.microsoftTeamsMail() && !self.webexMeetingsDisplayName() && !self.webexMeetingsMail()){
             self.changeMessage('Please enter at least one item.', 'text-danger');
             return;
         }
