@@ -45,77 +45,82 @@
     </div>
 </div>
 
-<div id="manageWebMeetingAppsAttendeesModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
+<div id="addWebMeetingAppsAttendeesModal" class="modal fade">
+    <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-header">
-                <h3>Manage Web Meeting Apps Attendees</h3>
+                <h3>Add Web Meeting Apps Attendees</h3>
             </div>
             <div class="modal-body">
-                <br>
+                <div id="addWebMeetingAttendees">
+                    <form>
+                        <div>
+                            <label>User Guid</label>
+                            <input class="form-control" type="text" data-bind="value: userGuid">
+                        </div>
+                        <div>
+                            <label style="padding-top: 10px;">Microsoft Teams</label>
+                        </div>
+                        <div style="padding-left: 25px;">
+                            <label>Sign-in Address</label>
+                            <input class="form-control" type="text" data-bind="value: microsoftTeamsMail">
+                        </div>
+                        <div style="padding-left: 25px;">
+                            <label>User Name</label>
+                            <input class="form-control" type="text" data-bind="value: microsoftTeamsUserName">
+                        </div>
+                        <div style="padding-top: 10px;">
+                            <label>Webex Meetings</label>
+                        </div>
+                        <div style="padding-left: 25px;">
+                            <label>Sign-in Address</label>
+                            <input class="form-control" type="text" data-bind="value: webexMeetingsMail">
+                        </div>
+                        <div style="padding-left: 25px;">
+                            <label>Display Name</label>
+                            <input class="form-control" type="text" data-bind="value: webexMeetingsDisplayName">
+                        </div>
+                    </form>
+                    <!-- Flashed Messages -->
+                    <div class="help-block">
+                        <p data-bind="html: message, attr: {class: messageClass}"></p>
+                    </div>
+                </div>
+            </div><!-- end modal-body -->
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
+                <!-- Save Button -->
+                <button data-bind="click: addWebMeetingAppsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">Add</button>
+            </div><!-- end modal-fotter -->
+        </div><!-- end modal-content -->
+    </div>
+</div>
+
+<div id="deleteWebMeetingAppsAttendeesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Web Meeting Apps Attendees</h3>
+            </div>
+            <div class="modal-body">
+            <div id="deleteWebMeetingAttendees">
                 <form>
-                    <table width="100%" >
-                        <tr>
-                            <td>User guid</td>
-                            <td>Microsoft Teams Sign-in Address</td>
-                            <td>Microsoft User Name</td>
-                         </tr>
-                         <tr>
-                            <td>
-                                <input type="text" data-bind="value: userGuid" style="width: 80%">
-                            </td>
-                            <td>
-                                <input type="text" data-bind="value: microsoftTeamsMail" style="width: 80%">
-                            </td>
-                            <td>
-                                <input type="text" data-bind="value: microsoftTeamsUserName" style="width: 90%">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Webex Meetings Sign-in Address</td>
-                            <td>Webex Meetings Display Name</td>
-                         </tr>
-                         <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <input type="text" data-bind="value: webexMeetingsMail" style="width: 80%">
-                            </td>
-                            <td>
-                                <input type="text" data-bind="value: webexMeetingsDisplayName" style="width: 90%">
-                            </td>
-                            <td style="border-top-style:none; border-bottom-style:none;" >
-                                <button data-bind="click: addWebMeetingAppsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-success pull-right">
-                                    Add
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <div>
+                        <label>User Guid</label>
+                        <input class="form-control" type="text" data-bind="value: userGuidToDelete">
+                    </div>
                 </form>
-                <table style="width: 100%">
-                    <tr>
-                        <td>
-                            User guid for Delete
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" data-bind="value: userGuidToDelete" style="width: 80%">
-                        </td>
-                        <td>
-                            <button data-bind="click: deleteMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-danger pull-right">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                </table>
                 <!-- Flashed Messages -->
                 <div class="help-block">
                     <p data-bind="html: message, attr: {class: messageClass}"></p>
                 </div>
+            </div>
             </div><!-- end modal-body -->
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
+                <!-- Save Button -->
+                <button data-bind="click: deleteMicrosoftTeamsUser" style="margin-top:5px; margin-bottom:5px;" class="btn btn-danger pull-right">Delete</button>
+            </div><!-- end modal-fotter -->
         </div><!-- end modal-content -->
     </div>
 </div>

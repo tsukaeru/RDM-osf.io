@@ -46,7 +46,10 @@
                 Manage
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="#manageWebMeetingAppsAttendeesModal" data-toggle="modal">Web Meeting Attendees</a></li>
+                    <li><a href="#addWebMeetingAppsAttendeesModal" data-toggle="modal">Add Web Meeting Attendees</a></li>
+                </ul>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#deleteWebMeetingAppsAttendeesModal" data-toggle="modal">Delete Web Meeting Attendees</a></li>
                 </ul>
             </div>
         % endif
