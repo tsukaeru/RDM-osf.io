@@ -117,19 +117,6 @@
             </scirpt>
             </div><!-- end modal-body -->
 
-            <div class="modal-footer">
-                <script id="addWebMeetingAttendees" type="text/html">
-                    <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
-                    <!-- Save Button -->
-                    <button data-bind="click: addWebMeetingAppsUser" class="btn btn-success">Add</button>
-                </scirpt>
-
-                <script id="deleteWebMeetingAttendees" type="text/html">
-                    <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
-                    <!-- Save Button -->
-                    <button data-bind="click: deleteMicrosoftTeamsUser" class="btn btn-danger">Delete</button>
-                </scirpt>
-            </div>
         </div><!-- end modal-content -->
     </div>
 </div>
