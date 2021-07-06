@@ -163,7 +163,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
                 error: error
             });
         });
-    },
+    }.
 
     showAddAttendees: function() {
 
