@@ -48,6 +48,7 @@
 <div id="manageWebMeetingAppsAttendeesModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h3>Manage Web Meeting Apps Attendees</h3>
             </div>
@@ -121,7 +122,7 @@
                 <script id="addWebMeetingAttendees" type="text/html">
                     <a href="#" class="btn btn-default" data-bind="click: clearModal" data-dismiss="modal">Cancel</a>
                     <!-- Save Button -->
-                    <button data-bind="click: addWebMeetingAppsUser" class="btn btn-success">Add</button>
+                    <button data-bind="click: addMicrosoftTeamsUser" class="btn btn-success">Add</button>
                 </scirpt>
 
                 <script id="deleteWebMeetingAttendees" type="text/html">
