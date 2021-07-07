@@ -554,10 +554,10 @@ def integromat_delete_web_meeting_attendee(**kwargs):
     nodeId = nodeSettings.id
     webMeetingAppAttendee = models.Attendees.objects.get(node_settings_id=nodeId, user_guid=userGuid)
 
-    webMeetingAppAttendee.microsoft_teams_user_name = ''
-    webMeetingAppAttendee.microsoft_teams_mail = ''
-    webMeetingAppAttendee.webex_meetings_display_name = ''
-    webMeetingAppAttendee.webex_meetings_mail = ''
+    webMeetingAppAttendee.microsoft_teams_user_name = None
+    webMeetingAppAttendee.microsoft_teams_mail = None
+    webMeetingAppAttendee.webex_meetings_display_name = None
+    webMeetingAppAttendee.webex_meetings_mail = None
 
     webMeetingAppAttendee.save()
 
