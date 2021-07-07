@@ -157,9 +157,8 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__gte=datetime.today()).order_by('start_datetime')
     previousWebMeetings = models.AllMeetingInformation.objects.filter(node_settings_id=addon.id, start_datetime__lt=datetime.today()).order_by('start_datetime').reverse()
     webMeetingApps = models.RdmWebMeetingApps.objects.all()
-    nodeWebMeetingAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True)
-    nodeMicrosoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
-    nodeWebexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id, is_active=True).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
+    nodeMicrosoftTeamsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id).exclude(microsoft_teams_mail__exact='').exclude(microsoft_teams_mail__isnull=True)
+    nodeWebexMeetingsAttendees = models.Attendees.objects.filter(node_settings_id=addon.id).exclude(webex_meetings_mail__exact='').exclude(webex_meetings_mail__isnull=True)
     nodeWorkflows = models.nodeWorkflows.objects.filter(node_settings_id=addon.id)
 
     nodeWebMeetingsAttendeesRelation = models.AllMeetingInformationAttendeesRelation.objects.filter(all_meeting_information__node_settings_id=addon.id)
@@ -173,7 +172,6 @@ def integromat_get_config_ember(auth, **kwargs):
     upcomingWebMeetingsJson = serializers.serialize('json', upcomingWebMeetings, ensure_ascii=False)
     previousWebMeetingsJson = serializers.serialize('json', previousWebMeetings, ensure_ascii=False)
     webMeetingAppsJson = serializers.serialize('json', webMeetingApps, ensure_ascii=False)
-    nodeWebMeetingAttendeesJson = serializers.serialize('json', nodeWebMeetingAttendees, ensure_ascii=False)
     nodeMicrosoftTeamsAttendeesJson = serializers.serialize('json', nodeMicrosoftTeamsAttendees, ensure_ascii=False)
     nodeWebexMeetingsAttendeesJson = serializers.serialize('json', nodeWebexMeetingsAttendees, ensure_ascii=False)
     nodeWorkflowsJson = serializers.serialize('json', nodeWorkflows, ensure_ascii=False)
@@ -186,7 +184,6 @@ def integromat_get_config_ember(auth, **kwargs):
                          'all_web_meetings': allWebMeetingsJson,
                          'upcoming_web_meetings': upcomingWebMeetingsJson,
                          'previous_web_meetings': previousWebMeetingsJson,
-                         'node_web_meeting_attendees': nodeWebMeetingAttendeesJson,
                          'node_microsoft_teams_attendees': nodeMicrosoftTeamsAttendeesJson,
                          'node_webex_meetings_attendees': nodeWebexMeetingsAttendeesJson,
                          'node_web_meetings_attendees_relation': nodeWebMeetingsAttendeesRelationJson,
@@ -505,10 +502,10 @@ def integromat_add_web_meeting_attendee(**kwargs):
     webexMeetingsMail = request.get_json().get('webex_meetings_mail')
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
-    nodeNum = nodeSettings.id
-    if models.Attendees.objects.filter(node_settings_id=nodeNum, user_guid=userGuid).exists():
+    nodeId = nodeSettings.id
+    if models.Attendees.objects.filter(node_settings_id=nodeId, user_guid=userGuid).exists():
 
-        webMeetingAppAttendee = models.Attendees.objects.get(node_settings_id=nodeNum, user_guid=userGuid)
+        webMeetingAppAttendee = models.Attendees.objects.get(node_settings_id=nodeId, user_guid=userGuid)
 
         if microsoftTeamsUserName:
             webMeetingAppAttendee.microsoft_teams_user_name = microsoftTeamsUserName
@@ -518,8 +515,6 @@ def integromat_add_web_meeting_attendee(**kwargs):
             webMeetingAppAttendee.webex_meetings_display_name = webexMeetingsDisplayName
         if webexMeetingsMail:
             webMeetingAppAttendee.webex_meetings_mail = webexMeetingsMail
-        if not webMeetingAppAttendee.is_active:
-            webMeetingAppAttendee.is_active = True
 
         webMeetingAppAttendee.save()
     else:
@@ -533,7 +528,6 @@ def integromat_add_web_meeting_attendee(**kwargs):
             microsoft_teams_mail=microsoftTeamsMail,
             webex_meetings_display_name=webexMeetingsDisplayName,
             webex_meetings_mail=webexMeetingsMail,
-            is_active = True,
             node_settings=nodeSettings,
         )
 
@@ -551,11 +545,15 @@ def integromat_delete_web_meeting_attendee(**kwargs):
     userGuid = request.get_json().get('user_guid')
 
     nodeSettings = models.NodeSettings.objects.get(_id=addon._id)
-    nodeNum = nodeSettings.id
-    qsWebMeetingAppAttendeeInfo = models.Attendees.objects.get(node_settings_id=nodeNum, user_guid=userGuid)
+    nodeId = nodeSettings.id
+    webMeetingAppAttendee = models.Attendees.objects.get(node_settings_id=nodeId, user_guid=userGuid)
 
-    qsWebMeetingAppAttendeeInfo.is_active = False
-    qsWebMeetingAppAttendeeInfo.save()
+    webMeetingAppAttendee.microsoft_teams_user_name = ''
+    webMeetingAppAttendee.microsoft_teams_mail = ''
+    webMeetingAppAttendee.webex_meetings_display_name = ''
+    webMeetingAppAttendee.webex_meetings_mail = ''
+
+    webMeetingAppAttendee.save()
 
     return {}
 
