@@ -100,7 +100,6 @@ class Attendees(BaseModel):
     microsoft_teams_user_name = models.CharField(max_length=256, blank=True, null=True)
     webex_meetings_mail = models.CharField(max_length=256, blank=True, null=True)
     webex_meetings_display_name = models.CharField(max_length=256, blank=True, null=True)
-    is_active = models.BooleanField(default=False)
     node_settings = models.ForeignKey(NodeSettings, null=False, blank=False, default=None)
 
     class Meta:
