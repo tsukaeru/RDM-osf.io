@@ -172,7 +172,7 @@ class BaseAddonAppConfig(AppConfig):
             'has_page': 'page' in self.views,
             'has_widget': 'widget' in self.views,
             'has_page_icon': self.has_page_icon,
-            'tab_name': self.tab_name
+            'tab_name': self.tab_name,
             'tab_path': self.tab_path
         }
 
