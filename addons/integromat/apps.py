@@ -26,7 +26,6 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
 
     # default value for RdmAddonOption.is_allowed for GRDM Admin
     is_allowed_default = False
-    for_institutions = True
 
     @property
     def routes(self):
