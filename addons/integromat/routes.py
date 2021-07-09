@@ -17,11 +17,11 @@ page_routes = {
         # Home (Base) | GET
         Rule(
             [
-                '/<pid>/grdmapps',
-                '/<pid>/node/<nid>/grdmapps',
+                '/<pid>/integromat',
+                '/<pid>/node/<nid>/integromat',
             ],
             'get',
-            views.project_grdmapps,
+            views.project_integromat,
             notemplate
         ),
 
@@ -186,13 +186,13 @@ api_routes = {
 
         # ember: ここから
         Rule([
-            '/project/<pid>/grdmapps/config',
-            '/project/<pid>/node/<nid>/grdmapps/config',
-        ], 'get', views.grdmapps_get_config_ember, json_renderer),
+            '/project/<pid>/integromat/config',
+            '/project/<pid>/node/<nid>/integromat/config',
+        ], 'get', views.integromat_get_config_ember, json_renderer),
         Rule([
-            '/project/<pid>/grdmapps/config',
-            '/project/<pid>/node/<nid>/grdmapps/config',
-        ], 'patch', views.grdmapps_set_config_ember, json_renderer),
+            '/project/<pid>/integromat/config',
+            '/project/<pid>/node/<nid>/integromat/config',
+        ], 'patch', views.integromat_set_config_ember, json_renderer),
         # ember: ここまで
 
     ],

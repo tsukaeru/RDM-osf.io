@@ -143,12 +143,12 @@ def authIntegromat(access_token, hSdkVersion):
 # ember: ここから
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
-def project_grdmapps(**kwargs):
+def project_integromat(**kwargs):
     return use_ember_app()
 
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
-def grdmapps_get_config_ember(auth, **kwargs):
+def integromat_get_config_ember(auth, **kwargs):
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
@@ -202,9 +202,9 @@ def grdmapps_get_config_ember(auth, **kwargs):
 
 @must_be_valid_project
 @must_have_addon(SHORT_NAME, 'node')
-def grdmapps_set_config_ember(**kwargs):
+def integromat_set_config_ember(**kwargs):
 
-    logger.info('grdmapps_set_config_ember start')
+    logger.info('integromat_set_config_ember start')
     node = kwargs['node'] or kwargs['project']
     addon = node.get_addon(SHORT_NAME)
 
