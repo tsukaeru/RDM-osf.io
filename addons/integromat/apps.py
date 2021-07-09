@@ -20,7 +20,6 @@ class IntegromatAddonConfig(BaseAddonAppConfig):
     configs = ['accounts', 'node']
     has_page_icon = False
     tab_name = 'Web Apps'
-    tab_path = 'grdmapps'
 
     node_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_node_settings.mako')
     user_settings_template = os.path.join(TEMPLATE_PATH, 'integromat_user_settings.mako')
