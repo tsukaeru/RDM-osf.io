@@ -82,7 +82,7 @@
                             % if addons[addon]['full_name'] == 'Integromat':
                                 % if addons[addon]['has_page']:
                                     <li>
-                                        <a href="${node['url']}${addons[addon]['short_name']}">
+                                        <a href="${node['url']}${addons[addon]['tab_path']}">
                                             % if addons[addon]['icon'] and addons[addon]['has_page_icon']:
                                                 <img src="${addons[addon]['icon']}" class="addon-logo"/>
                                             % endif
