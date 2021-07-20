@@ -25,31 +25,7 @@ var IntegromatFolderPickerViewModel = oop.extend(OauthAddonFolderPicker, {
         self.webexMeetingsDisplayName = ko.observable();
         self.webexMeetingsMail = ko.observable();
         self.userGuidToDelete = ko.observable();
-        // Treebeard config
-        self.treebeardOptions = $.extend(
-            {},
-            OauthAddonFolderPicker.prototype.treebeardOptions,
-            {   // TreeBeard Options
-                columnTitles: function() {
-                    return [{
-                        title: 'Buckets',
-                        width: '75%',
-                        sort: false
-                    }, {
-                        title: 'Select',
-                        width: '25%',
-                        sort: false
-                    }];
-                },
-                resolveToggle: function(item) {
-                    return '';
-                },
-                resolveIcon: function(item) {
-                    return m('i.fa.fa-folder-o', ' ');
-                },
-            },
-            tbOpts
-        );
+
     },
 
     connectAccount: function() {
