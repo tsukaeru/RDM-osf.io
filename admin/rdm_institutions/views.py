@@ -21,7 +21,7 @@ class InstitutionDisplay(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         institution_id = self.kwargs.get('institution_id')
-        return self.is_authenticated and self.is_admin and self.has_auth(institution_id)
+        return self.is_authenticated and self.is_admin
  
     def get_object(self, queryset=None):
         return Institution.objects.get(id=self.kwargs.get('institution_id'))
@@ -68,7 +68,7 @@ class InstitutionChangeForm(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         institution_id = self.kwargs.get('institution_id')
-        return self.is_authenticated and self.is_admin and self.has_auth(institution_id)
+        return self.is_authenticated and self.is_admin
 
     def get_object(self, queryset=None):
         institution_id = self.kwargs.get('institution_id')
