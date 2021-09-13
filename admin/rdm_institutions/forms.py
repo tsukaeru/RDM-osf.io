@@ -22,8 +22,9 @@ class InstitutionForm(forms.ModelForm):
 
         exclude = [
             'is_deleted', 'contributors',
-            'id',
+            '_id',
             'last_logged', 'delegation_protocol', 
             'login_url', 'logout_url',
             'domains', 'email_domains',
+            'login_url', 'logo_name',
         ]

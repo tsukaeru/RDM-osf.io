@@ -54,7 +54,7 @@
         </div>
         <div id="form-view" class="row">
             <div class="col-md-7">
-                <form action= {% url 'institutions:detail' institution.id %} method="post">
+                <form action= {% url 'rdm_institutions:detail' %} method="post">
                     {% csrf_token %}
                     {{ change_form.as_p }}
                     <input class="form-button" type="submit" value="Submit" />

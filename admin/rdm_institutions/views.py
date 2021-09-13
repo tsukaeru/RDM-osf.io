@@ -85,5 +85,5 @@ class InstitutionChangeForm(UserPassesTestMixin, UpdateView):
         return super(InstitutionChangeForm, self).get_context_data(*args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
-        return reverse_lazy('institutions:detail', kwargs={'institution_id': self.kwargs.get('institution_id')})
+        return reverse_lazy('rdm_institutions:detail', kwargs={'institution_id': self.kwargs.get('institution_id')})
 
