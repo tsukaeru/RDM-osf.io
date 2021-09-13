@@ -14,12 +14,15 @@ from admin.base.forms import ImportFileForm
 from admin.rdm_institutions.forms import InstitutionForm
 
 
-class InstitutionDisplay(PermissionRequiredMixin, DetailView):
+class InstitutionDisplay(UserPassesTestMixin, DetailView):
     model = Institution
     template_name = 'rdm_institutions/detail.html'
-    permission_required = 'osf.view_institution'
     raise_exception = True
 
+    def test_func(self):
+        institution_id = self.kwargs.get('institution_id')
+        return self.is_authenticated and self.is_admin and self.has_auth(institution_id)
+ 
     def get_object(self, queryset=None):
         return Institution.objects.get(id=self.kwargs.get('institution_id'))
 
@@ -37,9 +40,11 @@ class InstitutionDisplay(PermissionRequiredMixin, DetailView):
         return kwargs
 
 
-class InstitutionDetail(PermissionRequiredMixin, View):
-    permission_required = 'osf.view_institution'
+class InstitutionDetail(UserPassesTestMixin, View):
     raise_exception = True
+
+    def test_func(self):
+        return self.is_authenticated and self.is_admin
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -56,15 +61,18 @@ class InstitutionDetail(PermissionRequiredMixin, View):
         return view(request, *args, **kwargs)
 
 
-class InstitutionChangeForm(PermissionRequiredMixin, UpdateView):
-    permission_required = 'osf.change_institution'
+class InstitutionChangeForm(UserPassesTestMixin, UpdateView):
     raise_exception = True
     model = Institution
     form_class = InstitutionForm
 
+    def test_func(self):
+        institution_id = self.kwargs.get('institution_id')
+        return self.is_authenticated and self.is_admin and self.has_auth(institution_id)
+
     def get_object(self, queryset=None):
-        provider_id = self.kwargs.get('institution_id')
-        return Institution.objects.get(id=provider_id)
+        institution_id = self.kwargs.get('institution_id')
+        return Institution.objects.get(id=institution_id)
 
     def get_context_data(self, *args, **kwargs):
         kwargs['import_form'] = ImportFileForm()
