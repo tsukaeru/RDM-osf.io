@@ -103,6 +103,9 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">{% trans "Menu" %}</li>
+          {% if not user.is_superuser and user.is_staff %}
+            <li><a href="{% url 'institutions:list' %}"><i class='fa fa-link'></i> <span>{% trans "RDM Institutions" %}</span></a></li>
+          {% endif %}
             {% if perms.osf.view_node %}
                 <li><a role="button" data-toggle="collapse" href="#collapseNodes">
                   <i class='fa fa-caret-down'></i> {% trans "RDM Nodes" %}
