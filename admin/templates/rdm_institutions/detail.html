@@ -26,7 +26,7 @@
             <form class="col-md-2" action = {% url 'rdm_institutions:detail' %} method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ import_form.as_p }}
-                <input class="form-button" type="submit" value="{% trans 'Change' %}" />
+                <input class="form-button" type="submit" value = {% trans 'Change' %} />
             </form>
             <div class="col-md-2">
                 <h4>{% trans "Banner:" %}</h4>
@@ -37,7 +37,7 @@
             <form class="col-md-2" action = {% url 'rdm_institutions:detal' %} method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ import_form.as_p }}
-                <input class="form-button" type="submit" value="{% trans 'Change' %}" />
+                <input class="form-button" type="submit" value = {% trans "Change" %} />
             </form>
         </div>
 
@@ -67,7 +67,7 @@
                 <form action= {% url 'rdm_institutions:detail' %} method="post">
                     {% csrf_token %}
                     {{ change_form.as_p }}
-                    <input class="form-button" type="submit" value="{% trans 'Apply' %}" />
+                    <input class="form-button" type="submit" value = {% trans "Apply" %} />
 
                 </form>
             </div>
