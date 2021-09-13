@@ -20,8 +20,8 @@ class InstitutionDisplay(UserPassesTestMixin, DetailView):
     raise_exception = True
 
     def test_func(self):
-        user = self.request.user
-        institution_id = self.kwargs.get('institution_id')
+        # user = self.request.user
+        # institution_id = self.kwargs.get('institution_id')
         # return user.is_authenticated and user.is_admin
         return True
  
@@ -46,8 +46,9 @@ class InstitutionDetail(UserPassesTestMixin, View):
     raise_exception = True
 
     def test_func(self):
-        user = self.request.user
-        return user.is_authenticated and user.is_admin
+        # user = self.request.user
+        # return user.is_authenticated and user.is_admin
+        return True
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -70,8 +71,8 @@ class InstitutionChangeForm(UserPassesTestMixin, UpdateView):
     form_class = InstitutionForm
 
     def test_func(self):
-        user = self.request.user
-        institution_id = self.kwargs.get('institution_id')
+        # user = self.request.user
+        # institution_id = self.kwargs.get('institution_id')
         # return user.is_authenticated and user.is_admin
         return True
 
