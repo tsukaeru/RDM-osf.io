@@ -26,5 +26,5 @@ class InstitutionForm(forms.ModelForm):
             'last_logged', 'delegation_protocol', 
             'login_url', 'logout_url',
             'domains', 'email_domains',
-            'login_url', 'banner_name',
+            'logo_name', 'banner_name',
         ]

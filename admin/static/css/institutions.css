@@ -27,6 +27,7 @@ p textarea {
 
 form p label {
     width: 100px;
+    display: block;
 }
 
 .form-button {

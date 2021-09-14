@@ -61,7 +61,7 @@
                 <form action= {% url 'rdm_institutions:detail' %} method="post">
                     {% csrf_token %}
                     {{ change_form.as_p }}
-                    <input class="form-button" type="submit" value = {% trans "Apply" %} />
+                    <input class="btn btn-primary" type="submit" value = {% trans "Apply" %} />
 
                 </form>
             </div>
