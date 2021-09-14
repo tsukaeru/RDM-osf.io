@@ -23,22 +23,16 @@
             <div class="col-md-2">
                 <img class="institution-logo" src="{{ logohost }}/static/img/institutions/shields/{{ institution.logo_name }}">
             </div>
-            <form class="col-md-2" action = {% url 'rdm_institutions:detail' %} method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ import_form.as_p }}
-                <input class="form-button" type="submit" value = {% trans 'Change' %} />
-            </form>
             <div class="col-md-2">
-                <h4>{% trans "Banner:" %}</h4>
+                <form action = {% url 'rdm_institutions:detail' %} method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ import_form.as_p }}
+                    <input class="form-button" type="submit" value = {% trans 'Change' %} />
+                </form>
             </div>
-            <div class="col-md-2">
-                <img class="institution-banner" src="{{ logohost }}/static/img/institutions/banners/{{ institution.banner_name }}">
+            <div class="col-md-6">
+                &nbsp;
             </div>
-            <form class="col-md-2" action = {% url 'rdm_institutions:detail' %} method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ import_form.as_p }}
-                <input class="form-button" type="submit" value = {% trans "Change" %} />
-            </form>
         </div>
 
         <div class="row">
