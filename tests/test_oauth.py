@@ -1460,6 +1460,8 @@ class TestCallback(OsfTestCase):
     def setUp(self):
         super(TestCallback, self).setUp()
         self.user = UserFactory()
+        self.provider = MockOAuth2Provider()
+        self.provider.short_name = 'googledrive'
 
     @mock.patch('website.oauth.views.osf_oauth_callback')
     def test_web_callback(self, osf_callback_mock):
