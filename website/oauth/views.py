@@ -52,6 +52,7 @@ def oauth_connect(service_name, auth):
 
 @must_be_logged_in
 def osf_oauth_callback(service_name, auth):
+    print('THIS 002')
     try:
         validate_rdm_addons_allowed(auth, service_name)
     except PermissionsError as e:
@@ -77,6 +78,8 @@ def osf_oauth_callback(service_name, auth):
 
 @must_be_logged_in
 def oauth_callback(service_name, auth):
+    print('THIS 001')
+    print(session.data)
     try:
         validate_rdm_addons_allowed(auth, service_name)
     except PermissionsError as e:
@@ -109,6 +112,7 @@ def oauth_callback(service_name, auth):
     return redirect(osfadmin_oauth_callback(service_name))
 
 def osfadmin_oauth_callback(service_name):
+    print('THIS 003')
     from furl import furl
     from website.settings import ADMIN_URL
     f = furl(ADMIN_URL)
