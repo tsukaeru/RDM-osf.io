@@ -1459,7 +1459,7 @@ class TestCallback(OsfTestCase):
 
     def setUp(self):
         super(TestCallback, self).setUp()
-        self.user = AuthUserFactory()
+        self.user = UserFactory()
         self.provider = MockOAuth2Provider()
         self.provider.short_name = 'googledrive'
 
