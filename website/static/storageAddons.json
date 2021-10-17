@@ -90,5 +90,9 @@
     "dropboxbusiness": {
         "fullName": "Dropbox Business",
         "externalView": false
+    },
+    "rushfiles": {
+        "fullName": "RushFiles",
+        "externalView": true
     }
 }
