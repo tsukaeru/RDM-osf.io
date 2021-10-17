@@ -649,6 +649,36 @@
                 "status": "none",
                 "text": "BinderHub information will not be registered."
             }
+        },
+        "RushFiles": {
+            "Permissions": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "View / download file versions": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "Add / update files": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "Delete files": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "Logs": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "Forking": {
+                "status": "partial",
+                "text": "TODO"
+            },
+            "Registering": {
+                "status": "partial",
+                "text": "TODO"
+            }
         }
     },
     "disclaimers": [
