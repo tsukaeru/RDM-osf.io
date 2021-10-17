@@ -18,7 +18,8 @@ class RushFilesSerializer(StorageAddonSerializer):
             'name': node_settings.folder_name,
             'path': node_settings.folder_path
         }
-    
+
+    @property
     def addon_serialized_urls(self):
         node = self.node_settings.owner
         return {
@@ -27,6 +28,6 @@ class RushFilesSerializer(StorageAddonSerializer):
             'config': node.api_url_for('rushfiles_set_config'),
             'deauthorize': node.api_url_for('rushfiles_deauthorize_node'),
             'importAuth': node.api_url_for('rushfiles_import_auth'),
-            'folders': node.api_url_for('rushfiles_root_folder'),
+            'folders': node.api_url_for('rushfiles_folder_list'),
             'accounts': node.api_url_for('rushfiles_account_list'),
         }
