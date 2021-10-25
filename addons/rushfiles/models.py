@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Persistence layer for the google drive addon.
 """
+import sys
 from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings,
                                 BaseStorageAddon)
 from django.db import models
@@ -54,8 +55,8 @@ class RushFilesProvider(ExternalProvider):
         info = client.userinfo(response["access_token"], payload["primary_domain"])
 
         return {
-            'provider_id': info["Id"],
-            'display_name': info["FirstName"] + " " + info["LastName"],
+            'provider_id': info["User"]["UserId"],
+            'display_name': info["User"]["Name"],
             'profile_url': None
         }
 
