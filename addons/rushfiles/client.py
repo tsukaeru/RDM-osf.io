@@ -5,6 +5,7 @@ from website.util.client import BaseClient
 from addons.rushfiles import settings
 
 import sys
+import jwt
 
 class RushFilesAuthClient(BaseClient):
     def userinfo(self, access_token, user_main_domain):
@@ -23,9 +24,8 @@ class RushFilesAuthClient(BaseClient):
 
 
 class RushFilesClient(BaseClient):
-    def __init__(self, access_token=None,user_main_domain=None):
+    def __init__(self, access_token=None):
         self.access_token = access_token
-        self.user_main_api_base_url = "https://clientgateway." + user_main_domain
 
     @property
     def _default_headers(self):
@@ -37,11 +37,32 @@ class RushFilesClient(BaseClient):
         """
         Fetch share list from https://clientgateway.rushfiles.com/swagger/ui/index#!/User/User_GetUserShares
         """
-        res = self._make_request(
-            'GET',
-            self._build_url(self.user_main_api_base_url, 'api', 'users', user_id, 'shares'),
-            headers={'Authorization':"Bearer " + self.access_token},
-            expects=(200, )
-        ).json()
+        domain_list = []
+        payload = jwt.decode(self.access_token, verify=False)
 
-        return res["Data"]
+        domain_list.append(payload["primary_domain"])
+
+        if "domains" in payload:
+            if type(payload["domains"]) is str:
+                domain_list.append(payload["domains"])
+            else:
+                for domain in payload["domains"]:
+                    domain_list.append(domain)
+
+        share_list = []
+
+        for domain in domain_list:
+            api_base_domain = "https://clientgateway." + domain
+
+            res = self._make_request(
+            'GET',
+            self._build_url(api_base_domain, 'api', 'users', user_id, 'shares'),
+            expects=(200, )
+            ).json()
+
+            shares = res["Data"]
+
+            for share in shares:
+                share_list.append(share)
+
+        return share_list
