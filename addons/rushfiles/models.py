@@ -120,9 +120,8 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         # Question: How should we handle read-only shares?
 
         payload = jwt.decode(access_token, verify=False)
-        user_main_domain = payload["primary_domain"]
 
-        client = RushFilesClient(access_token=access_token, user_main_domain=user_main_domain)
+        client = RushFilesClient(access_token=access_token)
 
         share_list = client.shares(self.external_account.provider_id)
 
