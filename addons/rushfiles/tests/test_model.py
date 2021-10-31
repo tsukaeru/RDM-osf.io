@@ -10,8 +10,13 @@ from nose.tools import (
     assert_equal,assert_true
 )
 
-from addons.rushfiles.models import NodeSettings, RushFilesProvider
-from addons.rushfiles.client import RushFilesAuthClient
+from addons.base.tests.models import OAuthAddonNodeSettingsTestSuiteMixin
+
+from addons.rushfiles.models import NodeSettings, RushFilesProvider, UserSettings
+from addons.rushfiles.tests.factories import RushfilesAccountFactory,RushfilesNodeSettingFactory,RushfilesUserSettingFactory
+from addons.rushfiles.client import RushFilesAuthClient, RushFilesClient
+
+pytestmark = pytest.mark.django_db
 
 
 class TestProvider(unittest.TestCase):
@@ -39,6 +44,44 @@ class TestProvider(unittest.TestCase):
         assert_equal(res['display_name'], 'fake fake')
         assert_equal(res['profile_url'], None)
 
-class TestNodeSettings(unittest.TestCase):
-    def test_handle_callback(self):
-        assert_true(True)
+class TestNodeSettings(OAuthAddonNodeSettingsTestSuiteMixin,unittest.TestCase):
+    short_name = "rushfiles"
+    full_name = "Rushfiles"
+    ExternalAccountFactory = RushfilesAccountFactory
+
+    NodeSettingsFactory = RushfilesNodeSettingFactory
+    NodeSettingsClass = NodeSettings
+    UserSettingsFactory = RushfilesUserSettingFactory
+
+    def _node_settings_class_kwargs(self, node, user_settings):
+        return {
+            'user_settings': self.user_settings,
+            'share_id': 'fakemock',
+            'share_name': 'fake_share',
+            'domain': 'fake.com',
+            'owner': self.node
+        }
+
+    def setUp(self):
+        super(TestNodeSettings, self).setUp()
+        self.node_setting = NodeSettings()
+
+        self.external_account = RushfilesAccountFactory()
+        self.node_setting.external_account = self.external_account
+
+    @mock.patch.object(RushFilesClient, 'shares')
+    @mock.patch('addons.rushfiles.models.NodeSettings.fetch_access_token')
+    def test_get_folder(self,mock_access_token, mock_share):
+        fake_share_list = [
+            {
+                "Id": "fakeId",
+                "Name": "fake share"
+            }
+        ]
+        mock_share.return_value = fake_share_list
+        mock_access_token.return_value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJwcmltYXJ5X2RvbWFpbiI6ImZha2VAZmFrZS5uZXQifQ._CTx5dIZ0piHbqnF63NV-G6nuFs9uN-9q-pnR0X5HYE"
+
+        res = self.node_setting.get_folders()
+        assert_equal(res[0]["id"], fake_share_list[0]["Id"])
+        assert_equal(res[0]["name"], fake_share_list[0]["Name"])
+        assert_equal(res[0]["path"], fake_share_list[0]["Name"])
