@@ -9,18 +9,18 @@ import jwt
 
 class RushFilesAuthClient(BaseClient):
     def userinfo(self, access_token, user_main_domain):
-        """
+        '''
         Fetch user profile from GET /api/client/fullprofile
-        """
+        '''
         res = self._make_request(
             'GET',
-            self._build_url("https://clientgateway." + user_main_domain, "api", 'client', 'fullprofile'),
-            headers={'Authorization':"Bearer " + access_token},
-            params={"tick":1, "api":1,"associationRequired":False},
+            self._build_url('https://clientgateway.' + user_main_domain, 'api', 'client', 'fullprofile'),
+            headers={'Authorization':'Bearer ' + access_token},
+            params={'tick':1, 'api':1,'associationRequired':False},
             expects=(200, )
         ).json()
 
-        return res["Data"]
+        return res['Data']
 
 
 class RushFilesClient(BaseClient):
@@ -34,25 +34,25 @@ class RushFilesClient(BaseClient):
         return {}
 
     def shares(self,user_id):
-        """
+        '''
         Fetch share list from https://clientgateway.rushfiles.com/swagger/ui/index#!/User/User_GetUserShares
-        """
+        '''
         domain_list = []
         payload = jwt.decode(self.access_token, verify=False)
 
-        domain_list.append(payload["primary_domain"])
+        domain_list.append(payload['primary_domain'])
 
-        if "domains" in payload:
-            if type(payload["domains"]) is str:
-                domain_list.append(payload["domains"])
+        if 'domains' in payload:
+            if type(payload['domains']) is str:
+                domain_list.append(payload['domains'])
             else:
-                for domain in payload["domains"]:
+                for domain in payload['domains']:
                     domain_list.append(domain)
 
         share_list = []
 
         for domain in domain_list:
-            api_base_domain = "https://clientgateway." + domain
+            api_base_domain = 'https://clientgateway.' + domain
 
             res = self._make_request(
             'GET',
@@ -60,10 +60,10 @@ class RushFilesClient(BaseClient):
             expects=(200, )
             ).json()
 
-            shares = res["Data"]
+            shares = res['Data']
 
             for share in shares:
-                share['Id'] = share['Id'] + "@" + domain
+                share['Id'] = share['Id'] + '@' + domain
                 share_list.append(share)
 
         return share_list
