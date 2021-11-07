@@ -52,11 +52,11 @@ class RushFilesProvider(ExternalProvider):
         payload = jwt.decode(response['access_token'], verify=False)
         #TODO: get user name from RushFiles
         client = self._auth_client
-        info = client.userinfo(response["access_token"], payload["primary_domain"])
+        info = client.userinfo(response['access_token'], payload['primary_domain'])
 
         return {
-            'provider_id': info["User"]["UserId"],
-            'display_name': info["User"]["Name"],
+            'provider_id': info['User']['UserId'],
+            'display_name': info['User']['Name'],
             'profile_url': None
         }
 
@@ -127,10 +127,10 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
 
         return [{
             'addon': self.config.short_name,
-            'path': share["Name"],
+            'path': share['Name'],
             'kind': 'folder',
-            'id': share["Id"],
-            'name': share["Name"],
+            'id': share['Id'],
+            'name': share['Name'],
             'urls': {
                 'folders':''
             }
@@ -144,6 +144,8 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         """
         self.share_id = folder['id']
         self.share_name = folder['name']
+
+        #
 
         # Tell the user's addon settings that this node is connecting
         self.user_settings.grant_oauth_access(
@@ -170,5 +172,6 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
             'share': {
                 'id': self.folder_id,
                 'name': self.folder_name,
+                'domain': self.domain
             }
         }
