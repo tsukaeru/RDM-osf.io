@@ -103,6 +103,11 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
     def fetch_access_token(self):
         return self.provider.fetch_access_token()
 
+    def clear_settings(self):
+        self.share_id = None
+        self.share_name = None
+        self.domain = None
+
     def get_folders(self, **kwargs):
         node = self.owner
 
