@@ -137,15 +137,12 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         } for share in share_list ]
 
     def set_folder(self, folder, auth):
-        """Configure this addon to point to a Google Drive folder
-
-        :param dict folder:
-        :param User user:
         """
-        self.share_id = folder['id']
+        """
+        share_id, domain = folder['id'].split("@")
+        self.share_id = share_id
         self.share_name = folder['name']
-
-        #
+        self.domain = domain
 
         # Tell the user's addon settings that this node is connecting
         self.user_settings.grant_oauth_access(
