@@ -104,3 +104,16 @@ class TestNodeSettings(OAuthAddonNodeSettingsTestSuiteMixin,unittest.TestCase):
 
         assert_equal(self.node_settings.folder_name, folder['name'])
         assert_equal(self.node_settings.folder_path, folder['path'])
+
+    def test_serialize_waterbutler_settings(self):
+        settings = self.node_settings.serialize_waterbutler_settings()
+        expected = {
+            'share':
+            {
+                'id': self.node_settings.folder_id,
+                'name': self.node_settings.folder_name,
+                'domain': self.node_settings.domain,
+            }
+        }
+
+        assert_equal(expected, settings)
