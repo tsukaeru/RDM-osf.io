@@ -63,6 +63,7 @@ class RushFilesClient(BaseClient):
             shares = res["Data"]
 
             for share in shares:
+                share['Id'] = share['Id'] + "@" + domain
                 share_list.append(share)
 
         return share_list
