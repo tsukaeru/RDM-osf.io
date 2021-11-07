@@ -6,6 +6,8 @@ from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings,
                                 BaseStorageAddon)
 from django.db import models
 
+from framework.auth import Auth
+
 from framework.exceptions import HTTPError
 from osf.models.external import ExternalProvider
 from osf.models.files import File, Folder, BaseFileNode
@@ -177,3 +179,18 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
                 'domain': self.domain
             }
         }
+
+    def deauthorize(self, auth=None, add_log=False, save=False):
+        """Remove authorization from this node.
+
+        This method should be overridden for addon-specific behavior,
+        such as logging and clearing non-generalizable settings.
+        """
+        self.clear_settings()
+        self.clear_auth()
+
+        if save:
+            self.save()
+
+    def after_delete(self, user):
+        self.deauthorize(Auth(user=user), add_log=True, save=True)
