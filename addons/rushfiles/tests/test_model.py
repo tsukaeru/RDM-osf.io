@@ -6,6 +6,8 @@ import mock
 import pytest
 import unittest
 
+from framework.auth import Auth
+
 from nose.tools import (
     assert_equal,assert_true
 )
@@ -62,12 +64,12 @@ class TestNodeSettings(OAuthAddonNodeSettingsTestSuiteMixin,unittest.TestCase):
             'owner': self.node
         }
 
-    def setUp(self):
-        super(TestNodeSettings, self).setUp()
-        self.node_setting = NodeSettings()
+    # def setUp(self):
+    #     super(TestNodeSettings, self).setUp()
+    #     self.node_setting = NodeSettings()
 
-        self.external_account = RushfilesAccountFactory()
-        self.node_setting.external_account = self.external_account
+    #     self.external_account = RushfilesAccountFactory()
+    #     self.node_setting.external_account = self.external_account
 
     @mock.patch.object(RushFilesClient, 'shares')
     @mock.patch('addons.rushfiles.models.NodeSettings.fetch_access_token')
@@ -81,7 +83,24 @@ class TestNodeSettings(OAuthAddonNodeSettingsTestSuiteMixin,unittest.TestCase):
         mock_share.return_value = fake_share_list
         mock_access_token.return_value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJwcmltYXJ5X2RvbWFpbiI6ImZha2VAZmFrZS5uZXQifQ._CTx5dIZ0piHbqnF63NV-G6nuFs9uN-9q-pnR0X5HYE"
 
-        res = self.node_setting.get_folders()
+        res = self.node_settings.get_folders()
         assert_equal(res[0]["id"], fake_share_list[0]["Id"])
         assert_equal(res[0]["name"], fake_share_list[0]["Name"])
         assert_equal(res[0]["path"], fake_share_list[0]["Name"])
+
+    def test_set_folder(self):
+        folderId = 'fakeFolderId'
+        domain = 'fake.net'
+        folder = {
+            'id': folderId + '@' + domain,
+            'name': 'fake-folder-name',
+            'path': 'fake-folder-name'
+        }
+        self.node_settings.set_folder(folder, auth=Auth(self.user))
+        self.node_settings.save()
+
+        assert_equal(self.node_settings.folder_id, folderId)
+        assert_equal(self.node_settings.domain, domain)
+
+        assert_equal(self.node_settings.folder_name, folder['name'])
+        assert_equal(self.node_settings.folder_path, folder['path'])
