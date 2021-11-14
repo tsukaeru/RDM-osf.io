@@ -180,12 +180,35 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
             }
         }
 
+    def create_waterbutler_log(self, auth, action, metadata):
+        url = self.owner.web_url_for('addon_view_or_download_file', path=metadata['path'], provider='rushfiles')
+
+        self.owner.add_log(
+            'rushfiles_{0}'.format(action),
+            auth=auth,
+            params={
+                'project': self.owner.parent_id,
+                'node': self.owner._id,
+                'path': metadata['materialized'],
+                'bucket': self.folder_id,
+                'urls': {
+                    'view': url,
+                    'download': url + '?action=download'
+                }
+            },
+        )
+
+
     def deauthorize(self, auth=None, add_log=False, save=False):
         """Remove authorization from this node.
 
         This method should be overridden for addon-specific behavior,
         such as logging and clearing non-generalizable settings.
         """
+        if add_log:
+            extra = {'folder_id': self.folder_id}
+            self.nodelogger.log(action='node_deauthorized', extra=extra, save=True)
+
         self.clear_settings()
         self.clear_auth()
 
