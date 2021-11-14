@@ -199,12 +199,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         )
 
 
-    def deauthorize(self, auth=None, add_log=False, save=False):
-        """Remove authorization from this node.
-
-        This method should be overridden for addon-specific behavior,
-        such as logging and clearing non-generalizable settings.
-        """
+    def deauthorize(self, auth=None, add_log=True, save=False):
         if add_log:
             extra = {'folder_id': self.folder_id}
             self.nodelogger.log(action='node_deauthorized', extra=extra, save=True)
