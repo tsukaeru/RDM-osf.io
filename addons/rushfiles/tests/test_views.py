@@ -11,6 +11,10 @@ from addons.rushfiles.serializer import RushFilesSerializer
 from nose.tools import assert_equal
 assert_equal.__self__.maxDiff = None
 
+class TestRushfilesAuthView(RushfilesAddonTestCase, OAuthAddonAuthViewsTestCaseMixin, OsfTestCase):
+    def setUp(self):
+        super(TestRushfilesAuthView, self).setUp()
+
 class TestRushfilesConfigViews(RushfilesAddonTestCase, OAuthAddonConfigViewsTestCaseMixin, OsfTestCase):
     folder = {
         'path': 'fake_share',
