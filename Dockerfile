@@ -75,29 +75,29 @@ RUN set -ex \
     && mkdir -p /var/www \
     && chown www-data:www-data /var/www \
     && apk add --no-cache --virtual .build-deps \
-        build-base \
-        linux-headers \
-        python3-dev \
-        # lxml2
-        musl-dev \
-        libxml2-dev \
-        libxslt-dev \
-        # psycopg2
-        postgresql-dev \
-        # cryptography
-        libffi-dev \
-        libpng-dev \
-        freetype-dev \
-        jpeg-dev \
+    build-base \
+    linux-headers \
+    python3-dev \
+    # lxml2
+    musl-dev \
+    libxml2-dev \
+    libxslt-dev \
+    # psycopg2
+    postgresql-dev \
+    # cryptography
+    libffi-dev \
+    libpng-dev \
+    freetype-dev \
+    jpeg-dev \
     && pip3 install Cython \
     && pip3 install numpy==1.14.5 \
     && for reqs_file in \
-        /code/requirements.txt \
-        /code/requirements/release.txt \
-        /code/addons/*/requirements.txt \
-        /code/admin/rdm*/requirements.txt \
+    /code/requirements.txt \
+    /code/requirements/release.txt \
+    /code/addons/*/requirements.txt \
+    /code/admin/rdm*/requirements.txt \
     ; do \
-        pip3 install --no-cache-dir -r "$reqs_file" \
+    pip3 install --no-cache-dir -r "$reqs_file" \
     ; done \
     && (pip3 uninstall uritemplate.py --yes || true) \
     && pip3 install --no-cache-dir uritemplate.py==0.3.0 \
@@ -174,6 +174,8 @@ COPY ./addons/nextcloud/static/ ./addons/nextcloud/static/
 COPY ./addons/nextcloudinstitutions/static/ ./addons/nextcloudinstitutions/static/
 COPY ./addons/iqbrims/static/ ./addons/iqbrims/static/
 COPY ./addons/binderhub/static/ ./addons/binderhub/static/
+COPY ./addons/rushfiles/static/ ./addons/rushfiles/static/
+
 RUN \
     # OSF
     yarn install --frozen-lockfile \
@@ -201,17 +203,17 @@ RUN pybabel compile -D django -d ./admin/translations
 # TODO: Admin/API should fully specify their bower static deps, and not include ./website/static in their defaults.py.
 #       (this adds an additional 300+mb to the build image)
 RUN for module in \
-        api.base.settings \
-        admin.base.settings \
+    api.base.settings \
+    admin.base.settings \
     ; do \
-        export DJANGO_SETTINGS_MODULE=$module \
-        && python3 manage.py collectstatic --noinput --no-init-app \
+    export DJANGO_SETTINGS_MODULE=$module \
+    && python3 manage.py collectstatic --noinput --no-init-app \
     ; done \
     && for file in \
-        ./website/templates/_log_templates.mako \
-        ./website/static/built/nodeCategories.json \
+    ./website/templates/_log_templates.mako \
+    ./website/static/built/nodeCategories.json \
     ; do \
-        touch $file && chmod o+w $file \
+    touch $file && chmod o+w $file \
     ; done \
     && rm ./website/settings/local.py ./api/base/settings/local.py
 
