@@ -199,7 +199,12 @@ COPY ./addons/ociinstitutions/static/ ./addons/ociinstitutions/static/
 COPY ./addons/nextcloud/static/ ./addons/nextcloud/static/
 COPY ./addons/nextcloudinstitutions/static/ ./addons/nextcloudinstitutions/static/
 COPY ./addons/iqbrims/static/ ./addons/iqbrims/static/
-RUN mkdir -p ./website/static/built/ \
+COPY ./addons/rushfiles/static/ ./addons/rushfiles/static/
+
+RUN \
+    # OSF
+    yarn install --frozen-lockfile \
+    && mkdir -p ./website/static/built/ \
     && invoke build_js_config_files \
     && yarn run webpack-prod
 # /OSF: Assets
@@ -236,17 +241,17 @@ RUN pybabel compile -d ./website/translations
 RUN pybabel compile -D django -d ./admin/translations
 
 RUN for module in \
-        api.base.settings \
-        admin.base.settings \
+    api.base.settings \
+    admin.base.settings \
     ; do \
         export DJANGO_SETTINGS_MODULE=$module \
         && python manage.py collectstatic --noinput --no-init-app \
     ; done \
     && for file in \
-        ./website/templates/_log_templates.mako \
-        ./website/static/built/nodeCategories.json \
+    ./website/templates/_log_templates.mako \
+    ./website/static/built/nodeCategories.json \
     ; do \
-        touch $file && chmod o+w $file \
+    touch $file && chmod o+w $file \
     ; done \
     && rm ./website/settings/local.py ./api/base/settings/local.py
 
