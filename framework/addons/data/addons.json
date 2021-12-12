@@ -653,31 +653,31 @@
         "RushFiles": {
             "Permissions": {
                 "status": "partial",
-                "text": "TODO"
+                "text": "Making a GakuNin RDM project public or private is independent of making an Rushfiles share public or private. The GakuNin RDM does not alter the permissions of linked Rushfiles share."
             },
             "View / download file versions": {
-                "status": "partial",
-                "text": "TODO"
+                "status": "full",
+                "text": "Rusifiles share files and their versions can be viewed/downloaded via GakuNin RDM."
             },
             "Add / update files": {
-                "status": "partial",
-                "text": "TODO"
+                "status": "full",
+                "text": "Adding/updating files in the project via GakuNin RDM will be reflected in Rusifiles."
             },
             "Delete files": {
-                "status": "partial",
-                "text": "TODO"
+                "status": "full",
+                "text": "Files deleted via GakuNin RDM will be deleted in Rushfiles."
             },
             "Logs": {
                 "status": "partial",
-                "text": "TODO"
+                "text": "確認"
             },
             "Forking": {
                 "status": "partial",
-                "text": "TODO"
+                "text": "Forking a project or component does not copy Rushfiles authorization unless the user forking the project is the same user who authorized the Rushfiles add-on in the source project being forked."
             },
             "Registering": {
                 "status": "partial",
-                "text": "TODO"
+                "text": "確認"
             }
         }
     },
