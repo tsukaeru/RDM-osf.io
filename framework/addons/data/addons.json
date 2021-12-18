@@ -623,31 +623,31 @@
         "RushFiles": {
             "Permissions": {
                 "status": "partial",
-                "text": "Making a GakuNin RDM project public or private is independent of making an Rushfiles share public or private. The GakuNin RDM does not alter the permissions of linked Rushfiles share."
+                "text": "Making a GakuNin RDM project public or private is independent of making an RushFiles share public or private. The GakuNin RDM does not alter the permissions of linked RushFiles share."
             },
             "View / download file versions": {
-                "status": "full",
-                "text": "Rushfiles share files and their versions can be viewed/downloaded via GakuNin RDM."
+                "status": "partial",
+                "text": "Files in RushFiles can be viewed/downloaded via GakuNin RDM, but version history is not supported."
             },
             "Add / update files": {
                 "status": "full",
-                "text": "Adding/updating files in the project via GakuNin RDM will be reflected in Rusifiles."
+                "text": "Adding/updating files in the project via GakuNin RDM will be reflected in RushFiles."
             },
             "Delete files": {
                 "status": "full",
-                "text": "Files deleted via GakuNin RDM will be deleted in Rushfiles."
+                "text": "Files deleted via GakuNin RDM will be deleted in RushFiles."
             },
             "Logs": {
                 "status": "partial",
-                "text": "確認"
+                "text": "GakuNin RDM keeps track of changes you make to your RushFiles content through GakuNin RDM, but not for changes made using RushFiles directly."
             },
             "Forking": {
                 "status": "partial",
-                "text": "Forking a project or component does not copy Rushfiles authorization unless the user forking the project is the same user who authorized the Rushfiles add-on in the source project being forked."
+                "text": "こちらは確認中です"
             },
             "Registering": {
                 "status": "partial",
-                "text": "確認"
+                "text": ""
             }
         }
     },
