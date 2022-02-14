@@ -28,18 +28,18 @@ services:
     image: tsukaeru/rdm-osf.io:develop
     build:
       context: ./
-  # wb:
-  #   image: tsukaeru/rdm-waterbutler:develop
-  #   build:
-  #     context: ./../RDM-waterbutler/
-  # wb_requirements:
-  #   image: tsukaeru/rdm-waterbutler:develop
-  #   build:
-  #     context: ./../RDM-waterbutler/
-  # wb_worker:
-  #   image: tsukaeru/rdm-waterbutler:develop
-  #   build:
-  #     context: ./../RDM-waterbutler/
+  wb:
+    image: tsukaeru/rdm-waterbutler:develop
+    build:
+      context: ./../RDM-waterbutler/
+  wb_requirements:
+    image: tsukaeru/rdm-waterbutler:develop
+    build:
+      context: ./../RDM-waterbutler/
+  wb_worker:
+    image: tsukaeru/rdm-waterbutler:develop
+    build:
+      context: ./../RDM-waterbutler/
   web:
     image: tsukaeru/rdm-osf.io:develop
     build:
