@@ -18,10 +18,9 @@ if DEBUG:
         'nplusone.ext.django.NPlusOneMiddleware',
     )
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': lambda(_): True,
+        'SHOW_TOOLBAR_CALLBACK': lambda _: True,
     }
     ALLOWED_HOSTS.append('localhost')
-    ALLOWED_HOSTS.append('127.0.0.1')
 
     # django-silk
     INSTALLED_APPS += ('silk',)
@@ -40,4 +39,34 @@ REST_FRAMEWORK['DEFAULT_THROTTLE_RATES'] = {
     'test-user': '2/hour',
     'test-anon': '1/hour',
     'send-email': '2/minute',
+    'burst': '10/second',
 }
+
+REST_FRAMEWORK['ALLOWED_VERSIONS'] = (
+    '2.0',
+    '2.1',
+    '2.2',
+    '2.3',
+    '2.4',
+    '2.5',
+    '2.6',
+    '2.7',
+    '2.8',
+    '2.9',
+    '2.10',
+    '2.11',
+    '2.12',
+    '2.13',
+    '2.14',
+    '2.15',
+    '2.16',
+    '2.17',
+    '2.18',
+    '2.19',
+    '2.20'
+)
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost'
+]

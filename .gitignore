@@ -123,7 +123,6 @@ website/static/sitemaps/
 api/static/vendor
 
 # Local settings files
-local.py
 local.json
 
 website/uploads/
@@ -193,9 +192,6 @@ piwik-migration
 scripts/image_maniplation/test_rounded_corners.html
 
 .autoenv
-.docker-compose.env
-.docker-compose.*.env
-docker-compose.override.yml
 .unison*
 .docker-sync/
 ssl/

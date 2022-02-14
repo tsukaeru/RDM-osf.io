@@ -1,0 +1,54 @@
+version: "3.4"
+# Additional configuration for development on services linked with osf.io
+services:
+  postgres:
+    environment:
+      # Without username or implicit trust, database won't initialize.
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      
+  # Override image names and point context to local repositories
+  # NOT real images in docker hub repository. Just local names
+  admin:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  admin_assets:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  api:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  assets:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  requirements:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  # wb:
+  #   image: tsukaeru/rdm-waterbutler:develop
+  #   build:
+  #     context: ./../RDM-waterbutler/
+  # wb_requirements:
+  #   image: tsukaeru/rdm-waterbutler:develop
+  #   build:
+  #     context: ./../RDM-waterbutler/
+  # wb_worker:
+  #   image: tsukaeru/rdm-waterbutler:develop
+  #   build:
+  #     context: ./../RDM-waterbutler/
+  web:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  worker:
+    image: tsukaeru/rdm-osf.io:develop
+    build:
+      context: ./
+  # ember_osf_web:
+  #   image: tsukaeru/rdm-ember-osf-web:develop
+  #   build:
+  #     context: ./../RDM-ember-osf-web/

@@ -641,9 +641,9 @@ def ensure_docker_env_setup(ctx):
     if hasattr(os.environ, 'DOCKER_ENV_SETUP') and os.environ['DOCKER_ENV_SETUP'] == '1':
         pass
     else:
-        os.environ['WEB_REMOTE_DEBUG'] = '192.168.168.167:11000'
-        os.environ['API_REMOTE_DEBUG'] = '192.168.168.167:12000'
-        os.environ['WORKER_REMOTE_DEBUG'] = '192.168.168.167:13000'
+        os.environ['WEB_REMOTE_DEBUG'] = 'web:11000'
+        os.environ['API_REMOTE_DEBUG'] = 'api:12000'
+        os.environ['WORKER_REMOTE_DEBUG'] = 'worker:13000'
         os.environ['DOCKER_ENV_SETUP'] = '1'
         docker_init(ctx)
 

@@ -56,10 +56,11 @@ class CasResponse(object):
 class CasClient(object):
     """HTTP client for the CAS server."""
 
-    def __init__(self, base_url):
+    def __init__(self, base_external_url, base_url):
+        self.BASE_EXTERNAL_URL = base_external_url
         self.BASE_URL = base_url
 
-    def get_login_url(self, service_url, campaign=None, username=None, verification_key=None):
+    def get_login_url(self, service_url, campaign=None, username=None, verification_key=None, internal=False):
         """
         Get CAS login url with `service_url` as redirect location. There are three options:
         1. no additional parameters provided -> go to CAS login page
@@ -71,9 +72,10 @@ class CasClient(object):
         :param username: the username
         :param verification_key: the verification key
         :return: dedicated CAS login url
-        """
+        """ 
 
-        url = furl.furl(self.BASE_URL)
+        baseurl = self.BASE_EXTERNAL_URL if not internal else self.BASE_URL
+        url = furl.furl(baseurl)
         url.path.segments.append('login')
         url.args['service'] = service_url
         if campaign:
@@ -83,19 +85,22 @@ class CasClient(object):
             url.args['verification_key'] = verification_key
         return url.url
 
-    def get_logout_url(self, service_url):
-        url = furl.furl(self.BASE_URL)
+    def get_logout_url(self, service_url, internal=False):
+        baseurl = self.BASE_EXTERNAL_URL if not internal else self.BASE_URL
+        url = furl.furl(baseurl)
         url.path.segments.append('logout')
         url.args['service'] = service_url
         return url.url
 
-    def get_profile_url(self):
-        url = furl.furl(self.BASE_URL)
+    def get_profile_url(self, internal=False):
+        baseurl = self.BASE_EXTERNAL_URL if not internal else self.BASE_URL
+        url = furl.furl(baseurl)
         url.path.segments.extend(('oauth2', 'profile',))
         return url.url
 
-    def get_auth_token_revocation_url(self):
-        url = furl.furl(self.BASE_URL)
+    def get_auth_token_revocation_url(self, internal=False):
+        baseurl = self.BASE_EXTERNAL_URL if not internal else self.BASE_URL
+        url = furl.furl(baseurl)
         url.path.segments.extend(('oauth2', 'revoke'))
         return url.url
 
@@ -109,7 +114,8 @@ class CasClient(object):
         :raises: CasError if an unexpected response is returned
         """
 
-        url = furl.furl(self.BASE_URL)
+        baseurl = self.BASE_URL
+        url = furl.furl(baseurl)
         url.path.segments.extend(('p3', 'serviceValidate',))
         url.args['ticket'] = ticket
         url.args['service'] = service_url
@@ -129,7 +135,7 @@ class CasClient(object):
         :raises: CasError if an unexpected response is returned.
         """
 
-        url = self.get_profile_url()
+        url = self.get_profile_url(True)
         headers = {
             'Authorization': 'Bearer {}'.format(access_token),
         }
@@ -180,7 +186,7 @@ class CasClient(object):
 
     def revoke_tokens(self, payload):
         """Revoke a tokens based on payload"""
-        url = self.get_auth_token_revocation_url()
+        url = self.get_auth_token_revocation_url(True)
 
         resp = requests.post(url, data=payload)
         if resp.status_code == 204:
@@ -209,7 +215,7 @@ def parse_auth_header(header):
 
 
 def get_client():
-    return CasClient(settings.CAS_SERVER_URL)
+    return CasClient(settings.CAS_SERVER_URL, settings.CAS_SERVER_INTERNAL_URL)
 
 
 def get_login_url(*args, **kwargs):
@@ -238,10 +244,10 @@ def get_logout_url(*args, **kwargs):
     return get_client().get_logout_url(*args, **kwargs)
 
 
-def get_profile_url():
+def get_profile_url(*args, **kwargs):
     """Convenience function for getting a profile URL for a user."""
 
-    return get_client().get_profile_url()
+    return get_client().get_profile_url(*args, **kwargs)
 
 
 def make_response_from_ticket(ticket, service_url):

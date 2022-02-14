@@ -118,7 +118,8 @@ class TestCASClient(OsfTestCase):
     def setUp(self):
         OsfTestCase.setUp(self)
         self.base_url = 'http://accounts.test.test'
-        self.client = cas.CasClient(self.base_url)
+        self.base_internal_url = self.base_url
+        self.client = cas.CasClient(self.base_url, self.base_internal_url)
 
     @responses.activate
     def test_service_validate(self):

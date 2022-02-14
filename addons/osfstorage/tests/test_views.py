@@ -1561,7 +1561,8 @@ class TestFileViews(StorageTestCase):
     @mock.patch('framework.auth.cas.get_client')
     def test_download_file_with_token(self, mock_get_client):
         cas_base_url = 'http://accounts.test.test'
-        client = cas.CasClient(cas_base_url)
+        cas_base_internal_url = 'http://internalurl'
+        client = cas.CasClient(cas_base_url, cas_base_internal_url)
 
         mock_get_client.return_value = client
 
@@ -1636,7 +1637,8 @@ class TestPreprintFileViews(StorageTestCase):
         file = self.preprint.primary_file
 
         cas_base_url = 'http://accounts.test.test'
-        client = cas.CasClient(cas_base_url)
+        cas_base_internal_url = 'http://internalurl'
+        client = cas.CasClient(cas_base_url, cas_base_internal_url)
 
         mock_get_client.return_value = client
 
