@@ -5,7 +5,7 @@ services:
     environment:
       # Without username or implicit trust, database won't initialize.
       POSTGRES_HOST_AUTH_METHOD: 'trust'
-      
+
   # Override image names and point context to local repositories
   # NOT real images in docker hub repository. Just local names
   admin:
@@ -44,6 +44,8 @@ services:
     image: tsukaeru/rdm-osf.io:develop
     build:
       context: ./
+    volumes:
+      - ./:/code
   worker:
     image: tsukaeru/rdm-osf.io:develop
     build:
