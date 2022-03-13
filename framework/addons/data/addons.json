@@ -673,7 +673,7 @@
             },
             "Forking": {
                 "status": "partial",
-                "text": "こちらは確認中です"
+                "text": "Forking a project or component does not copy RushFiles authorization unless the user forking the project is the same user who authorized the RushFiles add-on in the source project being forked."
             },
             "Registering": {
                 "status": "partial",
