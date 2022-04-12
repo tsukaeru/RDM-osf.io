@@ -176,6 +176,8 @@ COPY ./addons/nextcloudinstitutions/static/ ./addons/nextcloudinstitutions/stati
 COPY ./addons/iqbrims/static/ ./addons/iqbrims/static/
 COPY ./addons/binderhub/static/ ./addons/binderhub/static/
 COPY ./addons/metadata/static/ ./addons/metadata/static/
+COPY ./addons/rushfiles/static/ ./addons/rushfiles/static/
+
 RUN \
     # OSF
     yarn install --frozen-lockfile \
@@ -203,17 +205,17 @@ RUN pybabel compile -D django -d ./admin/translations
 # TODO: Admin/API should fully specify their bower static deps, and not include ./website/static in their defaults.py.
 #       (this adds an additional 300+mb to the build image)
 RUN for module in \
-        api.base.settings \
-        admin.base.settings \
+    api.base.settings \
+    admin.base.settings \
     ; do \
         export DJANGO_SETTINGS_MODULE=$module \
         && python3 manage.py collectstatic --noinput --no-init-app \
     ; done \
     && for file in \
-        ./website/templates/_log_templates.mako \
-        ./website/static/built/nodeCategories.json \
+    ./website/templates/_log_templates.mako \
+    ./website/static/built/nodeCategories.json \
     ; do \
-        touch $file && chmod o+w $file \
+    touch $file && chmod o+w $file \
     ; done \
     && rm ./website/settings/local.py ./api/base/settings/local.py
 
