@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Persistence layer for the google drive addon.
 """
+import sys
 from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings,
                                 BaseStorageAddon)
 from django.db import models
@@ -12,6 +13,7 @@ from addons.base import exceptions
 from addons.rushfiles import settings
 from addons.rushfiles.serializer import RushFilesSerializer
 from addons.rushfiles.utils import get_os
+from addons.rushfiles.client import RushFilesClient, RushFilesAuthClient
 
 import socket
 import jwt
@@ -43,13 +45,18 @@ class RushFilesProvider(ExternalProvider):
 
     default_scopes = settings.OAUTH_SCOPE
 
+    _auth_client = RushFilesAuthClient()
+
     def handle_callback(self, response):
         # Should we better verify?
         payload = jwt.decode(response['access_token'], verify=False)
         #TODO: get user name from RushFiles
+        client = self._auth_client
+        info = client.userinfo(response['access_token'], payload['primary_domain'])
+
         return {
-            'provider_id': payload['sub'],
-            'display_name': 'Wiktor Klonowski',
+            'provider_id': info['User']['UserId'],
+            'display_name': info['User']['Name'],
             'profile_url': None
         }
 
@@ -112,14 +119,23 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         # on per-share basis and user can create sub-shares if they want different folder structure.
         # Question: How should we handle read-only shares?
 
+        payload = jwt.decode(access_token, verify=False)
+        user_main_domain = payload["primary_domain"]
+
+        client = RushFilesClient(access_token=access_token, user_main_domain=user_main_domain)
+
+        share_list = client.shares(self.external_account.provider_id)
+
         return [{
             'addon': self.config.short_name,
-            'path': '開発',
+            'path': share['Name'],
             'kind': 'folder',
-            'id': 'd0c475011bd24b6dae8a6f890f6b4a93',
-            'name': '開発',
-            'urls': {}
-        }]
+            'id': share['Id'],
+            'name': share['Name'],
+            'urls': {
+                'folders':''
+            }
+        } for share in share_list ]
 
     def set_folder(self, folder, auth):
         """Configure this addon to point to a Google Drive folder
@@ -130,6 +146,8 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         self.share_id = folder['id']
         self.share_name = folder['name']
 
+        #
+
         # Tell the user's addon settings that this node is connecting
         self.user_settings.grant_oauth_access(
             node=self.owner,
@@ -139,7 +157,7 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         self.save()
 
         self.nodelogger.log('folder_selected', save=True)
-    
+
     # Match with RDM-waterbutler/waterbutler/providers/rushfiles/provider.py:RushFilesProvider::__init__
     def serialize_waterbutler_credentials(self):
         if not self.has_auth:
@@ -155,5 +173,6 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
             'share': {
                 'id': self.folder_id,
                 'name': self.folder_name,
+                'domain': self.domain
             }
         }
