@@ -6,6 +6,8 @@ from addons.base.models import (BaseOAuthNodeSettings, BaseOAuthUserSettings,
                                 BaseStorageAddon)
 from django.db import models
 
+from framework.auth import Auth
+
 from framework.exceptions import HTTPError
 from osf.models.external import ExternalProvider
 from osf.models.files import File, Folder, BaseFileNode
@@ -103,6 +105,11 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
     def fetch_access_token(self):
         return self.provider.fetch_access_token()
 
+    def clear_settings(self):
+        self.share_id = None
+        self.share_name = None
+        self.domain = None
+
     def get_folders(self, **kwargs):
         node = self.owner
 
@@ -172,3 +179,40 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
                 'domain': self.domain
             }
         }
+
+    def create_waterbutler_log(self, auth, action, metadata):
+        url = self.owner.web_url_for('addon_view_or_download_file', path=metadata['path'], provider='rushfiles')
+
+        self.owner.add_log(
+            'rushfiles_{0}'.format(action),
+            auth=auth,
+            params={
+                'project': self.owner.parent_id,
+                'node': self.owner._id,
+                'path': metadata['materialized'],
+                'bucket': self.folder_id,
+                'urls': {
+                    'view': url,
+                    'download': url + '?action=download'
+                }
+            },
+        )
+
+
+    def deauthorize(self, auth=None, add_log=True, save=False):
+        if add_log:
+            extra = {'folder_id': self.folder_id}
+            self.nodelogger.log(action='node_deauthorized', extra=extra, save=True)
+
+        self.clear_settings()
+        self.clear_auth()
+
+        if save:
+            self.save()
+
+    def after_delete(self, user):
+        self.deauthorize(Auth(user=user), add_log=True, save=True)
+
+    def on_delete(self):
+        self.deauthorize(add_log=False)
+        self.save()
