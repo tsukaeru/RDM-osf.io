@@ -94,5 +94,9 @@
     "onedrivebusiness": {
         "fullName": "OneDrive for Office365",
         "externalView": false
+    },
+    "rushfiles": {
+        "fullName": "RushFiles",
+        "externalView": true
     }
 }
