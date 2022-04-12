@@ -281,6 +281,7 @@ class ExternalProvider(object, with_metaclass(ExternalProviderMeta)):
                         service_name=self.short_name,
                         _absolute=True
                     )
+                redirect_uri = 'https://mail.cloudfile.jp/auth' #! remove when we have a proper OAuth client
                 response = OAuth2Session(
                     self.client_id,
                     redirect_uri=redirect_uri,
