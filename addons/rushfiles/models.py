@@ -11,7 +11,9 @@ from osf.models.files import File, Folder, BaseFileNode
 from addons.base import exceptions
 from addons.rushfiles import settings
 from addons.rushfiles.serializer import RushFilesSerializer
+from addons.rushfiles.utils import get_os
 
+import socket
 import jwt
 
 class RushFilesFileNode(BaseFileNode):
@@ -33,12 +35,11 @@ class RushFilesProvider(ExternalProvider):
     client_id = settings.CLIENT_ID
     client_secret = settings.CLIENT_SECRET
 
-
-    auth_url_base = '{}{}'.format(settings.OAUTH_BASE_URL, 'authorize')
+    auth_url_base = '{}authorize?acr_values=deviceName:OSF@{} deviceOs:{} deviceType:9'.format(settings.OAUTH_BASE_URL, socket.gethostname(), get_os())
     callback_url = '{}{}'.format(settings.OAUTH_BASE_URL, 'token')
     auto_refresh_url = callback_url
-    refresh_time = 180
-    expiry_time = 0
+    refresh_time = settings.REFRESH_TIME
+    expiry_time = settings.EXPIRY_TIME
 
     default_scopes = settings.OAUTH_SCOPE
 
@@ -106,6 +107,10 @@ class NodeSettings(BaseOAuthNodeSettings, BaseStorageAddon):
         #TODO Return the list of shares available to the authenticated user
         # https://clientgateway.rushfiles.com/swagger/ui/index#!/User/User_GetUserShares
         # Get main user domain from access token (JWT)
+
+        # I think handling only one level (shares) is enough. Permissions are configurable
+        # on per-share basis and user can create sub-shares if they want different folder structure.
+        # Question: How should we handle read-only shares?
 
         return [{
             'addon': self.config.short_name,

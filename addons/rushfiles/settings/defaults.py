@@ -1,5 +1,5 @@
 # Drive credentials
-CLIENT_ID = 'chaneme'
+CLIENT_ID = 'changeme'
 CLIENT_SECRET = 'changeme'
 
 EXPIRY_TIME = 60 * 60 * 24 * 60  # 60 days
