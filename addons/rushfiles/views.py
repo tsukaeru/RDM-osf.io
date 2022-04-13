@@ -7,7 +7,7 @@ from addons.base import generic_views
 from addons.rushfiles.serializer import RushFilesSerializer
 
 SHORT_NAME = 'rushfiles'
-FULL_NAME = 'RushFiles'
+FULL_NAME = 'Tsukaeru FileBako'
 
 rushfiles_account_list = generic_views.account_list(
     SHORT_NAME,

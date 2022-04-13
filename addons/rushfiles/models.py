@@ -33,7 +33,7 @@ class RushFilesFile(RushFilesFileNode, File):
 
 
 class RushFilesProvider(ExternalProvider):
-    name = 'RushFiles'
+    name = 'Tsukaeru FileBako'
     short_name = 'rushfiles'
 
     client_id = settings.CLIENT_ID
@@ -50,9 +50,7 @@ class RushFilesProvider(ExternalProvider):
     _auth_client = RushFilesAuthClient()
 
     def handle_callback(self, response):
-        # Should we better verify?
         payload = jwt.decode(response['access_token'], verify=False)
-        #TODO: get user name from RushFiles
         client = self._auth_client
         info = client.userinfo(response['access_token'], payload['primary_domain'])
 
