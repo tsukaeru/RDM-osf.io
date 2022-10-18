@@ -69,7 +69,7 @@ class RushFilesClient(BaseClient):
         share_list.sort(key=lambda x: x.get('Name'))
 
         return share_list
-    
+
     def user_companies(self, user_id, domain):
         companies = {}
 
