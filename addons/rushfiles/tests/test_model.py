@@ -48,7 +48,7 @@ class TestProvider(unittest.TestCase):
 
 class TestNodeSettings(OAuthAddonNodeSettingsTestSuiteMixin,unittest.TestCase):
     short_name = 'rushfiles'
-    full_name = 'Rushfiles'
+    full_name = 'Tsukaeru FileBako'
     ExternalAccountFactory = RushfilesAccountFactory
 
     NodeSettingsFactory = RushfilesNodeSettingFactory
